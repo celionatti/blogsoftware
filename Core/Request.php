@@ -8,7 +8,7 @@ class Request
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $position = strpos($path, '?');
-        if($position === false) {
+        if ($position === false) {
             return $path;
         }
         return substr($path, 0, $position);
@@ -52,12 +52,12 @@ class Request
     {
 
         if (empty($key)) {
-            return $_GET;
+            return $this->esc($_GET);
         } elseif (isset($_GET[$key])) {
-            return $_GET[$key];
+            return $this->esc($_GET[$key]);
         }
 
-        return $default;
+        return $this->esc($default);
     }
 
     /**
@@ -129,4 +129,5 @@ class Request
     {
         return htmlspecialchars($str);
     }
+
 }

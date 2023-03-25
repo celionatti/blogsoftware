@@ -8,11 +8,11 @@ use Core\Response;
 use Exception;
 use models\Users;
 
-class SiteController extends Controller
+class AdminController extends Controller
 {
     public function onConstruct(): void
     {
-        $this->view->setLayout('blog');
+        $this->view->setLayout('admin');
     }
 
     /**
@@ -23,6 +23,13 @@ class SiteController extends Controller
         $view = [
             'users' => Users::find(),
         ];
-        $this->view->render('welcome', $view);
+        $this->view->render('admin/dashboard', $view);
+    }
+
+    public function create_article(Request $request, Response $response)
+    {
+        $view = [];
+
+        $this->view->render('admin/articles/create', $view);
     }
 }

@@ -3,7 +3,12 @@
 /** @var $router */
 
 use controllers\SiteController;
+use controllers\AdminController;
 
 $router->get('/', [SiteController::class, 'index']);
 
-$router->get('/users', 'controllers/users.php');
+// Admin
+$router->get('/admin', [AdminController::class, 'index']);
+$router->get('/admin/articles/create', [AdminController::class, 'create_article']);
+
+// $router->get('/users', 'controllers/users.php');
