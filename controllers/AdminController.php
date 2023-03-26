@@ -28,7 +28,9 @@ class AdminController extends Controller
 
     public function create_article(Request $request, Response $response)
     {
-        $view = [];
+        $view = [
+            'errors' => []
+        ];
 
         $this->view->render('admin/articles/create', $view);
     }

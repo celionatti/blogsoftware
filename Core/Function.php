@@ -1,6 +1,6 @@
 <?php
 
-
+use Core\Config;
 use JetBrains\PhpStorm\NoReturn;
 
 function dd($value): void
@@ -22,7 +22,7 @@ function urlIs($value): bool
  */
 function authorize($conditions, $status = \Core\Response::FORBIDDEN): void
 {
-    if(! $conditions) {
+    if (!$conditions) {
         abort($status);
     }
 }
@@ -34,7 +34,7 @@ function base_path($path): string
 
 function assets_path($path): string
 {
-    return \Core\Config::get('domain') . 'assets' . DIRECTORY_SEPARATOR . $path;
+    return Config::get('domain') . 'assets' . DIRECTORY_SEPARATOR . $path;
 }
 
 function console_logger($message): void
@@ -45,7 +45,7 @@ function console_logger($message): void
 #[NoReturn] function redirect($uri): void
 {
     http_response_code(\Core\Response::FOUND);
-    if (! headers_sent()) {
+    if (!headers_sent()) {
         header("Location: $uri");
     } else {
         echo '<script type="text/javascript">';
@@ -60,7 +60,7 @@ function console_logger($message): void
 
 function last_uri(): void
 {
-    if (! headers_sent()) {
+    if (!headers_sent()) {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         die();
     }
@@ -121,4 +121,20 @@ function get_pagination_vars(): array
         'first_link' => $first_link,
         'page_number' => $page_number,
     ];
+}
+
+function get_image(mixed $file = '', string $type = 'post'): string
+{
+
+    $file = $file ?? '';
+    if (file_exists($file)) {
+        return Config::get('domain') . $file;
+    }
+
+    if ($type == 'user') {
+        return assets_path("img/user.webp");
+    } else {
+        return assets_path("img/no_image.jpg");
+    }
+
 }
