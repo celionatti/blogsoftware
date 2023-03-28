@@ -29,7 +29,25 @@ use Core\Forms\BootstrapForm;
             </div>
         </div>
 
-        <?= BootstrapForm::inputField('Title', 'title', '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+        <small class="">Meta Details</small>
+
+        <?= BootstrapForm::inputField('Meta Title', 'meta_title', '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+
+        <?= BootstrapForm::inputField('Meta Keywords', 'meta_keywords', '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+
+        <?= BootstrapForm::inputField('Meta Description', 'meta_description', '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+
+        <?= bootstrapForm::selectField('Status', 'status', '', $statusOpts ?? [], ['class' => 'form-select form-select-lg'], ['class' => 'form-floating col'], $errors) ?>
+
+        <div class="row my-3">
+                <div class="col">
+                    <a href="/admin/articles" class="btn btn-danger w-100"><i class="bi bi-arrow-left-circle"></i>
+                    cancel</a>
+            </div>
+            <div class="col">
+                <button type="submit" class="btn btn-dark w-100">Create Article</button>
+            </div>
+        </div>
     </form>
 </div>
 

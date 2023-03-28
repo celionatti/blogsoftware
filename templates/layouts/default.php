@@ -32,6 +32,7 @@ use Core\Support\FlashMessage;
             /*display: flex;*/
             align-items: center;
             justify-content: center;
+            z-index: 9999;
             display: none;
         }
 
@@ -72,19 +73,20 @@ use Core\Support\FlashMessage;
         <?php $this->content('content'); ?>
     </div>
 
-    <!--<script>-->
-    <!--    const spinner = document.querySelector('.spinner');-->
-    <!---->
-    <!--    window.addEventListener('load', () => {-->
-    <!--        spinner.style.display = 'block';-->
-    <!--    });-->
-    <!---->
-    <!--    window.addEventListener('DOMContentLoaded', () => {-->
-    <!--        spinner.style.display = 'none';-->
-    <!--    });-->
-    <!--</script>-->
     <script src="<?= assets_path('js/jquery-3.6.3.min.js'); ?>"></script>
     <script src="<?= assets_path('bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+    <!-- <script>
+        const spinner = document.querySelector('.spinner');
+        const sp_container = document.querySelector('.sp-container');
+        window.addEventListener('load', () => {
+            sp_container.style.display = 'flex';
+            spinner.style.display = 'block';
+        });
+        window.addEventListener('DOMContentLoaded', () => {
+            sp_container.style.display = 'none';
+            spinner.style.display = 'none';
+        });
+    </script> -->
 
     <?php $this->content('script') ?>
 

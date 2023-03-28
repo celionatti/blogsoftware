@@ -1,5 +1,7 @@
 <?php
 
+use Core\Support\FlashMessage;
+
 /** @var $this \Core\View */
 
 ?>
@@ -36,11 +38,58 @@
             white-space: nowrap;
             -webkit-overflow-scrolling: touch;
         }
+
+        .sp-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* set a dark background color */
+            /* display: flex; */
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            display: none;
+        }
+
+        .spinner {
+            margin: 100px auto;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            border-top: 3px solid rgba(0, 0, 0, 0.1);
+            border-right: 3px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+            border-left: 3px solid #818a91;
+            border-radius: 50%;
+            animation: spin 1s ease-in-out infinite;
+            display: none;
+            /* hide the spinner by default */
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
 <body style="background: #eee">
+    <div class="sp-container">
+        <div class="spinner"></div>
+    </div>
+
     <?php $this->partial('admin-header') ?>
+
+    <?= FlashMessage::bootstrap_alert(); ?>
+
     <div class="container-fluid">
         <div class="row">
             <?php $this->partial('admin-sidebar') ?>
@@ -53,6 +102,18 @@
 
     <script src="<?= assets_path('js/jquery-3.6.3.min.js'); ?>"></script>
     <script src="<?= assets_path('bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+    <!-- <script>
+        const spinner = document.querySelector('.spinner');
+        const sp_container = document.querySelector('.sp-container');
+        window.addEventListener('load', () => {
+            sp_container.style.display = 'flex';
+            spinner.style.display = 'block';
+        });
+        window.addEventListener('DOMContentLoaded', () => {
+            sp_container.style.display = 'none';
+            spinner.style.display = 'none';
+        });
+    </script> -->
 
     <?php $this->content('script') ?>
 </body>

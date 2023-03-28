@@ -12,9 +12,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/admin/articles">
                     <span class="align-text-center bi bi-newspaper"></span>
                     Articles
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/topics">
+                    <span class="align-text-center bi bi-tags"></span>
+                    Topics
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/admin/users">
+                    <span class="align-text-center bi bi-people"></span>
+                    Users
                 </a>
             </li>
         </ul>
