@@ -11,8 +11,14 @@ use Core\Forms\BootstrapForm;
 <?php $this->start('content') ?>
 
 <div class="container bg-white p-2 rounded">
-    <h2 class="text-muted text-center">Create New User</h2>
-    <form action="" method="post" enctype="multipart/form-data">
+    <h2 class="text-muted text-center">Edit User (
+        <span class="text-uppercase">
+            <?= $user->surname ?>
+            <?= $user->name ?>
+        </span> )
+    </h2>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <?= BootstrapForm::method('PATCH'); ?>
         <div class="row">
             <?= BootstrapForm::inputField('Surname', 'surname', $user->surname ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2 col'], $errors) ?>
 
@@ -32,19 +38,13 @@ use Core\Forms\BootstrapForm;
         </div>
 
         <div class="row">
-            <?= BootstrapForm::inputField('Password', 'password', '', ['class' => 'form-control', 'type' => 'password'], ['class' => 'form-floating my-2 col'], $errors) ?>
-
-            <?= BootstrapForm::inputField('Confirm Password', 'confirm_password', '', ['class' => 'form-control', 'type' => 'password'], ['class' => 'form-floating my-2 col'], $errors) ?>
-        </div>
-
-        <div class="row">
-            <?= bootstrapForm::selectField('Access Level', 'acl', '', $aclOpts ?? [], ['class' => 'form-control form-select'], ['class' => 'form-floating col'], $errors) ?>
+            <?= bootstrapForm::selectField('Access Level', 'acl', $user->acl ?? '', $aclOpts ?? [], ['class' => 'form-control form-select'], ['class' => 'form-floating col'], $errors) ?>
 
             <?= bootstrapForm::fileField('', 'avatar', ['class' => 'form-control', 'onchange' => "display_image_edit(this.files[0])"], ['class' => 'col m-0 form-floating'], $errors) ?>
 
             <div class="d-flex align-items-center justify-content-center my-2">
                 <h5 class="mx-3">Current User Avatar: </h5>
-                <img src="<?= get_image() ?? '' ?>" alt="" class="mx-auto d-block image-preview-edit"
+                <img src="<?= get_image($user->avatar) ?? '' ?>" alt="" class="mx-auto d-block image-preview-edit"
                     style="height:150px;width:250px;object-fit:cover;border-radius: 10px;cursor: pointer;">
             </div>
         </div>

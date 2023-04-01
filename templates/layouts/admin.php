@@ -47,11 +47,11 @@ use Core\Support\FlashMessage;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
             /* set a dark background color */
-            /* display: flex; */
+            display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
-            display: none;
+            /* display: none; */
         }
 
         .spinner {
@@ -65,7 +65,7 @@ use Core\Support\FlashMessage;
             border-left: 3px solid #818a91;
             border-radius: 50%;
             animation: spin 1s ease-in-out infinite;
-            display: none;
+            display: flex;
             /* hide the spinner by default */
         }
 
@@ -102,18 +102,12 @@ use Core\Support\FlashMessage;
 
     <script src="<?= assets_path('js/jquery-3.6.3.min.js'); ?>"></script>
     <script src="<?= assets_path('bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-    <!-- <script>
-        const spinner = document.querySelector('.spinner');
-        const sp_container = document.querySelector('.sp-container');
-        window.addEventListener('load', () => {
-            sp_container.style.display = 'flex';
-            spinner.style.display = 'block';
+    <script>
+        $(document).ready(function () {
+            $(".spinner").hide();
+            $(".sp-container").hide();
         });
-        window.addEventListener('DOMContentLoaded', () => {
-            sp_container.style.display = 'none';
-            spinner.style.display = 'none';
-        });
-    </script> -->
+    </script>
 
     <?php $this->content('script') ?>
 </body>

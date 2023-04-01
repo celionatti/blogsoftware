@@ -31,7 +31,7 @@ class Application
         $this->configs();
         $this->definitions_calls();
 
-        if(! $migrate) {
+        if (!$migrate) {
             $router = new \Core\Router();
 
             require base_path('routes/route.php');
@@ -102,7 +102,7 @@ class Application
 
     public static function init(): static
     {
-        if(!isset(self::$instance)) {
+        if (!isset(self::$instance)) {
             self::$instance = new Application();
         }
         return self::$instance;

@@ -5,7 +5,7 @@ use Core\Database\Migration;
 /**
  * Initial Migration. (Articles Table)
  */
-class m0002_articles extends Migration
+class m0003_topics extends Migration
 {
     public function up(): void
     {
