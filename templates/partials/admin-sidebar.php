@@ -6,7 +6,7 @@
     <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+                <a class="nav-link active" aria-current="page" href="/admin">
                     <span class="align-text-center bi bi-house"></span>
                     Dashboard
                 </a>

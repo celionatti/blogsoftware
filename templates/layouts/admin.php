@@ -2,6 +2,7 @@
 
 use Core\Support\FlashMessage;
 
+
 /** @var $this \Core\View */
 
 ?>
@@ -87,10 +88,8 @@ use Core\Support\FlashMessage;
     </div>
 
     <?php $this->partial('admin-header') ?>
-
-    <?= FlashMessage::bootstrap_alert(); ?>
-
     <div class="container-fluid">
+        <?= FlashMessage::bootstrap_alert(); ?>
         <div class="row">
             <?php $this->partial('admin-sidebar') ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

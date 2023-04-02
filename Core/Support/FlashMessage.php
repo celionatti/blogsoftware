@@ -6,42 +6,43 @@ use Core\Application;
 
 class FlashMessage
 {
-    public static function bootstrap_alert(): string
+    public static function bootstrap_alert()
     {
-        if(Application::$app->session->getFlash('success')) {
+        if (Application::$app->session->getFlash('success')) {
             return self::bootstrap_success(Application::$app->session->getFlash('success'));
-        } elseif (Application::$app->session->getFlash('error')) {
-            return self::bootstrap_error(Application::$app->session->getFlash('error'));
-        } else {
-            return false;
-//            return self::bootstrap_info(Application::$app->session->getFlash('info'));
         }
+
+        if (Application::$app->session->getFlash('error')) {
+            return self::bootstrap_error(Application::$app->session->getFlash('error'));
+        }
+
+        return '';
     }
 
-    private static function bootstrap_success($msg): string
+    private static function bootstrap_success($msg)
     {
-        return "
-            <div class='alert alert-success alert-dismissible fade show mt-3 mx-2 shadow-lg fixed-top text-uppercase text-center' role='alert' style='z-index: 5000;'>
+        echo "
+            <div class='alert alert-success alert-dismissible fade show mt-3 mx-2 shadow-lg text-uppercase text-center' role='alert' style='z-index: 99999;'>
                 <div>{$msg}</div>
                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>
         ";
     }
 
-    private static function bootstrap_error($msg): string
+    private static function bootstrap_error($msg)
     {
-        return "
-            <div class='alert alert-error alert-dismissible fade show mt-3 mx-2 shadow-lg fixed-top text-uppercase text-center' role='alert' style='z-index: 5000;'>
+        echo "
+            <div class='alert alert-error alert-dismissible fade show mt-3 mx-2 shadow-lg text-uppercase text-center' role='alert' style='z-index: 99999;'>
                 <div>{$msg}</div>
                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>
         ";
     }
 
-    private static function bootstrap_info($msg): string
+    private static function bootstrap_info($msg)
     {
-        return "
-            <div class='alert alert-error alert-dismissible fade show mt-3 mx-2 shadow-lg fixed-top text-uppercase text-center' role='alert' style='z-index: 5000;'>
+        echo "
+            <div class='alert alert-error alert-dismissible fade show mt-3 mx-2 shadow-lg text-uppercase text-center' role='alert' style='z-index: 99999;'>
                 <div>{$msg}</div>
                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>

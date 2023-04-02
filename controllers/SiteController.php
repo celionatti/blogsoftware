@@ -2,11 +2,11 @@
 
 namespace controllers;
 
-use Core\Controller;
-use Core\Request;
-use Core\Response;
 use Exception;
+use Core\Request;
 use models\Users;
+use Core\Response;
+use Core\Controller;
 
 class SiteController extends Controller
 {

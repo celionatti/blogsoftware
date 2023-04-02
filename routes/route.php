@@ -18,6 +18,8 @@ $router->post('/admin/users/create', [AdminController::class, 'create_user']);
 $router->get('/admin/users/edit', [AdminController::class, 'edit_user']);
 $router->patch('/admin/users/edit', [AdminController::class, 'edit_user']);
 $router->get('/admin/users', [AdminController::class, 'users']);
+$router->get('/admin/users/delete', [AdminController::class, 'delete_user']);
+$router->delete('/admin/users/delete', [AdminController::class, 'delete_user']);
 
 $router->get('/admin/topics/create', [AdminController::class, 'create_topic']);
 $router->get('/admin/topics', [AdminController::class, 'topics']);

@@ -55,11 +55,8 @@ use Core\Forms\BootstrapForm;
                                     <?= $user->email ?>
                                 </a>
                                 <div class="my-2">
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal">
-                                        Delete
-                                    </button>
-                                    <!-- <a href="" class="text-danger">Delete</a> -->
+                                    <a href="<?= Config::get('domain') ?>admin/users/delete?uid=<?= $user->uid ?>"
+                                        class="btn btn-danger btn-sm">Delete</a>
                                     <span class="divider">|</span>
                                     <a href="<?= Config::get('domain') ?>admin/users/edit?uid=<?= $user->uid ?>"
                                         class="btn btn-info btn-sm">Edit</a>

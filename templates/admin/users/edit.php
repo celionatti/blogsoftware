@@ -59,7 +59,7 @@ use Core\Forms\BootstrapForm;
                     cancel</a>
             </div>
             <div class="col">
-                <button type="submit" class="btn btn-dark w-100">Create User</button>
+                <button type="submit" class="btn btn-dark w-100">Update User</button>
             </div>
         </div>
     </form>

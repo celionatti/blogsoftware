@@ -174,6 +174,37 @@ class AdminController extends Controller
         $this->view->render('admin/users/edit', $view);
     }
 
+    public function delete_user(Request $request, Response $response)
+    {
+        $uid = $request->get('uid');
+
+        $params = [
+            'conditions' => "uid = :uid",
+            'bind' => ['uid' => $uid]
+        ];
+        $user = Users::findFirst($params);
+
+        if ($request->isDelete()) {
+            if ($user) {
+                if ($user->delete()) {
+                    if (file_exists($user->avatar)) {
+                        unlink($user->avatar);
+                        $user->avatar = '';
+                    }
+                    Application::$app->session->setFlash("{$user->username} Deleted successfully", "success");
+                    redirect('/admin/users');
+                }
+            }
+        }
+
+        $view = [
+            'errors' => [],
+            'user' => $user,
+        ];
+
+        $this->view->render('admin/users/delete', $view);
+    }
+
     public function topics(Request $request, Response $response)
     {
         $view = [

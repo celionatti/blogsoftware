@@ -19,14 +19,14 @@ class Session
     }
 
     /** activate session if not yet started **/
-    private static function start_session(): void
+    private static function start_session()
     {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
     }
 
-    public function setFlash($key, $message): void
+    public function setFlash($key, $message)
     {
         $_SESSION[self::FLASH_KEY][$key] = [
             'remove' => false,
@@ -39,14 +39,14 @@ class Session
         return $_SESSION[self::FLASH_KEY][$key]['value'] ?? false;
     }
 
-    public function exists($name): bool
+    public function exists($name)
     {
         $this->start_session();
 
         return isset($_SESSION[$name]);
     }
 
-    public function set($key, $value): void
+    public function set($key, $value)
     {
         $this->start_session();
 
@@ -63,7 +63,7 @@ class Session
         return false;
     }
 
-    public function remove($key): void
+    public function remove($key)
     {
         $this->start_session();
 
@@ -76,7 +76,7 @@ class Session
         $this->removeFlashMessages();
     }
 
-    public function removeFlashMessages(): void
+    public function removeFlashMessages()
     {
         $flashMessages = $_SESSION[self::FLASH_KEY] ?? [];
         foreach ($flashMessages as $key => $flashMessage) {
