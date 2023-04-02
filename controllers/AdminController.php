@@ -10,6 +10,7 @@ use Core\Response;
 use Core\Controller;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
+use models\Topics;
 
 class AdminController extends Controller
 {
@@ -207,8 +208,12 @@ class AdminController extends Controller
 
     public function topics(Request $request, Response $response)
     {
+        $params = ['order' => 'topic'];
+        $params = Topics::mergeWithPagination($params);
+
         $view = [
-            'errors' => []
+            'errors' => [],
+            'topics' => Topics::find($params),
         ];
 
         $this->view->render('admin/topics/index', $view);
@@ -216,17 +221,89 @@ class AdminController extends Controller
 
     public function create_topic(Request $request, Response $response)
     {
+        $topic = new Topics();
+
+        if ($request->isPost()) {
+            $topic->loadData($request->getBody());
+
+            if ($topic->save()) {
+                Application::$app->session->setFlash("{$topic->topic} Created successfully", "success");
+                redirect('/admin/topics');
+            }
+        }
+
         $view = [
-            'errors' => [],
+            'errors' => $topic->getErrors(),
             'statusOpts' => [
                 '' => '--- Please Select ---',
                 'disabled' => 'Disabled',
                 'active' => 'Active',
             ],
+            'topic' => $topic,
         ];
 
         $this->view->render('admin/topics/create', $view);
     }
+
+    public function edit_topic(Request $request, Response $response)
+    {
+        $slug = $request->get('topic-slug');
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+        $topic = Topics::findFirst($params);
+
+        if ($request->isPatch()) {
+            $topic->loadData($request->getBody());
+
+            if ($topic->save()) {
+                Application::$app->session->setFlash("{$topic->topic} Updated successfully", "success");
+                redirect('/admin/topics');
+            }
+        }
+
+        $view = [
+            'errors' => $topic->getErrors(),
+            'statusOpts' => [
+                '' => '--- Please Select ---',
+                'disabled' => 'Disabled',
+                'active' => 'Active',
+            ],
+            'topic' => $topic,
+        ];
+
+        $this->view->render('admin/topics/edit', $view);
+    }
+
+    public function delete_topic(Request $request, Response $response)
+    {
+        $slug = $request->get('topic-slug');
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+        $topic = Topics::findFirst($params);
+
+        if ($request->isDelete()) {
+            if ($topic) {
+                if ($topic->delete()) {
+                    Application::$app->session->setFlash("{$topic->topic} Deleted successfully", "success");
+                    redirect('/admin/topics');
+                }
+            }
+        }
+
+        $view = [
+            'errors' => [],
+            'topic' => $topic,
+        ];
+
+        $this->view->render('admin/topics/delete', $view);
+    }
+
     public function collections(Request $request, Response $response)
     {
         $view = [

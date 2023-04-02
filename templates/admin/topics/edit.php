@@ -8,8 +8,14 @@ use Core\Forms\BootstrapForm;
 <?php $this->start('content') ?>
 
 <div class="container bg-white p-2 rounded">
-    <h2 class="text-muted text-center">Create New Topic</h2>
+    <h2 class="text-muted text-center">Update Topic
+        <span>
+            (
+            <?= $topic->topic ?> )
+        </span>
+    </h2>
     <form action="" method="post">
+        <?= bootstrapForm::method('PATCH'); ?>
 
         <?= BootstrapForm::inputField('Topic', 'topic', $topic->topic ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2 col'], $errors) ?>
 
@@ -21,7 +27,7 @@ use Core\Forms\BootstrapForm;
                     cancel</a>
             </div>
             <div class="col">
-                <button type="submit" class="btn btn-dark w-100">Create Topic</button>
+                <button type="submit" class="btn btn-dark w-100">Update Topic</button>
             </div>
         </div>
     </form>

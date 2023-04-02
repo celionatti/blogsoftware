@@ -1,6 +1,7 @@
 <?php
 
 use Core\Config;
+use Core\Support\Helpers\Image;
 use JetBrains\PhpStorm\NoReturn;
 
 function dd($value): void
@@ -137,4 +138,59 @@ function get_image(mixed $file = '', string $type = 'post'): string
         return assets_path("img/no_image.jpg");
     }
 
+}
+
+function remove_images_from_content($content, $folder = 'uploads/')
+{
+
+    preg_match_all("/<img[^>]+/", $content, $matches);
+
+    if (is_array($matches[0]) && count($matches[0]) > 0) {
+        foreach ($matches[0] as $img) {
+
+            if (!strstr($img, "data:")) {
+                continue;
+            }
+
+            preg_match('/src="[^"]+/', $img, $match);
+            $parts = explode("base64,", $match[0]);
+
+            preg_match('/data-filename="[^"]+/', $img, $file_match);
+
+            $filename = $folder . str_replace('data-filename="', "", $file_match[0]);
+            $image = new Image();
+            $image->resize($filename); // I add this.
+
+            file_put_contents($filename, base64_decode($parts[1]));
+            $content = str_replace($match[0], 'src="' . $filename, $content);
+
+
+        }
+    }
+    return $content;
+}
+
+function add_root_to_images($content)
+{
+
+    preg_match_all("/<img[^>]+/", $content, $matches);
+
+    if (is_array($matches[0]) && count($matches[0]) > 0) {
+        foreach ($matches[0] as $img) {
+
+            preg_match('/src="[^"]+/', $img, $match);
+            $new_img = str_replace('src="', 'src="' . "/", $img);
+            $content = str_replace($img, $new_img, $content);
+
+        }
+    }
+    return $content;
+}
+
+function remove_root_from_content($content)
+{
+
+    $content = str_replace(Config::get('domain'), "", $content);
+
+    return $content;
 }
