@@ -68,12 +68,12 @@ class Request
     {
 
         if (empty($key)) {
-            return $_POST;
+            return $this->esc($_POST);
         } elseif (isset($_POST[$key])) {
-            return $_POST[$key];
+            return $this->esc($_POST[$key]);
         }
 
-        return $default;
+        return $this->esc($default);
     }
 
     /**

@@ -7,8 +7,17 @@
     outline: none;
     border: none;
     text-decoration: none;
-    text-transform: capitalize;
     transition: all .2s linear;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Variables */
+:root {
+    --container-color: #1a1e21;
+    --second-color: #3f60a8;
+    --text-color: #172317;
+    --bg-color: #eee;
+    --logo-color: #0F234E;
 }
 
 ::selection {
@@ -29,6 +38,69 @@ body {
     min-height: 100vh !important;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
+}
+
+.post-img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 0.5rem;
+}
+
+.post-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-color);
+    /* To remain title in 2 line */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-title:hover {
+    color: #050505;
+}
+
+.post-date {
+    display: flex;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-top: 4px;
+}
+
+.post-description {
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    margin: 5px 0 10px;
+    /* To remain title in 3 line */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 5px 0;
+}
+
+.profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    border: 2px solid var(--second-color);
+}
+
+.profile-name {
+    font-size: 0.82rem;
+    font-weight: 500;
 }
 
 h1,
@@ -67,7 +139,7 @@ select {
 
 .active {
     font-weight: 500;
-    background-color: tomato !important;
+    background-color: rgb(58, 165, 253) !important;
     color: #fff !important;
     text-decoration: none !important;
     border-top-right-radius: 10px;
@@ -76,7 +148,8 @@ select {
 }
 
 .active:hover {
-    background-color: #ff6347ec !important;
+    background-color: #036096ec !important;
+    color: #fff !important;
 }
 
 @media (prefers-reduced-motion: reduce) {

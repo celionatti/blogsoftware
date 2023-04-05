@@ -10,6 +10,7 @@ use Core\Response;
 use Core\Controller;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
+use models\Articles;
 use models\Topics;
 
 class AdminController extends Controller
@@ -32,8 +33,14 @@ class AdminController extends Controller
 
     public function articles(Request $request, Response $response)
     {
+        $params = [
+            'order' => 'id DESC'
+        ];
+
         $view = [
-            'errors' => []
+            'errors' => [],
+            'articles' => Articles::find($params),
+            'total' => Articles::findTotal($params),
         ];
 
         $this->view->render('admin/articles/index', $view);
@@ -41,16 +48,156 @@ class AdminController extends Controller
 
     public function create_article(Request $request, Response $response)
     {
+        $article = new Articles();
+
+        $topics = Topics::find(['order' => 'topic']);
+        $topicOptions = [0 => ''];
+        foreach ($topics as $topic) {
+            $topicOptions[$topic->slug] = $topic->topic;
+        }
+
+        if ($request->isPost()) {
+            $article->loadData($request->getBody());
+            $article->author = "Celio natti";
+            $upload = new FileUpload('thumbnail');
+            $upload->required = true;
+
+            $uploadErrors = $upload->validate();
+
+            if (!empty($uploadErrors)) {
+                foreach ($uploadErrors as $field => $error) {
+                    $article->setError($field, $error);
+                }
+            }
+
+            if (empty($article->getErrors())) {
+                if ($article->save()) {
+                    $upload->directory('uploads/articles');
+                    if (!empty($upload->tmp)) {
+                        if ($upload->upload()) {
+                            if (file_exists($article->thumbnail)) {
+                                unlink($article->thumbnail);
+                                $article->thumbnail = "";
+                            }
+                            $article->thumbnail = $upload->fc;
+                            $image = new Image();
+                            $image->resize($article->thumbnail);
+                            $article->save();
+                        }
+                    }
+                    Application::$app->session->setFlash("success", "{$article->title} Saved successfully.");
+                    redirect('/admin/articles');
+                }
+            }
+        }
+
         $view = [
-            'errors' => [],
+            'errors' => $article->getErrors(),
             'statusOpts' => [
                 '' => '--- Please Select ---',
                 'published' => 'Published',
                 'draft' => 'Draft'
             ],
+            'article' => $article,
+            'topicOpts' => $topicOptions,
         ];
 
         $this->view->render('admin/articles/create', $view);
+    }
+
+    public function edit_article(Request $request, Response $response)
+    {
+        $slug = $request->get('article-slug');
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+        $article = Articles::findFirst($params);
+
+        $topics = Topics::find(['order' => 'topic']);
+        $topicOptions = [0 => ''];
+        foreach ($topics as $topic) {
+            $topicOptions[$topic->slug] = $topic->topic;
+        }
+
+        if ($request->isPatch()) {
+            $article->loadData($request->getBody());
+            $article->author = "Celio natti";
+            $upload = new FileUpload('thumbnail');
+
+            $uploadErrors = $upload->validate();
+
+            if (!empty($uploadErrors)) {
+                foreach ($uploadErrors as $field => $error) {
+                    $article->setError($field, $error);
+                }
+            }
+
+            if (empty($article->getErrors())) {
+                if ($article->save()) {
+                    $upload->directory('uploads/articles');
+                    if (!empty($upload->tmp)) {
+                        if ($upload->upload()) {
+                            if (file_exists($article->thumbnail)) {
+                                unlink($article->thumbnail);
+                                $article->thumbnail = "";
+                            }
+                            $article->thumbnail = $upload->fc;
+                            $image = new Image();
+                            $image->resize($article->thumbnail);
+                            $article->save();
+                        }
+                    }
+                    Application::$app->session->setFlash("success", "{$article->title} Updated successfully.");
+                    redirect('/admin/articles');
+                }
+            }
+        }
+
+        $view = [
+            'errors' => $article->getErrors(),
+            'statusOpts' => [
+                '' => '--- Please Select ---',
+                'published' => 'Published',
+                'draft' => 'Draft'
+            ],
+            'article' => $article,
+            'topicOpts' => $topicOptions,
+        ];
+
+        $this->view->render('admin/articles/edit', $view);
+    }
+
+    public function trash_article(Request $request, Response $response)
+    {
+        $slug = $request->get('article-slug');
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+        $article = Articles::findFirst($params);
+
+        if ($request->isDelete()) {
+            if ($article) {
+                if ($article->delete()) {
+                    if (file_exists($article->thumbnail)) {
+                        unlink($article->thumbnail);
+                        $article->thumbnail = '';
+                    }
+                    Application::$app->session->setFlash("success", "{$article->title} Deleted successfully");
+                    redirect('/admin/articles');
+                }
+            }
+        }
+
+        $view = [
+            'errors' => [],
+            'article' => $article,
+        ];
+
+        $this->view->render('admin/articles/delete', $view);
     }
 
     public function users(Request $request, Response $response)
@@ -98,7 +245,7 @@ class AdminController extends Controller
                             $user->save();
                         }
                     }
-                    Application::$app->session->setFlash("{$user->surname} Registration successful, user should check E-mail for verification.", "success");
+                    Application::$app->session->setFlash("success", "{$user->surname} Registration successfully, user should check E-mail for verification.");
                     redirect('/admin/users');
                 }
             }
@@ -108,7 +255,7 @@ class AdminController extends Controller
             'errors' => $user->getErrors(),
             'aclOpts' => [
                 '' => '--- Please Select ---',
-                'guest' => 'Guest',
+                'user' => 'User',
                 'author' => 'Author',
                 'admin' => 'Admin'
             ],
@@ -155,7 +302,7 @@ class AdminController extends Controller
                             $user->save();
                         }
                     }
-                    Application::$app->session->setFlash("{$user->surname} Updated successful", "success");
+                    Application::$app->session->setFlash("success", "{$user->surname} Updated successfully");
                     redirect('/admin/users');
                 }
             }
@@ -165,7 +312,7 @@ class AdminController extends Controller
             'errors' => $user->getErrors(),
             'aclOpts' => [
                 '' => '--- Please Select ---',
-                'guest' => 'Guest',
+                'user' => 'User',
                 'author' => 'Author',
                 'admin' => 'Admin'
             ],
@@ -192,7 +339,7 @@ class AdminController extends Controller
                         unlink($user->avatar);
                         $user->avatar = '';
                     }
-                    Application::$app->session->setFlash("{$user->username} Deleted successfully", "success");
+                    Application::$app->session->setFlash("success", "{$user->username} Deleted successfully");
                     redirect('/admin/users');
                 }
             }
@@ -227,7 +374,7 @@ class AdminController extends Controller
             $topic->loadData($request->getBody());
 
             if ($topic->save()) {
-                Application::$app->session->setFlash("{$topic->topic} Created successfully", "success");
+                Application::$app->session->setFlash("success", "{$topic->topic} Created successfully");
                 redirect('/admin/topics');
             }
         }
@@ -259,7 +406,7 @@ class AdminController extends Controller
             $topic->loadData($request->getBody());
 
             if ($topic->save()) {
-                Application::$app->session->setFlash("{$topic->topic} Updated successfully", "success");
+                Application::$app->session->setFlash("success", "{$topic->topic} Updated successfully");
                 redirect('/admin/topics');
             }
         }
@@ -290,7 +437,7 @@ class AdminController extends Controller
         if ($request->isDelete()) {
             if ($topic) {
                 if ($topic->delete()) {
-                    Application::$app->session->setFlash("{$topic->topic} Deleted successfully", "success");
+                    Application::$app->session->setFlash("success", "{$topic->topic} Deleted successfully");
                     redirect('/admin/topics');
                 }
             }

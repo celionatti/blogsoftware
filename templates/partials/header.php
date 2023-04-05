@@ -24,7 +24,7 @@
                         <path d="M21 21l-5.2-5.2" />
                     </svg>
                 </button>
-                <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+                <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up / Login</a>
             </div>
         </div>
         <!-- Search Modal -->
@@ -40,7 +40,7 @@
                             <input type="text" class="form-control bg-transparent border-light p-3 text-white"
                                 placeholder="Type search keyword" />
                             <button class="btn btn-light px-4">
-                                <BiSearchAlt />
+                                <span class="bi bi-search"></span>
                             </button>
                         </div>
                     </div>
@@ -54,13 +54,13 @@
             <div class="collapse navbar-collapse" id="navbarBuzz">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Blog</a>
+                        <a class="nav-link" href="/blog">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="/contact">Contact</a>
                     </li>
                 </ul>
             </div>

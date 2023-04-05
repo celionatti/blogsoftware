@@ -13,31 +13,33 @@ use Core\Forms\BootstrapForm;
 <div class="container bg-white p-2 rounded">
     <h2 class="text-muted text-center">Update Article</h2>
     <form action="" method="post" enctype="multipart/form-data">
-        <?= BootstrapForm::inputField('Title', 'title', '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+        <?= BootstrapForm::method('PATCH'); ?>
 
-        <?= BootstrapForm::textareaField('Content', 'content', '', ['class' => 'form-control summernote'], ['class' => 'form-floating my-2'], $errors) ?>
+        <?= BootstrapForm::inputField('Title', 'title', $article->title ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+
+        <?= BootstrapForm::textareaField('Content', 'content', $article->content ?? '', ['class' => 'form-control summernote'], ['class' => 'form-floating my-2'], $errors) ?>
 
         <div class="row">
-            <?= bootstrapForm::selectField('Topics', 'topic', '', [], ['class' => 'form-control'], ['class' => 'form-floating col'], $errors) ?>
+            <?= bootstrapForm::selectField('Topics', 'topic', $article->topic ?? '', $topicOpts ?? [], ['class' => 'form-control'], ['class' => 'form-floating col'], $errors) ?>
 
             <?= bootstrapForm::fileField('', 'thumbnail', ['class' => 'form-control', 'onchange' => "display_image_edit(this.files[0])"], ['class' => 'col m-0 form-floating'], $errors) ?>
 
             <div class="d-flex align-items-center justify-content-center my-2">
                 <h5 class="mx-3">Current Article Thumbnail: </h5>
-                <img src="<?= get_image() ?? '' ?>" alt="" class="mx-auto d-block image-preview-edit"
+                <img src="<?= get_image($article->thumbnail) ?? '' ?>" alt="" class="mx-auto d-block image-preview-edit"
                     style="height:150px;width:250px;object-fit:cover;border-radius: 10px;cursor: pointer;">
             </div>
         </div>
 
         <small class="">Meta Details</small>
 
-        <?= BootstrapForm::inputField('Meta Title', 'meta_title', '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+        <?= BootstrapForm::inputField('Meta Title', 'meta_title', $article->meta_title ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
-        <?= BootstrapForm::inputField('Meta Keywords', 'meta_keywords', '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+        <?= BootstrapForm::inputField('Meta Keywords', 'meta_keywords', $article->meta_keywords ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
-        <?= BootstrapForm::inputField('Meta Description', 'meta_description', '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+        <?= BootstrapForm::inputField('Meta Description', 'meta_description', $article->meta_description ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
-        <?= bootstrapForm::selectField('Status', 'status', '', $statusOpts ?? [], ['class' => 'form-select form-select-lg'], ['class' => 'form-floating col'], $errors) ?>
+        <?= bootstrapForm::selectField('Status', 'status', $article->status ?? '', $statusOpts ?? [], ['class' => 'form-select form-select-lg'], ['class' => 'form-floating col'], $errors) ?>
 
         <div class="row my-3">
             <div class="col">
@@ -45,7 +47,7 @@ use Core\Forms\BootstrapForm;
                     cancel</a>
             </div>
             <div class="col">
-                <button type="submit" class="btn btn-dark w-100">Create Article</button>
+                <button type="submit" class="btn btn-dark w-100">Update Article</button>
             </div>
         </div>
     </form>

@@ -2,7 +2,7 @@
 
 ?>
 
-<footer class="container pt-5 fixed-bottom">
+<footer class="container pt-5">
     <div class="row g-3">
         <div class="col-6 col-md-2 mb-3">
             <h5>Useful Links</h5>

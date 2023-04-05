@@ -32,7 +32,7 @@ use Core\Support\FlashMessage;
     <div class="container-fluid">
         <?= FlashMessage::bootstrap_alert(); ?>
         <?php $this->partial('header') ?>
-        <main class="container pb-5 border border-danger">
+        <main class="container pb-5">
             <?php $this->content('content'); ?>
         </main>
         <?php $this->partial('footer') ?>
