@@ -25,4 +25,20 @@ class SiteController extends Controller
         ];
         $this->view->render('welcome', $view);
     }
+
+    public function news(Request $request, Response $response)
+    {
+        $view = [
+
+        ];
+        $this->view->render('news', $view);
+    }
+
+    public function read(Request $request, Response $response)
+    {
+        $view = [
+
+        ];
+        $this->view->render('read', $view);
+    }
 }

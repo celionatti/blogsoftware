@@ -27,7 +27,7 @@ class AuthController extends Controller
             $user->loadData($request->getBody());
 
             if ($user->save()) {
-                Application::$app->session->setFlash("{$user->username} Account Created successfully", "success");
+                Application::$app->session->setFlash("success", "{$user->username} Account Created successfully");
                 redirect('/login');
             }
         }
@@ -82,5 +82,22 @@ class AuthController extends Controller
             'user' => $user,
         ];
         $this->view->render('auth/login', $view);
+    }
+
+    public function logout()
+    {
+        if (Application::$app->currentUser) {
+            Application::$app->currentUser->logout();
+        }
+        redirect('/');
+    }
+
+    public function forgot_password(Request $request, Response $response)
+    {
+        $view = [
+            'errors' => [],
+        ];
+
+        $this->view->render("auth/forgot_password", $view);
     }
 }

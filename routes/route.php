@@ -7,6 +7,8 @@ use controllers\SiteController;
 use controllers\AdminController;
 
 $router->get('/', [SiteController::class, 'index']);
+$router->get('/news', [SiteController::class, 'news']);
+$router->get('/news/read', [SiteController::class, 'read']);
 
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);

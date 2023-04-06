@@ -1,5 +1,11 @@
 <?php
 
+use Core\Config;
+use Core\Application;
+
+$currentUser = Application::$app->currentUser;
+
+
 ?>
 
 <div class="container">
@@ -9,12 +15,12 @@
                 <a class="link-secondary" href="#">Subscribe</a>
             </div>
             <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark" href="#">
+                <a class="blog-header-logo text-dark" href="/">
                     <h2>Natti Attention</h2>
                 </a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
-                <button type="button" class="btn text-secondary ms-3" data-bs-toggle="modal"
+                <button type="button" class="btn text-secondary ms-4" data-bs-toggle="modal"
                     data-bs-target="#searchModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
                         stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
@@ -24,7 +30,29 @@
                         <path d="M21 21l-5.2-5.2" />
                     </svg>
                 </button>
-                <a class="btn btn-sm btn-outline-secondary" href="/register">Sign up / Login</a>
+                <?php if ($currentUser): ?>
+                    <div class="dropdown">
+                        <button class="btn btn-warning btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <span class="bi bi-person"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <h6 class="dropdown-header bg-warning text-white text-capitalize text-center">
+                                    <?= $currentUser->displayName() ?>
+                                </h6>
+                            </li>
+                            <li><a class="dropdown-item p-2" href="/account">Profile</a></li>
+                            <li><a class="dropdown-item p-2" href="/admin">Dashboard</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item bg-danger text-white p-2" href="/logout">Logout</a></li>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <a class="btn btn-sm btn-outline-secondary" href="/login">Login</a>
+                <?php endif; ?>
             </div>
         </div>
         <!-- Search Modal -->
@@ -75,11 +103,6 @@
             <a class="p-2 link-secondary fw-semibold" href="#">Design</a>
             <a class="p-2 link-secondary fw-semibold" href="#">Culture</a>
             <a class="p-2 link-secondary fw-semibold" href="#">Business</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Politics</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Opinion</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Health</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Style</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Travel</a>
         </nav>
     </div>
 </div>

@@ -151,4 +151,17 @@ class Users extends DbModel
         return self::$_current_user;
     }
 
+    public function hasPermission($acl)
+    {
+        if (is_array($acl)) {
+            return in_array($this->acl, $acl);
+        }
+        return $this->acl == $acl;
+    }
+
+    public function displayName(): string
+    {
+        return trim($this->username);
+    }
+
 }

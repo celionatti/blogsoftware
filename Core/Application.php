@@ -4,6 +4,7 @@ namespace Core;
 
 use Core\Database\Database;
 use Exception;
+use models\Users;
 
 class Application
 {
@@ -16,6 +17,7 @@ class Application
     public Router $router;
     private static Application $instance;
     public static Application $app;
+    public $currentUser = null;
 
     /**
      * @throws Exception
@@ -30,6 +32,7 @@ class Application
 
         $this->configs();
         $this->definitions_calls();
+        $this->currentUser = Users::getCurrentUser();
 
         $router = new \Core\Router();
 

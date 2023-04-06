@@ -4,25 +4,33 @@
 
 <div class="col-md-4">
     <div class="position-sticky" style="top: 2rem;">
-        <div class="p-4 mb-3 bg-light rounded">
-            <h4 class="fst-italic">About</h4>
-            <p class="mb-0">Customize this section to tell your visitors a little bit about your publication,
-                writers, content, or something else entirely. Totally up to you.</p>
+        <div class="p-4 mb-3 bg-light rounded border-top border-primary border-3">
+            <h4 class="fst-italic pb-2">What we covered here</h4>
+            <ul>
+                <li>This is the topic of the most</li>
+                <li>This is the topic of the most This is the topic of the most</li>
+                <li>This is the topic of the most This is the topic.</li>
+            </ul>
         </div>
 
         <div class="">
             <h4 class="fst-italic border-bottom border-danger border-3 text-center my-2">Recent Articles</h4>
 
-            <div class="col shadow rounded bg-light">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a href="#" class="text-black">Card title ome quick example text to build on the card title
-                                and
-                                make
-                                up the</a>
-                        </h5>
-                    </div>
+            <div class="col shadow rounded bg-light p-3">
+
+                <div class="border-top border-muted border-3 py-2">
+                    <a href="#" class="h6 text-black fw-bold">
+                        <span class="bi bi-arrow-right me-2 text-danger"></span>
+                        This is the topic of the most recent articles.
+                    </a>
+                    <div class="text-muted small">By CNB, Amisu usman, Celio natti</div>
+                </div>
+                <div class="border-top border-muted border-3 py-2">
+                    <a href="#" class="h6 text-black fw-bold">
+                        <span class="bi bi-arrow-right me-2 text-danger"></span>
+                        This is the topic of the most recent articles.
+                    </a>
+                    <div class="text-muted small">By CNB, Amisu usman, Celio natti</div>
                 </div>
             </div>
 
