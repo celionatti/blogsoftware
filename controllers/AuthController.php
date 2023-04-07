@@ -84,12 +84,14 @@ class AuthController extends Controller
         $this->view->render('auth/login', $view);
     }
 
-    public function logout()
+    public function logout(Request $request, Response $response)
     {
-        if (Application::$app->currentUser) {
-            Application::$app->currentUser->logout();
+        if ($request->isPost()) {
+            if (Application::$app->currentUser) {
+                Application::$app->currentUser->logout();
+            }
+            redirect('/');
         }
-        redirect('/');
     }
 
     public function forgot_password(Request $request, Response $response)

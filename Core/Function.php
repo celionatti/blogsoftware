@@ -13,7 +13,7 @@ function dd($value): void
     die;
 }
 
-function urlIs($value): bool
+function urlIs($value)
 {
     return $_SERVER['REQUEST_URI'] === $value;
 }

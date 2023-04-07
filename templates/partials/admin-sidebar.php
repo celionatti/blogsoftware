@@ -45,6 +45,12 @@
                     Collections
                 </a>
             </li>
+            <li class="nav-item my-3">
+                <a class="nav-link text-danger" href="/">
+                    <span class="align-text-center bi bi-globe"></span>
+                    Visit Site
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

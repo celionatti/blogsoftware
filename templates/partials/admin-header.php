@@ -12,7 +12,9 @@
         aria-label="Search">
     <div class="navbar-nav">
         <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="/logout">Sign out</a>
+            <form action="/logout" method="post" class="nav-link px-3">
+                <button type="submit" class="btn text-white">Sign out</button>
+            </form>
         </div>
     </div>
 </header>

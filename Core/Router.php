@@ -29,6 +29,13 @@ class Router
         return $this;
     }
 
+    public function only($key)
+    {
+        $this->routes[array_key_last($this->routes)]['middleware'] = $key;
+
+        return $this;
+    }
+
     public function get($uri, $controller): static
     {
         return $this->add('GET', $uri, $controller);
@@ -60,25 +67,25 @@ class Router
     public function route($uri, $method)
     {
         foreach ($this->routes as $route) {
-            if($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
-                if($route['middleware']) {
+            if ($route['uri'] === $uri && $route['method'] === strtoupper($method)) {
+                if ($route['middleware']) {
                     Middleware::resolve($route['middleware']);
                 }
 
                 $callback = $route['controller'] ?? false;
 
-                if(is_string($callback)) {
+                if (is_string($callback)) {
                     http_response_code(Response::OK);
                     return require base_path($route['controller']);
                 }
 
-                if(is_array($callback)) {
+                if (is_array($callback)) {
                     $controller = new $callback[0]();
                     $controller->action = $callback[1];
                     $callback[0] = $controller;
                 }
                 http_response_code(Response::OK);
-                return  call_user_func($callback, $this->request, $this->response);
+                return call_user_func($callback, $this->request, $this->response);
             }
         }
         $this->abort();
@@ -120,7 +127,7 @@ class Router
                 }
                 $routeParams = array_combine($routeNames, $values);
 
-                $this->request->setRouteParams($routeParams);
+                // $this->request->setRouteParams($routeParams);
                 return $callback;
             }
         }

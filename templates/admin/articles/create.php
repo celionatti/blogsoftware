@@ -28,6 +28,18 @@ use Core\Forms\BootstrapForm;
                     style="height:150px;width:250px;object-fit:cover;border-radius: 10px;cursor: pointer;">
             </div>
         </div>
+        <div class="row mt-3">
+            <?= bootstrapForm::inputField('Author', 'author', $article->author ?? '', ['class' => 'form-control'], ['class' => 'form-floating col'], $errors) ?>
+
+            <?= bootstrapForm::fileField('', 'sub_image', ['class' => 'form-control', 'onchange' => "display_sub_image_edit(this.files[0])"], ['class' => 'col m-0 form-floating'], $errors) ?>
+
+            <div class="d-flex align-items-center justify-content-center my-2">
+                <h5 class="mx-3">Current Article Sub Image: </h5>
+                <img src="<?= get_image($article->sub_image) ?? '' ?>" alt=""
+                    class="mx-auto d-block image-sub_preview-edit"
+                    style="height:150px;width:250px;object-fit:cover;border-radius: 10px;cursor: pointer;">
+            </div>
+        </div>
 
         <small class="">Meta Details</small>
 
@@ -58,6 +70,10 @@ use Core\Forms\BootstrapForm;
 <script>
     function display_image_edit(file) {
         document.querySelector(".image-preview-edit").src = URL.createObjectURL(file);
+    }
+
+    function display_sub_image_edit(file) {
+        document.querySelector(".image-sub_preview-edit").src = URL.createObjectURL(file);
     }
 
     $('.summernote').summernote({

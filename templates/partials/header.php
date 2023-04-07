@@ -47,7 +47,11 @@ $currentUser = Application::$app->currentUser;
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item bg-danger text-white p-2" href="/logout">Logout</a></li>
+                            <li>
+                                <form action="/logout" method="post">
+                                    <button type="submit" class="dropdown-item bg-danger text-white p-2">Logout</button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 <?php else: ?>
@@ -82,22 +86,23 @@ $currentUser = Application::$app->currentUser;
             <div class="collapse navbar-collapse" id="navbarBuzz">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        <a class="nav-link <?= UrlIs('/') ? 'active' : '' ?>" aria-current="page" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/blog">Blog</a>
+                        <a class="nav-link <?= UrlIs('/news') ? 'active' : '' ?>" href="/news">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact">Contact</a>
+                        <a class="nav-link <?= UrlIs('/contact') ? 'active' : '' ?>" href="/contact">Contact</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="nav-scroller py-1 mb-2">
+    <div class="nav-scroller py-1 mb-2 border-bottom border-muted">
         <nav class="nav d-flex justify-content-between">
-            <a class="p-2 link-secondary fw-semibold active" href="#">World</a>
+            <a class="p-2 link-secondary fw-semibold <?= UrlIs('/news?topic=world') ? 'active' : '' ?>"
+                href="#">World</a>
             <a class="p-2 link-secondary fw-semibold" href="#">Nigeria</a>
             <a class="p-2 link-secondary fw-semibold" href="#">Technology</a>
             <a class="p-2 link-secondary fw-semibold" href="#">Design</a>

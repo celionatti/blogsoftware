@@ -2,6 +2,7 @@
 
 use Core\Config;
 use Core\Forms\BootstrapForm;
+use Core\Support\Helpers\TimeFormat;
 
 ?>
 
@@ -47,7 +48,7 @@ use Core\Forms\BootstrapForm;
                     <th>Author</th>
                     <th>Title</th>
                     <th>Topic</th>
-                    <th>Views</th>
+                    <th>Created Date</th>
                 </thead>
                 <tbody>
                     <?php foreach ($articles as $key => $article): ?>
@@ -73,8 +74,12 @@ use Core\Forms\BootstrapForm;
                                         class="text-primary">Related Article</a>
                                 </div>
                             </td>
-                            <td>Africa</td>
-                            <td>1000</td>
+                            <td>
+                                <?= $article->topic ?>
+                            </td>
+                            <td>
+                                <?= TimeFormat::DateOne($article->created_at) ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

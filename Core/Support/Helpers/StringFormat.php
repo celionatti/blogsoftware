@@ -14,7 +14,7 @@ class StringFormat
      *
      * @return string
      */
-    public static function Excerpt(string $text, int|string $length = 15): string
+    public static function Excerpt(string $text, int|string $length = 250): string
     {
         return substr($text, 0, $length) . '...';
     }

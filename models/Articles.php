@@ -23,7 +23,9 @@ class Articles extends DbModel
     public string $content = "";
     public string $topic = "";
     public string $thumbnail = "";
-    public string $author = "";
+    public string $sub_image = "";
+    public string $user_id = "";
+    public string $author = "CNB, ";
     public int $featured = self::FEATURED_DISABLED;
     public string $meta_title = "";
     public string $meta_description = "";
@@ -43,6 +45,7 @@ class Articles extends DbModel
 
         $this->runValidation(new RequiredValidation($this, ['field' => 'title', 'msg' => "Article Title is a required field."]));
         $this->runValidation(new RequiredValidation($this, ['field' => 'topic', 'msg' => "Topic is a required field."]));
+        $this->runValidation(new RequiredValidation($this, ['field' => 'author', 'msg' => "Author is a required field."]));
         $this->runValidation(new RequiredValidation($this, ['field' => 'meta_title', 'msg' => "Meta Title is a required field."]));
         $this->runValidation(new RequiredValidation($this, ['field' => 'meta_description', 'msg' => "Meta Description is a required field."]));
         $this->runValidation(new RequiredValidation($this, ['field' => 'meta_keywords', 'msg' => "Meta Keywords is a required field."]));

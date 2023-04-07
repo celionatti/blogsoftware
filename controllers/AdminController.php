@@ -15,9 +15,12 @@ use models\Topics;
 
 class AdminController extends Controller
 {
+    public $currentUser;
+
     public function onConstruct(): void
     {
         $this->view->setLayout('admin');
+        $this->currentUser = Users::getCurrentUser();
     }
 
     /**
@@ -34,7 +37,11 @@ class AdminController extends Controller
     public function articles(Request $request, Response $response)
     {
         $params = [
-            'order' => 'id DESC'
+            'columns' => "articles.*, topics.topic",
+            'joins' => [
+                ['topics', 'articles.topic = topics.slug'],
+            ],
+            'order' => 'articles.id DESC'
         ];
 
         $view = [
@@ -58,14 +65,22 @@ class AdminController extends Controller
 
         if ($request->isPost()) {
             $article->loadData($request->getBody());
-            $article->author = "Celio natti";
+            $article->user_id = $this->currentUser->uid;
             $upload = new FileUpload('thumbnail');
+            $subUpload = new FileUpload('sub_image');
             $upload->required = true;
+            $subUpload->required = true;
 
             $uploadErrors = $upload->validate();
+            $subUploadErrors = $subUpload->validate();
 
             if (!empty($uploadErrors)) {
                 foreach ($uploadErrors as $field => $error) {
+                    $article->setError($field, $error);
+                }
+            }
+            if (!empty($subUploadErrors)) {
+                foreach ($subUploadErrors as $field => $error) {
                     $article->setError($field, $error);
                 }
             }
@@ -73,15 +88,20 @@ class AdminController extends Controller
             if (empty($article->getErrors())) {
                 if ($article->save()) {
                     $upload->directory('uploads/articles');
-                    if (!empty($upload->tmp)) {
-                        if ($upload->upload()) {
-                            if (file_exists($article->thumbnail)) {
+                    $subUpload->directory('uploads/articles/subs');
+                    if (!empty($upload->tmp) && !empty($subUpload->tmp)) {
+                        if ($upload->upload() && $subUpload->upload()) {
+                            if (file_exists($article->thumbnail) && file_exists($article->sub_image)) {
                                 unlink($article->thumbnail);
+                                unlink($article->sub_image);
                                 $article->thumbnail = "";
+                                $article->sub_image = "";
                             }
                             $article->thumbnail = $upload->fc;
+                            $article->sub_image = $subUpload->fc;
                             $image = new Image();
                             $image->resize($article->thumbnail);
+                            $image->resize($article->sub_image);
                             $article->save();
                         }
                     }
@@ -123,13 +143,20 @@ class AdminController extends Controller
 
         if ($request->isPatch()) {
             $article->loadData($request->getBody());
-            $article->author = "Celio natti";
+            $article->user_id = $this->currentUser->uid;
             $upload = new FileUpload('thumbnail');
+            $subUpload = new FileUpload('sub_image');
 
             $uploadErrors = $upload->validate();
+            $subUploadErrors = $subUpload->validate();
 
             if (!empty($uploadErrors)) {
                 foreach ($uploadErrors as $field => $error) {
+                    $article->setError($field, $error);
+                }
+            }
+            if (!empty($subUploadErrors)) {
+                foreach ($subUploadErrors as $field => $error) {
                     $article->setError($field, $error);
                 }
             }
@@ -137,15 +164,20 @@ class AdminController extends Controller
             if (empty($article->getErrors())) {
                 if ($article->save()) {
                     $upload->directory('uploads/articles');
-                    if (!empty($upload->tmp)) {
-                        if ($upload->upload()) {
-                            if (file_exists($article->thumbnail)) {
+                    $subUpload->directory('uploads/articles/subs');
+                    if (!empty($upload->tmp) && !empty($subUpload->tmp)) {
+                        if ($upload->upload() && $subUpload->upload()) {
+                            if (file_exists($article->thumbnail) && file_exists($article->sub_image)) {
                                 unlink($article->thumbnail);
+                                unlink($article->sub_image);
                                 $article->thumbnail = "";
+                                $article->sub_image = "";
                             }
                             $article->thumbnail = $upload->fc;
+                            $article->sub_image = $subUpload->fc;
                             $image = new Image();
                             $image->resize($article->thumbnail);
+                            $image->resize($article->sub_image);
                             $article->save();
                         }
                     }
