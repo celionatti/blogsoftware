@@ -23,7 +23,11 @@ class Articles extends DbModel
     public string $content = "";
     public string $topic = "";
     public string $thumbnail = "";
+
+    public ?string $thumbnail_caption = null;
     public string $sub_image = "";
+
+    public ?string $sub_image_caption = null;
     public string $user_id = "";
     public string $author = "CNB, ";
     public int $featured = self::FEATURED_DISABLED;

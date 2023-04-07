@@ -108,11 +108,22 @@ class TimeFormat
 
     public static function DateOne($timeStamp): string
     {
+        date_default_timezone_set(Config::get('time_zone'));
+
         return date("M j, Y ~ g:i a", strtotime($timeStamp));
     }
 
     public static function DateTwo($timeStamp): string
     {
+        date_default_timezone_set(Config::get('time_zone'));
+
         return date("j M Y", strtotime($timeStamp));
+    }
+
+    public static function BlogDate($timeStamp): string
+    {
+        date_default_timezone_set(Config::get('time_zone'));
+
+        return date("g:i a T. F h, Y", strtotime($timeStamp));
     }
 }

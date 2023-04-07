@@ -1,5 +1,9 @@
 <?php
 
+
+use Core\Support\Helpers\TimeFormat;
+
+
 ?>
 
 
@@ -13,7 +17,10 @@
         <div class="my-2 text-muted">By
             <?= $article->author ?>
         </div>
-        <small class="text-muted">Updated 05:45 PM GMT. April 05, 2023</small>
+        <small class="text-muted">Updated
+            <?= TimeFormat::BlogDate($article->created_at) ?>
+        </small>
+        <!-- <small class="text-muted">Updated 05:45 PM GMT. April 05, 2023</small> -->
         <div class="d-flex my-2">
             <a href="#" class="bi bi-facebook fs-5 me-3"></a>
             <a href="#" class="bi bi-telegram fs-5 me-3"></a>
@@ -24,7 +31,9 @@
     <div class="col-md-5" style="overflow:hidden;">
         <img src="<?= get_image($article->sub_image) ?>" alt="" class="img-fluid shadow"
             style="object-fit: cover; height: 280px; width:100%;">
-        <figure>No image caption</figure>
+        <figure class="my-2 text-muted">
+            <?= $article->sub_image_caption ?? '' ?>
+        </figure>
     </div>
 </div>
 
@@ -39,7 +48,9 @@
                         <img src="<?= get_image($article->thumbnail) ?>" alt="" class=""
                             style="object-fit: cover; height: 600px; width:100%;">
                     </a>
-                    <figure class="text-muted px-3">No image caption</figure>
+                    <figure class="text-muted my-2 px-2">
+                        <?= $article->thumbnail_caption ?? '' ?>
+                    </figure>
                 </div>
 
                 <div class="card-body">

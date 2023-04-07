@@ -243,6 +243,8 @@ use PDO;
      */
     public function timeStamps(): void
     {
+        date_default_timezone_set(Config::get('time_zone'));
+        
         $dt = new \DateTime("now", new \DateTimeZone(Config::get('time_zone')));
         $now = $dt->format('Y-m-d H:i:s');
         $this->updated_at = $now;

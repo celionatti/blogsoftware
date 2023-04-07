@@ -27,6 +27,7 @@ use Core\Forms\BootstrapForm;
                 <img src="<?= get_image($article->thumbnail) ?? '' ?>" alt="" class="mx-auto d-block image-preview-edit"
                     style="height:150px;width:250px;object-fit:cover;border-radius: 10px;cursor: pointer;">
             </div>
+            <?= bootstrapForm::inputField('Thumbnail Caption', 'thumbnail_caption', $article->thumbnail_caption ?? '', ['class' => 'form-control'], ['class' => 'form-floating col'], $errors) ?>
         </div>
         <div class="row mt-3">
             <?= bootstrapForm::inputField('Author', 'author', $article->author ?? '', ['class' => 'form-control'], ['class' => 'form-floating col'], $errors) ?>
@@ -39,9 +40,10 @@ use Core\Forms\BootstrapForm;
                     class="mx-auto d-block image-sub_preview-edit"
                     style="height:150px;width:250px;object-fit:cover;border-radius: 10px;cursor: pointer;">
             </div>
+            <?= bootstrapForm::inputField('Sub Thumbnail Caption', 'sub_image_caption', $article->sub_image_caption ?? '', ['class' => 'form-control'], ['class' => 'form-floating col'], $errors) ?>
         </div>
 
-        <small class="">Meta Details</small>
+        <small class="mt-3 text-danger">Meta Details</small>
 
         <?= BootstrapForm::inputField('Meta Title', 'meta_title', $article->meta_title ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
