@@ -1,6 +1,7 @@
 <?php
 
 
+use Core\Forms\BootstrapForm;
 use Core\Support\Helpers\TimeFormat;
 
 
@@ -59,10 +60,40 @@ use Core\Support\Helpers\TimeFormat;
             </div>
         </article>
 
+        <!-- Comment section -->
+        <section class="post-container mt-3">
+            <h2><span class="bi bi-chat-dots"></span> Comments</h2>
+
+            <hr class="my-2">
+            <!-- Add Comment -->
+            <div class="card">
+                <div class="card-body bg-light">
+                    <div class="text-danger" id="error_status"></div>
+                    <div class="main-comment">
+                        <form action="" method="post">
+                            <input type="hidden" class="slug" value="<?= $article->slug ?>">
+                            <?= BootstrapForm::textareaField('', 'message', '', ['class' => 'comment_textbox form-control', 'rows' => '2'], ['class' => ''], $errors); ?>
+                            <button type="submit" class="btn btn-primary add_comment_btn my-2">Add Comment</button>
+                        </form>
+
+                        <hr class="my-2">
+                        <!-- List all comments -->
+                        <div class="comment-container">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
     <?= $this->partial('sidebar') ?>
 
 </div>
 
+<?php $this->end(); ?>
+
+<?php $this->start('script'); ?>
+<script src="<?= assets_path("js/comments.js"); ?>"></script>
 <?php $this->end(); ?>

@@ -9,6 +9,11 @@ use controllers\AdminController;
 $router->get('/', [SiteController::class, 'index']);
 $router->get('/news', [SiteController::class, 'news']);
 $router->get('/news/read', [SiteController::class, 'read']);
+$router->post('/news/read/comments', [SiteController::class, 'comments']);
+$router->post('/news/read/add_comment', [SiteController::class, 'add_comment']);
+$router->post('/news/read/add_reply_comment', [SiteController::class, 'add_reply_comment']);
+$router->post('/news/read/view_comment_replies', [SiteController::class, 'view_comment_replies']);
+$router->post('/news/read/add_sub_replies', [SiteController::class, 'add_sub_replies']);
 $router->get('/contact', [SiteController::class, 'contact']);
 
 $router->get('/register', [AuthController::class, 'register']);
