@@ -18,6 +18,17 @@ function urlIs($value)
     return $_SERVER['REQUEST_URI'] === $value;
 }
 
+function query_string($params, $value)
+{
+    if (isset($_GET[$params])) {
+        return $_GET[$params] === $value;
+    }
+    return false;
+    // $queries = [];
+    // parse_str($_SERVER['QUERY_STRING'], $queries);
+    // $queries[$params] === $value;
+}
+
 /**
  * @throws Exception
  */

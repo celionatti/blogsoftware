@@ -109,7 +109,7 @@ $navTopics = Topics::navTopics();
         <div class="nav-scroller py-1 mb-2 border-bottom border-muted">
             <nav class="nav d-flex justify-content-between">
                 <?php foreach ($navTopics as $nav): ?>
-                    <a class="p-2 link-secondary fw-semibold <?= UrlIs('/news?topic=world') ? 'active' : '' ?>"
+                    <a class="p-2 link-secondary fw-semibold <?= query_string("slug", $nav->slug) ? 'active' : '' ?>"
                         href="<?= Config::get("domain") ?>tags?slug=<?= $nav->slug ?>&tag_name=<?= $nav->topic ?>">
                         <?= $nav->topic ?>
                     </a>
