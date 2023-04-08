@@ -4,6 +4,14 @@
 
 <div class="col-md-4">
     <div class="position-sticky" style="top: 2rem;">
+        <div class="p-4 mb-3 bg-light rounded border-top border-primary border-3">
+            <h4 class="fst-italic pb-2">What we covered here</h4>
+            <ul>
+                <li>This is the topic of the most</li>
+                <li>This is the topic of the most This is the topic of the most</li>
+                <li>This is the topic of the most This is the topic.</li>
+            </ul>
+        </div>
 
         <div class="">
             <h4 class="fst-italic border-bottom border-danger border-3 text-center my-2">Recent Articles</h4>

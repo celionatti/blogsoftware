@@ -26,8 +26,32 @@ class SiteController extends Controller
      */
     public function index(Request $request, Response $response)
     {
+        $featured_params = [
+            'columns' => "articles.*, users.username, topics.topic, topics.slug as topic_slug",
+            'conditions' => "articles.status = :status AND articles.featured = '1'",
+            'bind' => ['status' => 'published'],
+            'joins' => [
+                ['users', 'articles.user_id = users.uid'],
+                ['topics', 'articles.topic = topics.slug', 'topics', 'LEFT']
+            ],
+            'limit' => "1",
+            'order' => 'articles.created_at DESC'
+        ];
+        $articles_params = [
+            'columns' => "articles.*, users.username, topics.topic, topics.slug as topic_slug",
+            'conditions' => "articles.status = :status AND articles.featured = '0'",
+            'bind' => ['status' => 'published'],
+            'joins' => [
+                ['users', 'articles.user_id = users.uid'],
+                ['topics', 'articles.topic = topics.slug', 'topics', 'LEFT']
+            ],
+            'limit' => "10",
+            'order' => 'articles.created_at DESC'
+        ];
+
         $view = [
-            'users' => Users::find(),
+            'featured' => Articles::findFirst($featured_params),
+            'articles' => Articles::find($articles_params),
         ];
         $this->view->render('welcome', $view);
     }
@@ -42,7 +66,7 @@ class SiteController extends Controller
                 ['users', 'articles.user_id = users.uid'],
                 ['topics', 'articles.topic = topics.slug', 'topics', 'LEFT']
             ],
-            'order' => 'articles.id DESC'
+            'order' => 'articles.created_at DESC'
         ];
 
         $params = Articles::mergeWithPagination($params);
@@ -79,6 +103,16 @@ class SiteController extends Controller
         ];
         $this->view->render('read', $view);
     }
+
+    public function contact(Request $request, Response $response)
+    {
+        $view = [
+            'errors' => [],
+        ];
+        $this->view->render('contact', $view);
+    }
+
+    // Start of Comment.
 
     public function comments(Request $request, Response $response)
     {
@@ -190,12 +224,41 @@ class SiteController extends Controller
             }
         }
     }
+    // End of Comments.
 
-    public function contact(Request $request, Response $response)
+    public function tags(Request $request, Response $response)
+    {
+        $slug = $request->get('slug');
+        $tag_name = $request->get('tag_name');
+
+        $params = [
+            'columns' => "articles.*, users.username, users.avatar, topics.topic, topics.slug as topic_slug",
+            'conditions' => "articles.status = :status AND topics.slug = :slug",
+            'bind' => ['status' => 'published', 'slug' => $slug],
+            'joins' => [
+                ['users', 'articles.user_id = users.uid'],
+                ['topics', 'articles.topic = topics.slug', 'topics', 'LEFT']
+            ],
+            'order' => 'articles.created_at DESC'
+        ];
+
+        $params = Articles::mergeWithPagination($params);
+        $total = Articles::findTotal($params);
+
+        $view = [
+            'articles' => Articles::find($params),
+            'total' => $total,
+            'tag_name' => $tag_name
+        ];
+
+        $this->view->render('tags', $view);
+    }
+
+    public function search(Request $request, Response $response)
     {
         $view = [
             'errors' => [],
         ];
-        $this->view->render('contact', $view);
+        $this->view->render('search', $view);
     }
 }

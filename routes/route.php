@@ -14,6 +14,7 @@ $router->post('/news/read/add_comment', [SiteController::class, 'add_comment']);
 $router->post('/news/read/add_reply_comment', [SiteController::class, 'add_reply_comment']);
 $router->post('/news/read/view_comment_replies', [SiteController::class, 'view_comment_replies']);
 $router->post('/news/read/add_sub_replies', [SiteController::class, 'add_sub_replies']);
+$router->get('/tags', [SiteController::class, 'tags']);
 $router->get('/contact', [SiteController::class, 'contact']);
 
 $router->get('/register', [AuthController::class, 'register']);

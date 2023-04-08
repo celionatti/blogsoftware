@@ -23,10 +23,10 @@ use Core\Support\Helpers\TimeFormat;
         </small>
         <!-- <small class="text-muted">Updated 05:45 PM GMT. April 05, 2023</small> -->
         <div class="d-flex my-2">
-            <a href="#" class="bi bi-facebook fs-5 me-3"></a>
-            <a href="#" class="bi bi-telegram fs-5 me-3"></a>
-            <a href="#" class="bi bi-whatsapp fs-5 me-3"></a>
-            <a href="#" class="bi bi-twitter fs-5 me-3"></a>
+            <a href="#" class="bi bi-facebook fs-5 me-3 text-primary"></a>
+            <a href="#" class="bi bi-telegram fs-5 me-3 text-primary"></a>
+            <a href="#" class="bi bi-whatsapp fs-5 me-3 text-success"></a>
+            <a href="#" class="bi bi-twitter fs-5 me-3 text-info"></a>
         </div>
     </div>
     <div class="col-md-5" style="overflow:hidden;">
@@ -54,7 +54,7 @@ use Core\Support\Helpers\TimeFormat;
                     </figure>
                 </div>
 
-                <div class="card-body">
+                <div class="card-body shadow">
                     <?= htmlspecialchars_decode($article->content) ?>
                 </div>
             </div>
@@ -88,7 +88,7 @@ use Core\Support\Helpers\TimeFormat;
 
     </div>
 
-    <?= $this->partial('sidebar') ?>
+    <?= $this->partial('readSidebar') ?>
 
 </div>
 

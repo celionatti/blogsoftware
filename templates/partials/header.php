@@ -2,8 +2,11 @@
 
 use Core\Config;
 use Core\Application;
+use models\Topics;
 
 $currentUser = Application::$app->currentUser;
+
+$navTopics = Topics::navTopics();
 
 
 ?>
@@ -12,7 +15,9 @@ $currentUser = Application::$app->currentUser;
     <header class="blog-header lh-1 py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
             <div class="col-4 pt-1">
-                <a class="link-secondary" href="#">Subscribe</a>
+                <a class="link-secondary">
+                    <?= date("l, d F Y") ?>
+                </a>
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="/">
@@ -99,15 +104,18 @@ $currentUser = Application::$app->currentUser;
         </div>
     </nav>
 
-    <div class="nav-scroller py-1 mb-2 border-bottom border-muted">
-        <nav class="nav d-flex justify-content-between">
-            <a class="p-2 link-secondary fw-semibold <?= UrlIs('/news?topic=world') ? 'active' : '' ?>"
-                href="#">World</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Nigeria</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Technology</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Design</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Culture</a>
-            <a class="p-2 link-secondary fw-semibold" href="#">Business</a>
-        </nav>
-    </div>
+    <?php if ($navTopics): ?>
+
+        <div class="nav-scroller py-1 mb-2 border-bottom border-muted">
+            <nav class="nav d-flex justify-content-between">
+                <?php foreach ($navTopics as $nav): ?>
+                    <a class="p-2 link-secondary fw-semibold <?= UrlIs('/news?topic=world') ? 'active' : '' ?>"
+                        href="<?= Config::get("domain") ?>tags?slug=<?= $nav->slug ?>&tag_name=<?= $nav->topic ?>">
+                        <?= $nav->topic ?>
+                    </a>
+                <?php endforeach; ?>
+            </nav>
+        </div>
+
+    <?php endif; ?>
 </div>

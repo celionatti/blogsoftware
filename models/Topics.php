@@ -36,4 +36,14 @@ class Topics extends DbModel
             $this->_skipUpdate = ['slug'];
         }
     }
+
+    public static function navTopics()
+    {
+        $params = [
+            'conditions' => "status = 'active'",
+            'group' => 'id',
+            'order' => 'topic DESC'
+        ];
+        return self::find($params);
+    }
 }
