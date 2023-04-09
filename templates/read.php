@@ -28,10 +28,26 @@ use Core\Support\Helpers\TimeFormat;
             <a href="#" class="bi bi-whatsapp fs-5 me-3 text-success"></a>
             <a href="#" class="bi bi-twitter fs-5 me-3 text-info"></a>
         </div>
+
+        <?php if ($article->point_one): ?>
+
+            <div class="p-4 mb-3 bg-light rounded border-top border-primary border-3">
+                <h4 class="fst-italic pb-2">What we covered here</h4>
+                <ul>
+                    <li>
+                        <?= $article->point_one ?>
+                    </li>
+                    <li>
+                        <?= $article->point_two ?>
+                    </li>
+                </ul>
+            </div>
+        <?php endif; ?>
+
     </div>
     <div class="col-md-5" style="overflow:hidden;">
-        <img src="<?= get_image($article->sub_image) ?>" alt="" class="img-fluid shadow"
-            style="object-fit: cover; height: 280px; width:100%;">
+        <img src="<?= get_image($article->sub_image) ?>" alt="<?= $article->sub_image_caption ?? '' ?>"
+            class="img-fluid shadow" style="object-fit: cover; height: 280px; width:100%;">
         <figure class="my-2 text-muted">
             <?= $article->sub_image_caption ?? '' ?>
         </figure>
@@ -46,8 +62,8 @@ use Core\Support\Helpers\TimeFormat;
             <div class="card">
                 <div class="pb-4 mb-2 fst-italic border-bottom">
                     <a href="#">
-                        <img src="<?= get_image($article->thumbnail) ?>" alt="" class=""
-                            style="object-fit: cover; height: 600px; width:100%;">
+                        <img src="<?= get_image($article->thumbnail) ?>" alt="<?= $article->thumbnail_caption ?? '' ?>"
+                            class="" style="object-fit: cover; height: 600px; width:100%;">
                     </a>
                     <figure class="text-muted my-2 px-2">
                         <?= $article->thumbnail_caption ?? '' ?>

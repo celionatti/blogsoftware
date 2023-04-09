@@ -24,9 +24,6 @@ function query_string($params, $value)
         return $_GET[$params] === $value;
     }
     return false;
-    // $queries = [];
-    // parse_str($_SERVER['QUERY_STRING'], $queries);
-    // $queries[$params] === $value;
 }
 
 /**

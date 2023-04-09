@@ -48,7 +48,7 @@ $navTopics = Topics::navTopics();
                                 </h6>
                             </li>
                             <li><a class="dropdown-item p-2" href="/account">Profile</a></li>
-                            <li><a class="dropdown-item p-2" href="/admin">Dashboard</a></li>
+                            <li><a class="dropdown-item p-2" href="/admin" target="_blank">Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

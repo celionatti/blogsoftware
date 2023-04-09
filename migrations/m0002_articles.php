@@ -22,6 +22,8 @@ class m0002_articles extends Migration
         `user_id` varchar(300) NOT NULL,
         `author` varchar(300) NOT NULL,
         `featured` tinyint(4) NOT NULL DEFAULT 0,
+        `point_one` text DEFAULT NULL,
+        `point_two` text DEFAULT NULL,
         `meta_title` varchar(60) NOT NULL,
         `meta_description` varchar(160) NOT NULL,
         `meta_keywords` varchar(60) NOT NULL,

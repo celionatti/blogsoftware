@@ -25,9 +25,12 @@ use Core\Support\Helpers\TimeFormat;
             Featured Article
         </h3>
         <div class="col-md-7 text-start">
-            <h1 class="fw-bold">
-                <?= $featured->title ?>
-            </h1>
+            <a href="<?= Config::get('domain') ?>news/read?slug=<?= $featured->slug ?>" class="text-dark"
+                style="text-decoration:none;">
+                <h1 class="fw-bold">
+                    <?= $featured->title ?>
+                </h1>
+            </a>
             <div class="my-2 text-muted">By
                 <?= $featured->author ?>
             </div>
@@ -46,8 +49,10 @@ use Core\Support\Helpers\TimeFormat;
             </div>
         </div>
         <div class="col-md-5" style="overflow:hidden;">
-            <img src="<?= get_image($featured->thumbnail) ?>" alt="" class="img-fluid shadow rounded"
-                style="object-fit: cover; height: 280px; width:100%;">
+            <a href="<?= Config::get('domain') ?>news/read?slug=<?= $featured->slug ?>">
+                <img src="<?= get_image($featured->thumbnail) ?>" alt="<?= $featured->thumbnail_caption ?>"
+                    class="img-fluid shadow rounded" style="object-fit: cover; height: 280px; width:100%;">
+            </a>
             <figure class="my-2 text-muted">
                 <?= $featured->thumbnail_caption ?>
             </figure>
@@ -68,8 +73,8 @@ use Core\Support\Helpers\TimeFormat;
                     <article class="">
                         <div class="image">
                             <a href="<?= Config::get("domain") ?>news/read?slug=<?= $article->slug ?>">
-                                <img src="<?= get_image($article->thumbnail) ?>" alt="" class="img-fluid shadow"
-                                    style="object-fit: cover; height: 280px; width:100%;">
+                                <img src="<?= get_image($article->thumbnail) ?>" alt="<?= $article->thumbnail_caption ?? '' ?>"
+                                    class="img-fluid shadow" style="object-fit: cover; height: 280px; width:100%;">
                             </a>
                         </div>
 

@@ -51,6 +51,12 @@ use Core\Forms\BootstrapForm;
 
         <?= BootstrapForm::inputField('Meta Description', 'meta_description', $article->meta_description ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
+        <small class="mt-3 text-danger">Key Points</small>
+
+        <?= BootstrapForm::inputField('Key Point One', 'point_one', $article->point_one ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+
+        <?= BootstrapForm::inputField('Key Point Two', 'point_two', $article->point_two ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+
         <?= bootstrapForm::selectField('Status', 'status', $article->status ?? '', $statusOpts ?? [], ['class' => 'form-select form-select-lg'], ['class' => 'form-floating col'], $errors) ?>
 
         <div class="row my-3">

@@ -18,7 +18,8 @@ use Core\Support\Helpers\TimeFormat;
                         <div class="card">
                             <div class="card-header">
                                 <a href="/news/read?slug=<?= $article->slug ?>">
-                                    <img src="<?= get_image($article->thumbnail) ?>" alt="" class="post-img">
+                                    <img src="<?= get_image($article->thumbnail) ?>"
+                                        alt="<?= $article->thumbnail_caption ?? '' ?>" class="post-img">
                                 </a>
                             </div>
                             <div class="card-body">

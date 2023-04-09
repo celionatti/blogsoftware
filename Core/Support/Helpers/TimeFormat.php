@@ -124,6 +124,6 @@ class TimeFormat
     {
         date_default_timezone_set(Config::get('time_zone'));
 
-        return date("g:i a T. F h, Y", strtotime($timeStamp));
+        return date("g:i a T. F j, Y", strtotime($timeStamp));
     }
 }
