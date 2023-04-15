@@ -247,15 +247,14 @@ class AdminController extends Controller
             'limit' => $recordsPerPage,
             'offset' => ($currentPage - 1) * $recordsPerPage
         ];
-        // $params = Users::mergeWithPagination($params);
         $total = Users::findTotal($params);
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
             'errors' => [],
             'users' => Users::find($params),
-            'prevPage' => $currentPage > 1 ? $currentPage - 1 : false,
-            'nextPage' => $currentPage + 1 <= $numberOfPages ? $currentPage + 1 : false,
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
 
         $this->view->render('admin/users/index', $view);

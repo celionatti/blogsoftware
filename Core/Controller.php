@@ -25,6 +25,17 @@ class Controller
         exit;
     }
 
+    public function previous_pagination($currentPage)
+    {
+        return $currentPage > 1 ? $currentPage - 1 : false;
+    }
+
+    public function next_pagination($currentPage, $numberOfPages)
+    {
+        return $currentPage + 1 <= $numberOfPages ? $currentPage + 1 : 1;
+    }
+
     public function onConstruct(): void
-    {}
+    {
+    }
 }

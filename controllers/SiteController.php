@@ -76,15 +76,14 @@ class SiteController extends Controller
             'offset' => ($currentPage - 1) * $recordsPerPage
         ];
 
-        // $params = Articles::mergeWithPagination($params);
         $total = Articles::findTotal($params);
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
             'articles' => Articles::find($params),
             'total' => $total,
-            'prevPage' => $currentPage > 1 ? $currentPage - 1 : false,
-            'nextPage' => $currentPage + 1 <= $numberOfPages ? $currentPage + 1 : false,
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
         $this->view->render('news', $view);
     }
