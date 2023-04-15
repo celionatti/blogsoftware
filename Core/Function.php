@@ -148,10 +148,10 @@ function get_image(mixed $file = '', string $type = 'post'): string
 
 }
 
-function remove_images_from_content($content, $folder = 'uploads/')
+function remove_images_from_content($content, $folder = 'uploads/articles/posts/')
 {
 
-    preg_match_all("/<img[^>]+/", $content, $matches);
+    preg_match_all("/&lt;img[^ &gt;]+/", $content, $matches);
 
     if (is_array($matches[0]) && count($matches[0]) > 0) {
         foreach ($matches[0] as $img) {
@@ -160,12 +160,13 @@ function remove_images_from_content($content, $folder = 'uploads/')
                 continue;
             }
 
-            preg_match('/src="[^"]+/', $img, $match);
+            preg_match('/src=&quot;[^&quot;]+/', $img, $match);
             $parts = explode("base64,", $match[0]);
 
-            preg_match('/data-filename="[^"]+/', $img, $file_match);
+            preg_match('/data-filename=&quot;[^&quot;]+/', $img, $file_match);
 
             $filename = $folder . str_replace('data-filename="', "", $file_match[0]);
+            dd($filename);
             $image = new Image();
             $image->resize($filename); // I add this.
 

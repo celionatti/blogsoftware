@@ -2,16 +2,17 @@
 
 namespace controllers;
 
-use Core\Application;
 use Exception;
 use Core\Request;
 use models\Users;
 use Core\Response;
+use models\Topics;
 use Core\Controller;
+use models\Articles;
+use models\Contacts;
+use Core\Application;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
-use models\Articles;
-use models\Topics;
 
 class AdminController extends Controller
 {
@@ -218,6 +219,10 @@ class AdminController extends Controller
                         unlink($article->thumbnail);
                         $article->thumbnail = '';
                     }
+                    if (file_exists($article->sub_image)) {
+                        unlink($article->sub_image);
+                        $article->sub_image = '';
+                    }
                     Application::$app->session->setFlash("success", "{$article->title} Deleted successfully");
                     redirect('/admin/articles');
                 }
@@ -234,12 +239,23 @@ class AdminController extends Controller
 
     public function users(Request $request, Response $response)
     {
-        $params = ['order' => 'name, surname'];
-        $params = Users::mergeWithPagination($params);
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 1;
+
+        $params = [
+            'order' => 'name, surname',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+        // $params = Users::mergeWithPagination($params);
+        $total = Users::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
             'errors' => [],
             'users' => Users::find($params),
+            'prevPage' => $currentPage > 1 ? $currentPage - 1 : false,
+            'nextPage' => $currentPage + 1 <= $numberOfPages ? $currentPage + 1 : false,
         ];
 
         $this->view->render('admin/users/index', $view);
@@ -504,5 +520,48 @@ class AdminController extends Controller
         ];
 
         $this->view->render('admin/collections/create', $view);
+    }
+
+    public function messages(Request $request, Response $response)
+    {
+        $params = ['order' => 'created_at DESC'];
+        $params = Contacts::mergeWithPagination($params);
+
+        $view = [
+            'errors' => [],
+            'messages' => Contacts::find($params),
+        ];
+
+        $this->view->render('admin/messages/index', $view);
+    }
+
+    public function trash_messages(Request $request, Response $response)
+    {
+        $slug = $request->get('message-slug');
+
+        if ($request->isDelete()) {
+            if ($slug) {
+                $params = [
+                    'conditions' => "slug = :slug",
+                    'bind' => ['slug' => $slug]
+                ];
+
+                $message = Contacts::findFirst($params);
+
+                if ($message) {
+                    if ($message->delete()) {
+                        Application::$app->session->setFlash("success", "{$message->name} Message Deleted successfully");
+                    }
+                }
+            }
+            $messages = Contacts::find();
+            if ($messages) {
+                foreach ($messages as $message) {
+                    $message->delete();
+                }
+                Application::$app->session->setFlash("success", "Message Deleted successfully");
+            }
+            redirect("/admin/messages");
+        }
     }
 }

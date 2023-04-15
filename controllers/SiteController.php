@@ -8,8 +8,10 @@ use models\Users;
 use Core\Response;
 use Core\Controller;
 use models\Articles;
-use models\CommentReplies;
 use models\Comments;
+use models\Contacts;
+use Core\Application;
+use models\CommentReplies;
 
 class SiteController extends Controller
 {
@@ -58,6 +60,9 @@ class SiteController extends Controller
 
     public function news(Request $request, Response $response)
     {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 2;
+
         $params = [
             'columns' => "articles.*, users.username, users.avatar, topics.topic, topics.slug as topic_slug",
             'conditions' => "articles.status = :status",
@@ -66,15 +71,20 @@ class SiteController extends Controller
                 ['users', 'articles.user_id = users.uid'],
                 ['topics', 'articles.topic = topics.slug', 'topics', 'LEFT']
             ],
-            'order' => 'articles.created_at DESC'
+            'order' => 'articles.created_at DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
         ];
 
-        $params = Articles::mergeWithPagination($params);
+        // $params = Articles::mergeWithPagination($params);
         $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
             'articles' => Articles::find($params),
             'total' => $total,
+            'prevPage' => $currentPage > 1 ? $currentPage - 1 : false,
+            'nextPage' => $currentPage + 1 <= $numberOfPages ? $currentPage + 1 : false,
         ];
         $this->view->render('news', $view);
     }
@@ -106,6 +116,17 @@ class SiteController extends Controller
 
     public function contact(Request $request, Response $response)
     {
+        if ($request->isPost()) {
+            $contact = new Contacts();
+
+            $contact->loadData($request->getBody());
+
+            if ($contact->save()) {
+                Application::$app->session->setFlash("success", "{$contact->name} Message Sent, Thanks for contacting Us.");
+                redirect('/contact');
+            }
+        }
+
         $view = [
             'errors' => [],
         ];

@@ -1,6 +1,7 @@
 <?php
 
-use Core\Support\Helpers\StringFormat;
+use Core\Config;
+use Core\Support\Pagination;
 use Core\Support\Helpers\TimeFormat;
 
 ?>
@@ -44,9 +45,8 @@ use Core\Support\Helpers\TimeFormat;
                 <?php endforeach; ?>
             </div>
 
-            <nav class="blog-pagination" aria-label="Pagination">
-                <a class="btn btn-outline-secondary rounded-pill w-100" href="#">Load More</a>
-            </nav>
+            <?= Pagination::bootstrap_prev_next($prevPage, $nextPage) ?>
+
         <?php else: ?>
             <h4 class="text-center text-danger my-3">No Data Available yet!</h4>
         <?php endif; ?>

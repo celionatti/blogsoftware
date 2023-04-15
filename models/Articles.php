@@ -21,7 +21,7 @@ class Articles extends DbModel
     public string $slug = "";
     public string $title = "";
     public string $content = "";
-    public string $topic = "";
+    public ?string $topic = "";
     public string $thumbnail = "";
 
     public ?string $thumbnail_caption = null;

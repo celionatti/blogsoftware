@@ -18,6 +18,10 @@ class Application
     private static Application $instance;
     public static Application $app;
     public $currentUser = null;
+    public $url;
+    public $currentLink;
+    public $currentPage;
+    public $queryString;
 
     /**
      * @throws Exception
@@ -70,6 +74,22 @@ class Application
             exit($message);
         }
         $this->checkExtensions();
+
+        $this->url = $_SERVER['REQUEST_URI'];
+        if (Config::get('domain') != '/') {
+            $this->url = str_replace(Config::get('domain'), '', $this->url);
+        } else {
+            $this->url = ltrim($this->url, '/');
+        }
+        $this->url = preg_replace('/(\?.+)/', '', $this->url);
+
+        $this->currentPage = $this->url;
+        $this->currentLink = $this->url;
+
+        $page = $_GET['page'] ?? '';
+        $this->queryString = $_SERVER['QUERY_STRING'] ? $_SERVER['QUERY_STRING'] . '&' : '';
+        $this->queryString = str_replace("page=" . $page, "", $_SERVER['QUERY_STRING']);
+        $this->queryString = !strstr($this->queryString, "page=" . $page) ? $this->queryString : $this->queryString;
     }
 
     private function checkExtensions(): void

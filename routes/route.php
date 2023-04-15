@@ -16,6 +16,7 @@ $router->post('/news/read/view_comment_replies', [SiteController::class, 'view_c
 $router->post('/news/read/add_sub_replies', [SiteController::class, 'add_sub_replies']);
 $router->get('/tags', [SiteController::class, 'tags']);
 $router->get('/contact', [SiteController::class, 'contact']);
+$router->post('/contact', [SiteController::class, 'contact']);
 
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);
@@ -53,5 +54,8 @@ $router->delete('/admin/topics/delete', [AdminController::class, 'delete_topic']
 
 $router->get('/admin/collections/create', [AdminController::class, 'create_collection'])->only('admin');
 $router->get('/admin/collections', [AdminController::class, 'collections'])->only('admin');
+
+$router->get('/admin/messages', [AdminController::class, 'messages'])->only('admin');
+$router->delete('/admin/messages/trash', [AdminController::class, 'trash_messages'])->only('admin');
 
 // $router->get('/users', 'controllers/users.php');

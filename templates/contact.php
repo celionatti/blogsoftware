@@ -40,15 +40,15 @@ use Core\Forms\BootstrapForm;
             <div class="col-12 col-lg-8 col-md-6 col-sm-12">
                 <form action="" method="post" class="border-end border-3 border-danger p-2">
                     <?= BootstrapForm::csrfField(); ?>
-                    <?= BootstrapForm::inputField('FullName', 'fullname', $contact->fullname ?? '', ['class' => 'form-control'], ['class' => 'mb-3 form-floating'], $errors); ?>
+                    <?= BootstrapForm::inputField('FullName', 'name', $contact->name ?? '', ['class' => 'form-control'], ['class' => 'mb-3 form-floating'], $errors); ?>
 
                     <?= BootstrapForm::inputField('E-Mail', 'email', $contact->email ?? '', ['class' => 'form-control', 'type' => 'email'], ['class' => 'mb-3 form-floating'], $errors); ?>
 
                     <?= BootstrapForm::inputField('Subject', 'subject', $contact->subject ?? '', ['class' => 'form-control'], ['class' => 'mb-3 form-floating'], $errors); ?>
 
-                    <?= BootstrapForm::textareaField('Message', 'message', $contact->message ?? '', ['class' => 'form-control'], ['class' => 'mb-3'], $errors); ?>
+                    <?= BootstrapForm::textareaField('Message', 'message', $contact->message ?? '', ['class' => 'form-control', 'rows' => '5'], ['class' => 'mb-3'], $errors); ?>
 
-                    <button type="submit" class="btn btn-danger w-100">Send Message</button>
+                    <button type="submit" class="btn btn-dark w-100">Send Message</button>
                 </form>
             </div>
             <div class="col-12 col-lg-4 col-md-6 col-sm-12">
