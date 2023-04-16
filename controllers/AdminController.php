@@ -14,6 +14,7 @@ use Core\Application;
 use models\RelatedArticles;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
+use models\Comments;
 
 class AdminController extends Controller
 {
@@ -312,6 +313,41 @@ class AdminController extends Controller
                 redirect("/admin/articles");
             }
         }
+    }
+
+    public function comments_article(Request $request, Response $response)
+    {
+        $slug = $request->get('article-slug');
+
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 10;
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+
+        $article = Articles::findFirst($params);
+
+        $comments_params = [
+            'conditions' => "article_slug = :article_slug",
+            'bind' => ['article_slug' => $slug],
+            'order' => "created_at DESC",
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
+        $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
+        $view = [
+            'article' => $article,
+            'comments' => Comments::find($comments_params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
+        ];
+
+        $this->view->render("admin/articles/comments", $view);
     }
 
     public function users(Request $request, Response $response)
