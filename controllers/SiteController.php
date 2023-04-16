@@ -61,7 +61,7 @@ class SiteController extends Controller
     public function news(Request $request, Response $response)
     {
         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $recordsPerPage = 2;
+        $recordsPerPage = 10;
 
         $params = [
             'columns' => "articles.*, users.username, users.avatar, topics.topic, topics.slug as topic_slug",

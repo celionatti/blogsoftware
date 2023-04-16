@@ -22,6 +22,11 @@ class Form
         return "<input type='hidden' value='{$method}' name='_method' />";
     }
 
+    public static function hidden($name, $value): string
+    {
+        return "<input type='hidden' value='{$value}' name='{$name}' />";
+    }
+
     public static function processAttrs($attrs): string
     {
         $html = "";

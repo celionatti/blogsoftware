@@ -35,6 +35,9 @@ $router->get('/admin/articles/edit', [AdminController::class, 'edit_article'])->
 $router->patch('/admin/articles/edit', [AdminController::class, 'edit_article'])->only('admin');
 $router->get('/admin/articles/trash', [AdminController::class, 'trash_article'])->only('admin');
 $router->delete('/admin/articles/trash', [AdminController::class, 'trash_article'])->only('admin');
+$router->get('/admin/articles/related-articles', [AdminController::class, 'related_articles'])->only('admin');
+$router->post('/admin/articles/related-articles/add', [AdminController::class, 'add_related_articles'])->only('admin');
+$router->delete('/admin/articles/related-articles/remove', [AdminController::class, 'remove_related_articles'])->only('admin');
 
 $router->get('/admin/users', [AdminController::class, 'users'])->only('admin');
 $router->get('/admin/users/create', [AdminController::class, 'create_user'])->only('admin');

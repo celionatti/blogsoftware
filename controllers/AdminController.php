@@ -11,6 +11,7 @@ use Core\Controller;
 use models\Articles;
 use models\Contacts;
 use Core\Application;
+use models\RelatedArticles;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
 
@@ -37,18 +38,27 @@ class AdminController extends Controller
 
     public function articles(Request $request, Response $response)
     {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
         $params = [
             'columns' => "articles.*, topics.topic",
             'joins' => [
                 ['topics', 'articles.topic = topics.slug'],
             ],
-            'order' => 'articles.id DESC'
+            'order' => 'articles.id DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
         ];
+
+        $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
             'errors' => [],
             'articles' => Articles::find($params),
-            'total' => Articles::findTotal($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
 
         $this->view->render('admin/articles/index', $view);
@@ -237,6 +247,73 @@ class AdminController extends Controller
         $this->view->render('admin/articles/delete', $view);
     }
 
+    public function related_articles(Request $request, Response $response)
+    {
+        $slug = $request->get('article-slug');
+
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+
+        $article = Articles::findFirst($params);
+
+        $related_params = [
+            'conditions' => "status = :status AND title LIKE :title OR author LIKE :author",
+            'bind' => ['status' => 'published', 'title' => "%$article->title%", 'author' => "%$article->author%"],
+            'order' => "created_at DESC",
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
+
+        $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
+        $view = [
+            'article' => $article,
+            'articles' => Articles::find($related_params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
+        ];
+
+        $this->view->render('admin/articles/related', $view);
+    }
+
+    public function add_related_articles(Request $request, Response $response)
+    {
+        $related_articles = new RelatedArticles();
+
+        $params = [
+            'conditions' => "article_slug = :article_slug AND related_slug = :related_slug",
+            'bind' => ['article_slug' => $request->post('article_slug'), 'related_slug' => $request->post('related_slug')]
+        ];
+
+        $existing_related_articles = RelatedArticles::findFirst($params);
+
+        if ($request->post('article_slug') == $request->post('related_slug')) {
+            Application::$app->session->setFlash("error", "Article with the same title can't be added");
+            last_uri();
+        }
+
+        if ($existing_related_articles) {
+            Application::$app->session->setFlash("error", "Article Already Existed, can't add anymore.");
+            last_uri();
+        }
+
+        if ($request->isPost()) {
+            $related_articles->loadData($request->getBody());
+
+            if ($related_articles->save()) {
+                Application::$app->session->setFlash("success", "Article Related Successfully.");
+                redirect("/admin/articles");
+            }
+        }
+    }
+
     public function users(Request $request, Response $response)
     {
         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -402,12 +479,22 @@ class AdminController extends Controller
 
     public function topics(Request $request, Response $response)
     {
-        $params = ['order' => 'topic'];
-        $params = Topics::mergeWithPagination($params);
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $params = [
+            'order' => 'topic',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+        $total = Topics::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
             'errors' => [],
             'topics' => Topics::find($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
 
         $this->view->render('admin/topics/index', $view);
@@ -523,12 +610,22 @@ class AdminController extends Controller
 
     public function messages(Request $request, Response $response)
     {
-        $params = ['order' => 'created_at DESC'];
-        $params = Contacts::mergeWithPagination($params);
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $params = [
+            'order' => 'created_at DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+        $total = Contacts::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
             'errors' => [],
             'messages' => Contacts::find($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
 
         $this->view->render('admin/messages/index', $view);
@@ -551,6 +648,8 @@ class AdminController extends Controller
                     if ($message->delete()) {
                         Application::$app->session->setFlash("success", "{$message->name} Message Deleted successfully");
                     }
+                } else {
+                    Application::$app->session->setFlash("success", "Message Not Found");
                 }
             }
             $messages = Contacts::find();
@@ -559,6 +658,8 @@ class AdminController extends Controller
                     $message->delete();
                 }
                 Application::$app->session->setFlash("success", "Message Deleted successfully");
+            } else {
+                Application::$app->session->setFlash("success", "No Messages");
             }
             redirect("/admin/messages");
         }

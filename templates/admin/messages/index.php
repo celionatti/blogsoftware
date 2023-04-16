@@ -1,6 +1,7 @@
 <?php
 
 use Core\Config;
+use Core\Support\Pagination;
 use Core\Forms\BootstrapForm;
 
 ?>
@@ -58,6 +59,7 @@ use Core\Forms\BootstrapForm;
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            <?= Pagination::bootstrap_prev_next($prevPage, $nextPage) ?>
         <?php else: ?>
             <h4 class="text-center text-danger border-bottom border-danger py-2">No Data Available Yet!</h4>
         <?php endif; ?>

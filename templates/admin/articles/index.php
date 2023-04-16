@@ -1,6 +1,7 @@
 <?php
 
 use Core\Config;
+use Core\Support\Pagination;
 use Core\Forms\BootstrapForm;
 use Core\Support\Helpers\TimeFormat;
 
@@ -70,8 +71,11 @@ use Core\Support\Helpers\TimeFormat;
                                     <a href="<?= Config::get('domain') ?>admin/articles/edit?article-slug=<?= $article->slug ?>"
                                         class="text-info">Edit</a>
                                     <span class="divider">|</span>
-                                    <a href="<?= Config::get('domain') ?>admin/articles/related-article?article-slug=<?= $article->slug ?>"
+                                    <a href="<?= Config::get('domain') ?>admin/articles/related-articles?article-slug=<?= $article->slug ?>"
                                         class="text-primary">Related Article</a>
+                                    <span class="divider">|</span>
+                                    <a href="<?= Config::get('domain') ?>admin/articles/comments-article?article-slug=<?= $article->slug ?>"
+                                        class="text-warning">Comments</a>
                                 </div>
                             </td>
                             <td>
@@ -84,23 +88,7 @@ use Core\Support\Helpers\TimeFormat;
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <nav aria-label="Standard pagination example">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <?= Pagination::bootstrap_prev_next($prevPage, $nextPage) ?>
         <?php else: ?>
             <h4 class="text-center text-muted border-bottom border-3 border-danger p-3">No Data Available at the moment!
             </h4>
