@@ -9,12 +9,13 @@ use Core\Response;
 use models\Topics;
 use Core\Controller;
 use models\Articles;
+use models\Comments;
 use models\Contacts;
 use Core\Application;
+use models\CommentReplies;
 use models\RelatedArticles;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
-use models\Comments;
 
 class AdminController extends Controller
 {
@@ -44,9 +45,11 @@ class AdminController extends Controller
 
         $params = [
             'columns' => "articles.*, topics.topic",
+            'conditions' => "articles.status = :status",
             'joins' => [
                 ['topics', 'articles.topic = topics.slug'],
             ],
+            'bind' => ['status' => 'published'],
             'order' => 'articles.id DESC',
             'limit' => $recordsPerPage,
             'offset' => ($currentPage - 1) * $recordsPerPage
@@ -63,6 +66,36 @@ class AdminController extends Controller
         ];
 
         $this->view->render('admin/articles/index', $view);
+    }
+
+    public function drafts(Request $request, Response $response)
+    {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $params = [
+            'columns' => "articles.*, topics.topic",
+            'conditions' => "articles.status = :status",
+            'joins' => [
+                ['topics', 'articles.topic = topics.slug'],
+            ],
+            'bind' => ['status' => 'draft'],
+            'order' => 'articles.id DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
+        $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
+        $view = [
+            'errors' => [],
+            'articles' => Articles::find($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
+        ];
+
+        $this->view->render('admin/articles/drafts', $view);
     }
 
     public function create_article(Request $request, Response $response)
@@ -310,7 +343,30 @@ class AdminController extends Controller
 
             if ($related_articles->save()) {
                 Application::$app->session->setFlash("success", "Article Related Successfully.");
-                redirect("/admin/articles");
+                last_uri();
+            }
+        }
+    }
+
+    public function remove_related_articles(Request $request, Response $response)
+    {
+        if ($request->post('article_slug') == $request->post('related_slug')) {
+            Application::$app->session->setFlash("error", "Article with the same title can't be removed");
+            last_uri();
+        }
+
+        if ($request->isDelete()) {
+            $params = [
+                'conditions' => "article_slug = :article_slug AND related_slug = :related_slug",
+                'bind' => ['article_slug' => $request->post('article_slug'), 'related_slug' => $request->post('related_slug')]
+            ];
+
+            $related_article = RelatedArticles::findFirst($params);
+            if($related_article) {
+                if($related_article->delete()) {
+                    Application::$app->session->setFlash("success", "Related Article Deleted Successfully.");
+                    last_uri();
+                }
             }
         }
     }
@@ -348,6 +404,156 @@ class AdminController extends Controller
         ];
 
         $this->view->render("admin/articles/comments", $view);
+    }
+
+    public function comments_article_replies(Request $request, Response $response)
+    {
+        $slug = $request->get('article-slug');
+        $comment_id = $request->get('comment-id');
+
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 10;
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+
+        $article = Articles::findFirst($params);
+
+        $comment_replies_params = [
+            'conditions' => "comment_id = :comment_id",
+            'bind' => ['comment_id' => $comment_id],
+            'order' => "created_at DESC",
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
+        $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
+        $view = [
+            'article' => $article,
+            'comments' => CommentReplies::find($comment_replies_params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
+        ];
+
+        $this->view->render("admin/articles/comment_replies", $view);
+    }
+
+    public function comments_article_trash(Request $request, Response $response)
+    {
+        $params = [
+            'conditions' => "id = :id",
+            'bind' => ['id' => $request->post('comment_id')]
+        ];
+
+        $comment = Comments::findFirst($params);
+
+        if (!$comment) {
+            Application::$app->session->setFlash("success", "Comment Not Found");
+            last_uri();
+        }
+
+        if ($request->isDelete()) {
+            if ($comment) {
+
+                $comment_replies_params = [
+                    'conditions' => "comment_id = :comment_id",
+                    'bind' => ['comment_id' => $comment->id]
+                ];
+
+                $replies = CommentReplies::find($comment_replies_params);
+
+                if (!$replies) {
+                    return;
+                } else {
+                    foreach ($replies as $reply) {
+                        $reply->delete();
+                    }
+                }
+
+                if ($comment->delete()) {
+                    Application::$app->session->setFlash("success", "Comment Deleted successfully");
+                }
+            }
+            last_uri();
+        }
+    }
+
+    public function comments_article_status(Request $request, Response $response)
+    {
+        $params = [
+            'conditions' => "id = :id",
+            'bind' => ['id' => $request->post('comment_id')]
+        ];
+
+        $comment = Comments::findFirst($params);
+
+        if (!$comment) {
+            Application::$app->session->setFlash("success", "Comment Not Found");
+            last_uri();
+        }
+
+        if ($request->isPatch()) {
+            if ($comment) {
+                $comment->loadData($request->getBody());
+                if ($comment->save()) {
+                    Application::$app->session->setFlash("success", "Comment Updated successfully");
+                }
+            }
+            last_uri();
+        }
+    }
+
+    public function comments_article_replies_trash(Request $request, Response $response)
+    {
+        $params = [
+            'conditions' => "id = :id",
+            'bind' => ['id' => $request->post('comment_id')]
+        ];
+
+        $comment = CommentReplies::findFirst($params);
+
+        if (!$comment) {
+            Application::$app->session->setFlash("success", "Comment Not Found");
+            last_uri();
+        }
+
+        if ($request->isDelete()) {
+            if ($comment) {
+                if ($comment->delete()) {
+                    Application::$app->session->setFlash("success", "Comment Deleted successfully");
+                    last_uri();
+                }
+            }
+        }
+    }
+
+    public function comments_article_replies_status(Request $request, Response $response)
+    {
+        $params = [
+            'conditions' => "id = :id",
+            'bind' => ['id' => $request->post('comment_id')]
+        ];
+
+        $comment = CommentReplies::findFirst($params);
+
+        if (!$comment) {
+            Application::$app->session->setFlash("success", "Comment Not Found");
+            last_uri();
+        }
+
+        if ($request->isPatch()) {
+            if ($comment) {
+                $comment->loadData($request->getBody());
+                if ($comment->save()) {
+                    Application::$app->session->setFlash("success", "Comment Updated successfully");
+                    last_uri();
+                }
+            }
+        }
     }
 
     public function users(Request $request, Response $response)

@@ -16,6 +16,9 @@ use models\RelatedArticles;
         <?= $article->title ?>
     </h5>
 
+    <a href="<?= Config::get('domain') ?>admin/articles" class="btn btn-sm btn-primary my-2"><i
+            class="bi bi-arrow-left"></i> Back</a>
+
     <div class="border border-muted border-1 px-2 table-responsive">
         <?php if ($articles): ?>
             <table class="table table-striped">

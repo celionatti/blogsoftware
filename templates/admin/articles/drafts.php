@@ -10,29 +10,15 @@ use Core\Support\Helpers\TimeFormat;
 
 <?php $this->start('content') ?>
 <div class="container bg-white p-2 rounded">
-    <h2 class="text-muted text-center border-bottom border-3 border-danger py-2">Articles</h2>
-
-    <div id="featured_posts">
-        <form action="" method="post">
-            <strong>Featured Post: </strong>
-            <span class="title-wrapper">
-                <span>This is a sample post title</span>
-                <button type="button" class="change-featured-post">Change</button>
-            </span>
-            <span class="input-wrapper d-none">
-                <?= BootstrapForm::inputField('Featured Article', 'title', '', ['class' => 'form-control form-control-sm'], ['class' => 'form-floating my-2'], $errors) ?>
-                <button type="submit" class="btn btn-dark">Update</button>
-            </span>
-        </form>
-    </div>
+    <h2 class="text-muted text-center border-bottom border-3 border-danger py-2">Draft Articles</h2>
 
     <div id="table-actions" class="row mt-3">
         <?= BootstrapForm::inputField('', 'search', '', ['class' => 'form-control form-control-sm shadow', 'type' => 'search'], ['class' => 'col my-1'], $errors) ?>
 
         <div class="col text-end">
-            <a href="/admin/articles/drafts" class="btn btn-warning btn-sm">
-                <i class="bi bi-archive"></i>
-                Drafts
+            <a href="/admin/articles" class="btn btn-warning btn-sm">
+                <i class="bi bi-files"></i>
+                Articles
             </a>
             <a href="/admin/articles/create" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-circle"></i>

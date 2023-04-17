@@ -11,13 +11,12 @@ use models\RelatedArticles;
 
 <?php $this->start('content') ?>
 <div class="container bg-white p-2 rounded">
-    <h2 class="text-muted text-center border-bottom border-3 border-danger py-2">Comments Article</h2>
+    <h2 class="text-muted text-center border-bottom border-3 border-danger py-2">Comments Replies Article</h2>
     <h5 class="text-muted text-center border-bottom border-3 border-danger py-2">Title:
         <?= $article->title ?>
     </h5>
-
-    <a href="<?= Config::get('domain') ?>admin/articles" class="btn btn-sm btn-primary my-2"><i
-            class="bi bi-arrow-left"></i> Back</a>
+    <a href="<?= Config::get('domain') ?>admin/articles/comments-article?article-slug=<?= $article->slug ?>"
+        class="btn btn-sm btn-primary my-2"><i class="bi bi-arrow-left"></i> Back</a>
 
     <div class="border border-muted border-1 px-2 table-responsive">
         <?php if ($comments): ?>
@@ -41,15 +40,16 @@ use models\RelatedArticles;
                             <td>
                                 <?= $comment->message ?>
                                 <div class="my-2">
-                                    <form action="<?= Config::get('domain') ?>admin/articles/comments-article/trash"
+                                    <form action="<?= Config::get('domain') ?>admin/articles/comments-article/replies/trash"
                                         method="post" class="d-inline">
                                         <?= BootstrapForm::method("DELETE"); ?>
-                                        <?= BootstrapForm::hidden("comment_id", $comment->id) ?>
+                                        <?= BootstrapForm::hidden("id", $comment->id) ?>
+                                        <?= BootstrapForm::hidden("comment_id", $comment->comment_id) ?>
                                         <button type="submit" class="btn btn-sm btn-danger">Trash</button>
                                     </form>
                                     <span class="divider">|</span>
                                     <?php if ($comment->status === "active"): ?>
-                                        <form action="<?= Config::get('domain') ?>admin/articles/comments-article/status"
+                                        <form action="<?= Config::get('domain') ?>admin/articles/comments-article/replies/status"
                                             method="post" class="d-inline">
                                             <?= BootstrapForm::method("PATCH"); ?>
                                             <?= BootstrapForm::hidden("comment_id", $comment->id) ?>
@@ -57,7 +57,7 @@ use models\RelatedArticles;
                                             <button type="submit" class="btn btn-sm btn-warning">Block</button>
                                         </form>
                                     <?php else: ?>
-                                        <form action="<?= Config::get('domain') ?>admin/articles/comments-article/status"
+                                        <form action="<?= Config::get('domain') ?>admin/articles/comments-article/replies/status"
                                             method="post" class="d-inline">
                                             <?= BootstrapForm::method("PATCH"); ?>
                                             <?= BootstrapForm::hidden("comment_id", $comment->id) ?>
@@ -65,12 +65,9 @@ use models\RelatedArticles;
                                             <button type="submit" class="btn btn-sm btn-info">Active</button>
                                         </form>
                                     <?php endif; ?>
-                                    <span class="divider">|</span>
-                                    <a href="<?= Config::get('domain') ?>admin/articles/comments-article/replies?article-slug=<?= $comment->article_slug ?>&comment-id=<?= $comment->id ?>"
-                                        class="btn btn-sm btn-primary">Replies</a>
                                 </div>
                             </td>
-                            <td class="text-capitalize">
+                            <td>
                                 <?= $comment->status ?>
                             </td>
                             <td>
