@@ -19,7 +19,7 @@ class m0004_user_sessions extends Migration
         UNIQUE KEY `user_id` (`user_id`),
         KEY `ip` (`ip`),
         KEY `hash` (`hash`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4";
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4";
         $this->connection->exec($SQL);
     }
 

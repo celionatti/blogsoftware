@@ -30,7 +30,7 @@ class m0001_initial extends Migration
         UNIQUE KEY `email` (`email`),
         KEY `username` (`username`),
         KEY `uid` (`uid`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4";
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4";
         $this->connection->exec($SQL);
     }
 

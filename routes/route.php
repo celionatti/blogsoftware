@@ -5,6 +5,8 @@
 use controllers\AuthController;
 use controllers\SiteController;
 use controllers\AdminController;
+use controllers\AdminTasksController;
+use controllers\AdminPodcastsController;
 
 $router->get('/', [SiteController::class, 'index']);
 $router->get('/news', [SiteController::class, 'news']);
@@ -28,6 +30,7 @@ $router->post('/logout', [AuthController::class, 'logout']);
 // Admin
 $router->get('/admin', [AdminController::class, 'index'])->only('admin');
 
+// Admin Articles
 $router->get('/admin/articles', [AdminController::class, 'articles'])->only('admin');
 $router->get('/admin/articles/drafts', [AdminController::class, 'drafts'])->only('admin');
 $router->get('/admin/articles/create', [AdminController::class, 'create_article'])->only('admin');
@@ -46,6 +49,7 @@ $router->patch('/admin/articles/comments-article/status', [AdminController::clas
 $router->delete('/admin/articles/comments-article/replies/trash', [AdminController::class, 'comments_article_replies_trash'])->only('admin');
 $router->patch('/admin/articles/comments-article/replies/status', [AdminController::class, 'comments_article_replies_status'])->only('admin');
 
+// Admin Users
 $router->get('/admin/users', [AdminController::class, 'users'])->only('admin');
 $router->get('/admin/users/create', [AdminController::class, 'create_user'])->only('admin');
 $router->post('/admin/users/create', [AdminController::class, 'create_user'])->only('admin');
@@ -54,6 +58,7 @@ $router->patch('/admin/users/edit', [AdminController::class, 'edit_user'])->only
 $router->get('/admin/users/delete', [AdminController::class, 'delete_user'])->only('admin');
 $router->delete('/admin/users/delete', [AdminController::class, 'delete_user'])->only('admin');
 
+// Admin Topics
 $router->get('/admin/topics', [AdminController::class, 'topics'])->only('admin');
 $router->get('/admin/topics/create', [AdminController::class, 'create_topic'])->only('admin');
 $router->post('/admin/topics/create', [AdminController::class, 'create_topic'])->only('admin');
@@ -62,10 +67,24 @@ $router->patch('/admin/topics/edit', [AdminController::class, 'edit_topic'])->on
 $router->get('/admin/topics/delete', [AdminController::class, 'delete_topic'])->only('admin');
 $router->delete('/admin/topics/delete', [AdminController::class, 'delete_topic'])->only('admin');
 
+// Admin Collections
 $router->get('/admin/collections/create', [AdminController::class, 'create_collection'])->only('admin');
 $router->get('/admin/collections', [AdminController::class, 'collections'])->only('admin');
 
+// Admin Messages
 $router->get('/admin/messages', [AdminController::class, 'messages'])->only('admin');
 $router->delete('/admin/messages/trash', [AdminController::class, 'trash_messages'])->only('admin');
 
+// Admin Podcasts
+$router->get('/admin/podcasts', [AdminPodcastsController::class, 'index'])->only('admin');
+
+// Admin Tasks
+$router->get('/admin/tasks', [AdminTasksController::class, 'index'])->only('admin');
+$router->get('/admin/tasks/create', [AdminTasksController::class, 'create_task'])->only('admin');
+$router->post('/admin/tasks/create', [AdminTasksController::class, 'create_task'])->only('admin');
+$router->get('/admin/tasks/edit', [AdminTasksController::class, 'edit_task'])->only('admin');
+$router->patch('/admin/tasks/edit', [AdminTasksController::class, 'edit_task'])->only('admin');
+$router->get('/admin/tasks/archive', [AdminTasksController::class, 'archive_task'])->only('admin');
+$router->delete('/admin/tasks/trash', [AdminTasksController::class, 'trash_task'])->only('admin');
+$router->get('/admin/tasks/view', [AdminTasksController::class, 'view_task'])->only('admin');
 // $router->get('/users', 'controllers/users.php');

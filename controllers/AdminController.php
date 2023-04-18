@@ -362,8 +362,8 @@ class AdminController extends Controller
             ];
 
             $related_article = RelatedArticles::findFirst($params);
-            if($related_article) {
-                if($related_article->delete()) {
+            if ($related_article) {
+                if ($related_article->delete()) {
                     Application::$app->session->setFlash("success", "Related Article Deleted Successfully.");
                     last_uri();
                 }

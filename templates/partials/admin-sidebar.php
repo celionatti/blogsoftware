@@ -46,6 +46,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/admin/tasks">
+                    <span class="align-text-center bi bi-list-task"></span>
+                    Tasks
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="/admin/messages">
                     <span class="align-text-center bi bi-envelope-paper"></span>
                     Messages

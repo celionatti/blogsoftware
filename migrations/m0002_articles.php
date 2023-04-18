@@ -34,7 +34,7 @@ class m0002_articles extends Migration
         UNIQUE KEY `slug` (`slug`),
         KEY `topic` (`topic`),
         KEY `title` (`title`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4";
+        ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4";
         $this->connection->exec($SQL);
     }
 
