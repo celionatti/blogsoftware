@@ -216,8 +216,64 @@ class AdminTasksController extends Controller
 
     public function view_task(Request $request, Response $response)
     {
-        $view = [];
+        $slug = $request->get("task-slug");
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+
+        $view = [
+            'task' => Tasks::findFirst($params)
+        ];
 
         $this->view->render("admin/tasks/view", $view);
+    }
+
+    public function questions(Request $request, Response $response)
+    {
+        $slug = $request->get("task-slug");
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+
+        $task = Tasks::findFirst($params);
+
+        $view = [
+            'errors' => [],
+            'task' => $task,
+        ];
+
+        $this->view->render("admin/tasks/questions", $view);
+    }
+
+    public function question(Request $request, Response $response)
+    {
+        $slug = $request->get("task-slug");
+        $type = $request->get("type");
+
+        $type_search = ["objective", "subjective", "theory"];
+
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $slug]
+        ];
+
+        $task = Tasks::findFirst($params);
+
+        if (!in_array($type, $type_search)) {
+            Application::$app->session->setFlash("success", "Question Type is Invalid!");
+            redirect("/admin/tasks/questions?task-slug={$task->slug}");
+        }
+
+        $view = [
+            'errors' => [],
+            'task' => $task,
+            'type' => $type
+        ];
+
+        $this->view->render("admin/tasks/question", $view);
     }
 }
