@@ -11,6 +11,7 @@ use Core\Controller;
 use Core\Application;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
+use models\Questions;
 
 class AdminTasksController extends Controller
 {
@@ -232,6 +233,9 @@ class AdminTasksController extends Controller
 
     public function questions(Request $request, Response $response)
     {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
         $slug = $request->get("task-slug");
 
         $params = [
@@ -239,11 +243,29 @@ class AdminTasksController extends Controller
             'bind' => ['slug' => $slug]
         ];
 
+        $questions_params = [
+            'columns' => "questions.*, users.username",
+            'conditions' => "questions.task_slug = :task_slug",
+            'joins' => [
+                ['users', 'questions.user = users.uid'],
+            ],
+            'bind' => ['task_slug' => $slug],
+            'order' => 'questions.created_at DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
         $task = Tasks::findFirst($params);
 
+        $total = Questions::findTotal($questions_params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
         $view = [
-            'errors' => [],
             'task' => $task,
+            'questions' => Questions::find($questions_params),
+            'totalQuestions' => $total,
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
 
         $this->view->render("admin/tasks/questions", $view);
@@ -268,12 +290,149 @@ class AdminTasksController extends Controller
             redirect("/admin/tasks/questions?task-slug={$task->slug}");
         }
 
+        $question = new Questions();
+
+        if ($request->isPost()) {
+            $question->loadData($request->getBody());
+            $question->user = $this->currentUser->uid;
+            $upload = new FileUpload('image');
+
+            $uploadErrors = $upload->validate();
+
+            if (!empty($uploadErrors)) {
+                foreach ($uploadErrors as $field => $error) {
+                    $question->setError($field, $error);
+                }
+            }
+
+            if (empty($question->getErrors())) {
+                if ($question->save()) {
+                    $upload->directory('uploads/tasks/questions');
+                    if (!empty($upload->tmp)) {
+                        if ($upload->upload()) {
+                            if (file_exists($question->image)) {
+                                unlink($question->image);
+                                $question->image = "";
+                            }
+                            $question->image = $upload->fc;
+                            $image = new Image();
+                            $image->resize($question->image);
+                            $question->save();
+                        }
+                    }
+                    Application::$app->session->setFlash("success", "{$question->question} Saved successfully.");
+                    redirect("/admin/tasks/questions?task-slug={$task->slug}");
+                }
+            }
+        }
+
         $view = [
-            'errors' => [],
+            'errors' => $question->getErrors(),
             'task' => $task,
-            'type' => $type
+            'type' => $type,
+            'question' => $question
         ];
 
         $this->view->render("admin/tasks/question", $view);
+    }
+
+    public function edit_question(Request $request, Response $response)
+    {
+        $task_slug = $request->get("task-slug");
+        $slug = $request->get("slug");
+        $type = $request->get("type");
+
+        $type_search = ["objective", "subjective", "theory"];
+
+        $task_params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $task_slug]
+        ];
+
+        $params = [
+            'conditions' => "slug = :slug AND task_slug = :task_slug",
+            'bind' => ['slug' => $slug, 'task_slug' => $task_slug]
+        ];
+
+        $task = Tasks::findFirst($task_params);
+
+        if (!in_array($type, $type_search)) {
+            Application::$app->session->setFlash("success", "Question Type is Invalid!");
+            redirect("/admin/tasks/questions?task-slug={$task->slug}");
+        }
+
+        $question = Questions::findFirst($params);
+
+        if (!$question) {
+            Application::$app->session->setFlash("success", "Question does not exist");
+            last_uri();
+        }
+
+        if ($request->isPatch()) {
+            $question->loadData($request->getBody());
+            $question->user = $this->currentUser->uid;
+            $upload = new FileUpload('image');
+
+            $uploadErrors = $upload->validate();
+
+            if (!empty($uploadErrors)) {
+                foreach ($uploadErrors as $field => $error) {
+                    $question->setError($field, $error);
+                }
+            }
+
+            if (empty($question->getErrors())) {
+                if ($question->save()) {
+                    $upload->directory('uploads/tasks/questions');
+                    if (!empty($upload->tmp)) {
+                        if ($upload->upload()) {
+                            if (file_exists($question->image)) {
+                                unlink($question->image);
+                                $question->image = "";
+                            }
+                            $question->image = $upload->fc;
+                            $image = new Image();
+                            $image->resize($question->image);
+                            $question->save();
+                        }
+                    }
+                    Application::$app->session->setFlash("success", "{$question->question} Updated successfully.");
+                    redirect("/admin/tasks/questions?task-slug={$task->slug}");
+                }
+            }
+        }
+
+        $view = [
+            'errors' => [],
+            'task' => $task,
+            'type' => $type,
+            'question' => $question
+        ];
+
+        $this->view->render("admin/tasks/edit_question", $view);
+    }
+
+    public function trash_question(Request $request, Response $response)
+    {
+        $params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $request->post('question_slug')]
+        ];
+
+        $question = Questions::findFirst($params);
+
+        if (!$question) {
+            Application::$app->session->setFlash("success", "Comment Not Found");
+            last_uri();
+        }
+
+        if ($request->isDelete()) {
+            if ($question) {
+                if ($question->delete()) {
+                    Application::$app->session->setFlash("success", "Question Deleted successfully");
+                    last_uri();
+                }
+            }
+        }
     }
 }

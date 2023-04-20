@@ -19,6 +19,7 @@ use Core\Support\Helpers\TimeFormat;
     </h5>
 
     <form action="" method="post" enctype="multipart/form-data">
+        <?= BootstrapForm::method("PATCH"); ?>
         <?= BootstrapForm::hidden("task_slug", $task->slug); ?>
         <?= BootstrapForm::hidden("type", $type); ?>
 
@@ -54,7 +55,7 @@ use Core\Support\Helpers\TimeFormat;
                     cancel</a>
             </div>
             <div class="col">
-                <button type="submit" class="btn btn-dark w-100">Add Question</button>
+                <button type="submit" class="btn btn-dark w-100">Update Question</button>
             </div>
         </div>
     </form>

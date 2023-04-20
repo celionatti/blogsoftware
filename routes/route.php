@@ -91,4 +91,7 @@ $router->get('/admin/tasks/questions', [AdminTasksController::class, 'questions'
 $router->post('/admin/tasks/questions', [AdminTasksController::class, 'questions'])->only('admin');
 $router->get('/admin/tasks/questions/question', [AdminTasksController::class, 'question'])->only('admin');
 $router->post('/admin/tasks/questions/question', [AdminTasksController::class, 'question'])->only('admin');
+$router->get('/admin/tasks/questions/question/edit', [AdminTasksController::class, 'edit_question'])->only('admin');
+$router->patch('/admin/tasks/questions/question/edit', [AdminTasksController::class, 'edit_question'])->only('admin');
+$router->delete('/admin/tasks/questions/question/trash', [AdminTasksController::class, 'trash_question'])->only('admin');
 // $router->get('/users', 'controllers/users.php');
