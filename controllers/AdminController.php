@@ -16,6 +16,7 @@ use models\CommentReplies;
 use models\RelatedArticles;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
+use models\Subscribers;
 
 class AdminController extends Controller
 {
@@ -905,5 +906,28 @@ class AdminController extends Controller
             }
             redirect("/admin/messages");
         }
+    }
+
+    public function subscribers(Request $request, Response $response)
+    {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $params = [
+            'order' => 'created_at DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+        $total = Subscribers::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
+        $view = [
+            'errors' => [],
+            'subscribers' => Subscribers::find($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
+        ];
+
+        $this->view->render('admin/extras/subscribers', $view);
     }
 }

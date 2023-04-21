@@ -1,9 +1,25 @@
 <?php
 
+
+use Core\Forms\BootstrapForm;
+
+
 ?>
 
 <?php $this->start('content') ?>
 
-<h1>Admin Dashboard</h1>
+<div id="table-actions" class="row mt-3">
+
+    <div class="col text-start">
+
+    </div>
+
+    <div class="col text-end">
+        <a href="/admin/subscribers" class="btn btn-warning btn-sm">
+            <i class="bi bi-user"></i>
+            Subscribers
+        </a>
+    </div>
+</div>
 
 <?php $this->end() ?>

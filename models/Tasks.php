@@ -20,8 +20,7 @@ class Tasks extends DbModel
     public string $type = "";
     public string $title = "";
     public string $thumbnail = "";
-    public string $start_time = "";
-    public string $end_time = "";
+    public string $time = "";
     public string $instruction = "";
     public string $editable = self::YES_EDITABLE;
     public string $status = self::STATUS_DISABLED;
@@ -38,8 +37,7 @@ class Tasks extends DbModel
         $this->timeStamps();
 
         $this->runValidation(new RequiredValidation($this, ['field' => 'title', 'msg' => "Title is a required field."]));
-        $this->runValidation(new RequiredValidation($this, ['field' => 'start_time', 'msg' => "Start Time is a required field."]));
-        $this->runValidation(new RequiredValidation($this, ['field' => 'end_time', 'msg' => "End Time is a required field."]));
+        $this->runValidation(new RequiredValidation($this, ['field' => 'time', 'msg' => "Time is a required field."]));
 
         if ($this->isNew()) {
             $this->slug = Token::generateOTP(60);

@@ -30,11 +30,7 @@ use Core\Forms\BootstrapForm;
 
         <?= BootstrapForm::textareaField('Instruction', 'instruction', $task->instruction ?? '', ['class' => 'form-control summernote'], ['class' => 'form-floating my-2'], $errors) ?>
 
-        <div class="row my-3">
-            <?= bootstrapForm::inputField('Start Time', 'start_time', $task->start_time ?? '', ['class' => 'form-control', 'type' => 'datetime-local'], ['class' => 'form-floating col'], $errors) ?>
-
-            <?= bootstrapForm::inputField('End Time', 'end_time', $task->end_time ?? '', ['class' => 'form-control', 'type' => 'datetime-local'], ['class' => 'form-floating col'], $errors) ?>
-        </div>
+        <?= bootstrapForm::inputField('Time', 'time', $task->time ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
         <?= bootstrapForm::selectField('Status', 'status', $task->status ?? '', $statusOpts ?? [], ['class' => 'form-select form-select-lg'], ['class' => 'form-floating col'], $errors) ?>
 

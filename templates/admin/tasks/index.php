@@ -36,6 +36,7 @@ use Core\Support\Helpers\TimeFormat;
                     <th>Image</th>
                     <th>Title</th>
                     <th>Type</th>
+                    <th>Time</th>
                     <th>Status</th>
                     <th>Created Date</th>
                 </thead>
@@ -75,6 +76,9 @@ use Core\Support\Helpers\TimeFormat;
                             </td>
                             <td class="text-capitalize">
                                 <?= $task->type ?>
+                            </td>
+                            <td class="text-capitalize">
+                                <?= $task->time ?>
                             </td>
                             <td class="text-capitalize">
                                 <?= $task->status ?>

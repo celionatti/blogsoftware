@@ -72,7 +72,7 @@ use Core\Support\Helpers\TimeFormat;
                             <td>
                                 <?= $key + 1 ?>
                             </td>
-                            <td>
+                            <td class="text-capitalize">
                                 <?= $question->username ?>
                             </td>
                             <td>

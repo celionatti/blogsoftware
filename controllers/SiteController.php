@@ -12,6 +12,7 @@ use models\Comments;
 use models\Contacts;
 use Core\Application;
 use models\CommentReplies;
+use models\Subscribers;
 
 class SiteController extends Controller
 {
@@ -52,6 +53,7 @@ class SiteController extends Controller
         ];
 
         $view = [
+            'errors' => [],
             'featured' => Articles::findFirst($featured_params),
             'articles' => Articles::find($articles_params),
         ];
@@ -280,5 +282,19 @@ class SiteController extends Controller
             'errors' => [],
         ];
         $this->view->render('search', $view);
+    }
+
+    public function subscribers(Request $request, Response $response)
+    {
+        $subscribers = new Subscribers();
+
+        if ($request->isPost()) {
+            $subscribers->loadData($request->getBody());
+
+            if ($subscribers->save()) {
+                Application::$app->session->setFlash("success", "You are now Subscribe to our newsletter");
+                last_uri();
+            }
+        }
     }
 }

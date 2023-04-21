@@ -19,6 +19,7 @@ $router->post('/news/read/add_sub_replies', [SiteController::class, 'add_sub_rep
 $router->get('/tags', [SiteController::class, 'tags']);
 $router->get('/contact', [SiteController::class, 'contact']);
 $router->post('/contact', [SiteController::class, 'contact']);
+$router->post('/subscribers', [SiteController::class, 'subscribers']);
 
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);
@@ -74,6 +75,11 @@ $router->get('/admin/collections', [AdminController::class, 'collections'])->onl
 // Admin Messages
 $router->get('/admin/messages', [AdminController::class, 'messages'])->only('admin');
 $router->delete('/admin/messages/trash', [AdminController::class, 'trash_messages'])->only('admin');
+
+
+// Admin Subscribers
+$router->get('/admin/subscribers', [AdminController::class, 'subscribers'])->only('admin');
+$router->delete('/admin/subscribers/trash', [AdminController::class, 'trash_subscriber'])->only('admin');
 
 // Admin Podcasts
 $router->get('/admin/podcasts', [AdminPodcastsController::class, 'index'])->only('admin');
