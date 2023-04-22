@@ -11,8 +11,9 @@ use models\Articles;
 use models\Comments;
 use models\Contacts;
 use Core\Application;
-use models\CommentReplies;
+use models\BoardPosts;
 use models\Subscribers;
+use models\CommentReplies;
 
 class SiteController extends Controller
 {
@@ -296,5 +297,26 @@ class SiteController extends Controller
                 last_uri();
             }
         }
+    }
+
+    public function board_post(Request $request, Response $response)
+    {
+        $slug = $request->get('slug');
+
+        $params = [
+            'conditions' => "status = :status AND slug = :slug",
+            'bind' => ['status' => 'active', 'slug' => $slug],
+            'limit' => "1",
+        ];
+
+        $board = BoardPosts::findFirst($params);
+        if (!$board)
+            abort(Response::NOT_FOUND);
+
+        $view = [
+            'board' => $board,
+        ];
+
+        $this->view->render("board_post", $view);
     }
 }

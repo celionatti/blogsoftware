@@ -7,6 +7,7 @@ use controllers\SiteController;
 use controllers\AdminController;
 use controllers\AdminTasksController;
 use controllers\AdminPodcastsController;
+use controllers\AdminBoardPostsController;
 
 $router->get('/', [SiteController::class, 'index']);
 $router->get('/news', [SiteController::class, 'news']);
@@ -20,6 +21,7 @@ $router->get('/tags', [SiteController::class, 'tags']);
 $router->get('/contact', [SiteController::class, 'contact']);
 $router->post('/contact', [SiteController::class, 'contact']);
 $router->post('/subscribers', [SiteController::class, 'subscribers']);
+$router->get('/board-post/read', [SiteController::class, 'board_post']);
 
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);
@@ -100,4 +102,13 @@ $router->post('/admin/tasks/questions/question', [AdminTasksController::class, '
 $router->get('/admin/tasks/questions/question/edit', [AdminTasksController::class, 'edit_question'])->only('admin');
 $router->patch('/admin/tasks/questions/question/edit', [AdminTasksController::class, 'edit_question'])->only('admin');
 $router->delete('/admin/tasks/questions/question/trash', [AdminTasksController::class, 'trash_question'])->only('admin');
+
+// Admin Board Posts
+$router->get('/admin/board-posts', [AdminBoardPostsController::class, 'index'])->only('admin');
+$router->get('/admin/board-posts/create', [AdminBoardPostsController::class, 'create'])->only('admin');
+$router->post('/admin/board-posts/create', [AdminBoardPostsController::class, 'create'])->only('admin');
+$router->get('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit'])->only('admin');
+$router->patch('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit'])->only('admin');
+$router->delete('/admin/board-posts/trash', [AdminBoardPostsController::class, 'trash'])->only('admin');
+
 // $router->get('/users', 'controllers/users.php');

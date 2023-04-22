@@ -11,7 +11,10 @@ use Core\Forms\BootstrapForm;
 <div id="table-actions" class="row mt-3">
 
     <div class="col text-start">
-
+        <a href="/admin/board-posts" class="btn btn-primary btn-sm">
+            <i class="bi bi-user"></i>
+            Board Posts
+        </a>
     </div>
 
     <div class="col text-end">

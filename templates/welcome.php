@@ -2,7 +2,11 @@
 
 
 use Core\Config;
+use Core\Support\Helpers\StringFormat;
 use Core\Support\Helpers\TimeFormat;
+use models\BoardPosts;
+
+$boardPost = BoardPosts::boardPost();
 
 
 ?>
@@ -10,14 +14,22 @@ use Core\Support\Helpers\TimeFormat;
 
 <?php $this->start('content') ?>
 
-<div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
-    <div class="col-md-6 px-0">
-        <h1 class="display-4 fst-italic">Title of a longer featured blog post</h1>
-        <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently
-            about what’s most interesting in this post’s contents.</p>
-        <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p>
+<?php if ($boardPost): ?>
+    <div class="p-4 p-md-5 mb-4 rounded text-bg-dark">
+        <div class="col-md-6 px-0">
+            <h1 class="display-4 fst-italic">
+                <?= $boardPost->title ?>
+            </h1>
+            <p class="lead my-3">
+                <?= htmlspecialchars_decode(StringFormat::Excerpt($boardPost->content)) ?>
+            </p>
+            <p class="lead mb-0"><a href="<?= Config::get('domain') ?>board-post/read?slug=<?= $boardPost->slug ?>"
+                    class="text-white fw-bold">Continue
+                    reading...</a>
+            </p>
+        </div>
     </div>
-</div>
+<?php endif; ?>
 
 <?php if ($featured): ?>
     <div class="row mb-3 text-center my-3 rounded border p-2 shadow">
