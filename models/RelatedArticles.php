@@ -2,6 +2,7 @@
 
 namespace models;
 
+use Core\Response;
 use Core\Database\DbModel;
 
 class RelatedArticles extends DbModel
@@ -35,5 +36,26 @@ class RelatedArticles extends DbModel
         }
 
         return false;
+    }
+
+    public static function fetch_related_articles($slug)
+    {
+        if (!$slug)
+            abort(Response::NOT_FOUND);
+            
+        $params = [
+            'columns' => "articles.title, articles.slug, articles.author",
+            'conditions' => "related_articles.article_slug = :article_slug AND articles.status = :status",
+            'bind' => ['article_slug' => $slug, 'status' => 'published'],
+            'joins' => [
+                ['articles', 'related_articles.related_slug = articles.slug'],
+            ],
+            'order' => 'articles.created_at DESC',
+            'limit' => '5'
+        ];
+
+        $related_articles = RelatedArticles::find($params);
+        
+        return $related_articles;
     }
 }

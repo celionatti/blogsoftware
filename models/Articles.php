@@ -2,14 +2,15 @@
 
 namespace models;
 
+use Core\Response;
 use Core\Database\DbModel;
-use Core\Support\Helpers\Bcrypt;
 use Core\Support\Helpers\Token;
-use Core\Validations\EmailValidation;
-use Core\Validations\MatchesValidation;
+use Core\Support\Helpers\Bcrypt;
 use Core\Validations\MinValidation;
-use Core\Validations\RequiredValidation;
+use Core\Validations\EmailValidation;
 use Core\Validations\UniqueValidation;
+use Core\Validations\MatchesValidation;
+use Core\Validations\RequiredValidation;
 
 class Articles extends DbModel
 {
@@ -64,4 +65,22 @@ class Articles extends DbModel
             $this->_skipUpdate = ['slug'];
         }
     }
+
+    public static function fetch_articles($slug)
+    {
+        if (!$slug)
+            abort(Response::NOT_FOUND);
+            
+        $params = [
+            'conditions' => "status = :status",
+            'bind' => ['status' => 'published'],
+            'order' => 'created_at DESC',
+            'limit' => '5'
+        ];
+
+        $articles = Articles::find($params);
+
+        return $articles;
+    }
+
 }

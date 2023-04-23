@@ -1,6 +1,7 @@
 <?php
 
 
+use Core\Config;
 use Core\Forms\BootstrapForm;
 use Core\Support\Helpers\TimeFormat;
 
@@ -25,8 +26,8 @@ use Core\Support\Helpers\TimeFormat;
         <div class="d-flex my-2">
             <a href="#" class="bi bi-facebook fs-5 me-3 text-primary"></a>
             <a href="#" class="bi bi-telegram fs-5 me-3 text-primary"></a>
-            <a href="#" class="bi bi-whatsapp fs-5 me-3 text-success"></a>
-            <a href="#" class="bi bi-twitter fs-5 me-3 text-info"></a>
+            <a href="https://api.whatsapp.com/send?text=<?= Config::get("domain") . $article->slug ?>" class="bi bi-whatsapp fs-5 me-3 text-success" target="_blank"></a>
+            <a href="https://twitter.com/share?text=<?= $article->meta_title ?>&url=<?= Config::get('domain') . $article->slug ?>" class="bi bi-twitter fs-5 me-3 text-info" target="_blank"></a>
         </div>
 
         <?php if ($article->point_one): ?>
@@ -37,9 +38,11 @@ use Core\Support\Helpers\TimeFormat;
                     <li>
                         <?= $article->point_one ?>
                     </li>
+                    <?php if ($article->point_two): ?>
                     <li>
                         <?= $article->point_two ?>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         <?php endif; ?>

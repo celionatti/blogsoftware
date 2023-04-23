@@ -80,7 +80,7 @@ $boardPost = BoardPosts::boardPost();
 
     <?php if ($articles): ?>
         <?php foreach ($articles as $article): ?>
-            <div class="col-6 my-3">
+            <div class="col-12 col-md-6 my-3">
                 <div class="border rounded p-2 shadow">
                     <article class="">
                         <div class="image">
