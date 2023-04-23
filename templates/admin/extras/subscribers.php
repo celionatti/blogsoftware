@@ -20,7 +20,7 @@ use Core\Forms\BootstrapForm;
                     Trash All
                 </button>
             </form>
-            <a href="/admin/subscribers/mail" class="btn btn-info btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/subscribers/mail" class="btn btn-info btn-sm">
                 <i class="bi bi-envelope"></i>
                 Message
             </a>
@@ -53,7 +53,7 @@ use Core\Forms\BootstrapForm;
                                         <button type="submit" class="btn btn-sm btn-danger">Trash</button>
                                     </form>
                                     <span class="divider">|</span>
-                                    <a href="/admin/subscribers/mail?slug=<?= $subscriber->slug ?>"
+                                    <a href="<?= Config::get('domain') ?>admin/subscribers/mail?slug=<?= $subscriber->slug ?>"
                                         class="btn btn-primary btn-sm">
                                         <i class="bi bi-envelope"></i>
                                         Message

@@ -10,19 +10,17 @@ use Core\Forms\BootstrapForm;
         <div class="col-6 col-md-2 mb-3">
             <h5>Useful Links</h5>
             <ul class="nav flex-column">
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Home</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Contacts</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">FAQs</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">About</a></li>
+                <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>" class="nav-link p-0 text-muted">Home</a></li>
+                <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>contact" class="nav-link p-0 text-muted">Contacts</a></li>
+                <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>faqs" class="nav-link p-0 text-muted">FAQs</a></li>
             </ul>
         </div>
 
         <div class="col-6 col-md-2 mb-3">
             <h5>Corporate Links</h5>
             <ul class="nav flex-column">
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Report a story</a></li>
+                <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>report-a-story" class="nav-link p-0 text-muted">Report a story</a></li>
                 <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Advertisement</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Private Policy</a></li>
                 <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Content Policy</a></li>
                 <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Terms</a></li>
             </ul>

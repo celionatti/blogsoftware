@@ -17,11 +17,11 @@ use Core\Support\Helpers\TimeFormat;
         <?= BootstrapForm::inputField('', 'search', '', ['class' => 'form-control form-control-sm shadow', 'type' => 'search'], ['class' => 'col my-1'], $errors) ?>
 
         <div class="col text-end">
-            <a href="/admin/tasks/archive" class="btn btn-warning btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/tasks/archive" class="btn btn-warning btn-sm">
                 <i class="bi bi-archive"></i>
                 Archive Task
             </a>
-            <a href="/admin/tasks/create" class="btn btn-primary btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/tasks/create" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-circle"></i>
                 New Task
             </a>

@@ -1,5 +1,6 @@
 <?php
 
+use Core\Config;
 use Core\Forms\BootstrapForm;
 
 ?>
@@ -19,7 +20,7 @@ use Core\Forms\BootstrapForm;
 
         <div class="row my-3">
             <div class="col">
-                <a href="/admin/articles" class="btn btn-dark w-100"><i class="bi bi-arrow-left-circle"></i>
+                <a href="<?= Config::get('domain') ?>admin/articles" class="btn btn-dark w-100"><i class="bi bi-arrow-left-circle"></i>
                     Cancel</a>
             </div>
             <div class="col">

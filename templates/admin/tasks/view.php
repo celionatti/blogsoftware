@@ -17,7 +17,7 @@ use Core\Support\Helpers\TimeFormat;
 
     <div id="table-actions" class="row mt-3">
         <div class="col text-start">
-            <a href="/admin/tasks/participants" class="btn btn-info btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/tasks/participants" class="btn btn-info btn-sm">
                 <i class="bi bi-people"></i>
                 Participants
             </a>
@@ -25,12 +25,12 @@ use Core\Support\Helpers\TimeFormat;
 
         <div class="col text-end">
             <?php if ($task->type === "quiz"): ?>
-                <a href="/admin/tasks/questions?task-slug=<?= $task->slug ?>" class="btn btn-primary btn-sm">
+                <a href="<?= Config::get('domain') ?>admin/tasks/questions?task-slug=<?= $task->slug ?>" class="btn btn-primary btn-sm">
                     <i class="bi bi-plus-circle"></i>
                     Questions
                 </a>
             <?php else: ?>
-                <a href="/admin/tasks/competitions?task-slug=<?= $task->slug ?>" class="btn btn-primary btn-sm">
+                <a href="<?= Config::get('domain') ?>admin/tasks/competitions?task-slug=<?= $task->slug ?>" class="btn btn-primary btn-sm">
                     <i class="bi bi-plus-circle"></i>
                     Challenge/Competition
                 </a>

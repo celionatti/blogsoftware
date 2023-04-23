@@ -15,11 +15,11 @@ use Core\Forms\BootstrapForm;
         <?= BootstrapForm::inputField('', 'search', '', ['class' => 'form-control form-control-sm shadow', 'type' => 'search'], ['class' => 'col my-1'], $errors) ?>
 
         <div class="col text-end">
-            <a href="/admin/topics/trash" class="btn btn-danger btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/topics/trash" class="btn btn-danger btn-sm">
                 <i class="bi bi-trash"></i>
                 Trash
             </a>
-            <a href="/admin/topics/create" class="btn btn-primary btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/topics/create" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-circle"></i>
                 New Topic
             </a>

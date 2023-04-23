@@ -15,11 +15,11 @@ use Core\Support\Pagination;
         <?= BootstrapForm::inputField('', 'search', '', ['class' => 'form-control form-control-sm shadow', 'type' => 'search'], ['class' => 'col my-1'], $errors) ?>
 
         <div class="col text-end">
-            <a href="/admin/users/trash" class="btn btn-danger btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/users/trash" class="btn btn-danger btn-sm">
                 <i class="bi bi-trash"></i>
                 Trash
             </a>
-            <a href="/admin/users/create" class="btn btn-primary btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/users/create" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-circle"></i>
                 New User
             </a>
@@ -76,26 +76,6 @@ use Core\Support\Pagination;
             </h4>
         <?php endif; ?>
     </div>
-
-    <!-- Delete User Model -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="deleteModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End of Delete User Model -->
 
 </div>
 <?php $this->end(); ?>

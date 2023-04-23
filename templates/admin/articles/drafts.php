@@ -16,11 +16,11 @@ use Core\Support\Helpers\TimeFormat;
         <?= BootstrapForm::inputField('', 'search', '', ['class' => 'form-control form-control-sm shadow', 'type' => 'search'], ['class' => 'col my-1'], $errors) ?>
 
         <div class="col text-end">
-            <a href="/admin/articles" class="btn btn-warning btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/articles" class="btn btn-warning btn-sm">
                 <i class="bi bi-files"></i>
                 Articles
             </a>
-            <a href="/admin/articles/create" class="btn btn-primary btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/articles/create" class="btn btn-primary btn-sm">
                 <i class="bi bi-plus-circle"></i>
                 New Article
             </a>
@@ -47,7 +47,7 @@ use Core\Support\Helpers\TimeFormat;
                                 <?= $article->author ?>
                             </td>
                             <td>
-                                <a href="" target="_blank" class="text-dark text-decoration-none">
+                                <a href="<?= Config::get('domain') ?>admin/articles/review?article-slug=<?= $article->slug ?>" target="_blank" class="text-dark text-decoration-none">
                                     <?= $article->title ?>
                                 </a>
                                 <div class="my-2">

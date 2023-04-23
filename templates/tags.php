@@ -1,6 +1,6 @@
 <?php
 
-use Core\Support\Helpers\StringFormat;
+use Core\Config;
 use Core\Support\Helpers\TimeFormat;
 
 ?>
@@ -22,7 +22,7 @@ use Core\Support\Helpers\TimeFormat;
                     <article class="my-3 shadow">
                         <div class="card">
                             <div class="card-header">
-                                <a href="/news/read?slug=<?= $article->slug ?>">
+                                <a href="<?= Config::get('domain') ?>news/read?slug=<?= $article->slug ?>">
                                     <img src="<?= get_image($article->thumbnail) ?>"
                                         alt="<?= $article->thumbnail_caption ?? '' ?>" class="post-img">
                                 </a>
@@ -31,7 +31,7 @@ use Core\Support\Helpers\TimeFormat;
                                 <div
                                     class="d-flex justify-content-between align-items-center mb-2 px-3 py-1 text-center rounded border-bottom border-danger border-3">
                                     <h6 class="text-center">
-                                        <a href="/tags?slug=<?= $article->topic_slug ?>&tag_name=<?= $article->topic ?>"
+                                        <a href="<?= Config::get('domain') ?>tags?slug=<?= $article->topic_slug ?>&tag_name=<?= $article->topic ?>"
                                             class="text-black">
                                             <span class="bi bi-tags"></span>
                                             <?= $article->topic ?>
@@ -41,7 +41,7 @@ use Core\Support\Helpers\TimeFormat;
                                         <?= TimeFormat::TimeInAgo($article->created_at) ?>
                                     </h6>
                                 </div>
-                                <a href="/news/read?slug=<?= $article->slug ?>" class="post-title">
+                                <a href="<?= Config::get('domain') ?>news/read?slug=<?= $article->slug ?>" class="post-title">
                                     <?= $article->title ?>
                                 </a>
                             </div>

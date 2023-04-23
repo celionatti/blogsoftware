@@ -20,8 +20,8 @@ $navTopics = Topics::navTopics();
                 </a>
             </div>
             <div class="col-4 text-center">
-                <a class="blog-header-logo text-dark" href="/">
-                    <h2>Natti Attention</h2>
+                <a class="blog-header-logo text-dark" href="<?= Config::get('domain') ?>">
+                    <h2><?= $this->getTitle(); ?></h2>
                 </a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -47,20 +47,20 @@ $navTopics = Topics::navTopics();
                                     <?= $currentUser->displayName() ?>
                                 </h6>
                             </li>
-                            <li><a class="dropdown-item p-2" href="/account">Profile</a></li>
+                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>account">Profile</a></li>
                             <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin" target="_blank">Dashboard</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <form action="/logout" method="post">
+                                <form action="<?= Config::get('domain') ?>logout" method="post">
                                     <button type="submit" class="dropdown-item bg-danger text-white p-2">Logout</button>
                                 </form>
                             </li>
                         </ul>
                     </div>
                 <?php else: ?>
-                    <a class="btn btn-sm btn-outline-secondary" href="/login">Login</a>
+                    <a class="btn btn-sm btn-outline-secondary" href="<?= Config::get('domain') ?>login">Login</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -91,13 +91,13 @@ $navTopics = Topics::navTopics();
             <div class="collapse navbar-collapse" id="navbarBuzz">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?= UrlIs('/') ? 'active' : '' ?>" aria-current="page" href="/">Home</a>
+                        <a class="nav-link <?= UrlIs('/') ? 'active' : '' ?>" aria-current="page" href="<?= Config::get('domain') ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= UrlIs('/news') ? 'active' : '' ?>" href="/news">News</a>
+                        <a class="nav-link <?= UrlIs('/news') ? 'active' : '' ?>" href="<?= Config::get('domain') ?>news">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= UrlIs('/contact') ? 'active' : '' ?>" href="/contact">Contact</a>
+                        <a class="nav-link <?= UrlIs('/contact') ? 'active' : '' ?>" href="<?= Config::get('domain') ?>contact">Contact</a>
                     </li>
                 </ul>
             </div>

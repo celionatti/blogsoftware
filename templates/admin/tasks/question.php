@@ -49,7 +49,7 @@ use Core\Support\Helpers\TimeFormat;
 
         <div class="row my-3">
             <div class="col">
-                <a href="/admin/tasks/questions?task-slug=<?= $task->slug ?>" class="btn btn-danger w-100"><i
+                <a href="<?= Config::get('domain') ?>admin/tasks/questions?task-slug=<?= $task->slug ?>" class="btn btn-danger w-100"><i
                         class="bi bi-arrow-left-circle"></i>
                     cancel</a>
             </div>
