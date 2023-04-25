@@ -146,4 +146,9 @@ class AdminBoardPostsController extends Controller
         ];
         $this->view->render('admin/board/edit', $view);
     }
+
+    public function status(Request $request, Response $response)
+    {
+
+    }
 }
