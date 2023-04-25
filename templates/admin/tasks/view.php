@@ -17,7 +17,7 @@ use Core\Support\Helpers\TimeFormat;
 
     <div id="table-actions" class="row mt-3">
         <div class="col text-start">
-            <a href="<?= Config::get('domain') ?>admin/tasks/participants" class="btn btn-info btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/tasks/participants?task-slug=<?= $task->slug ?>" class="btn btn-info btn-sm">
                 <i class="bi bi-people"></i>
                 Participants
             </a>

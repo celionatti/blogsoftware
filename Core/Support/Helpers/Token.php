@@ -67,15 +67,15 @@ class Token
 
     public static function TransactID($length, $prefix = ''): string
     {
-        $array = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, '|');
+        $array = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
 
         $text = "";
 
         for ($i = 0; $i < $length; $i++) {
-            $random = rand(0, 10);
+            $random = rand(0, 9);
             $text .= $array[$random];
         }
-        return $prefix . ':' . strtolower($text) . time();
+        return $prefix . ':' . strtolower($text);
     }
 
     public static function RandomNumber($length): string

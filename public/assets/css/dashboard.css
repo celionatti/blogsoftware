@@ -2,6 +2,11 @@ body {
     font-size: .875rem;
 }
 
+::selection {
+    background: #000;
+    color: #fff;
+}
+
 .feather {
     width: 16px;
     height: 16px;

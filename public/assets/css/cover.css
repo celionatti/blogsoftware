@@ -11,6 +11,11 @@
   text-shadow: none; /* Prevent inheritance from `body` */
 }
 
+::selection {
+    background: #000;
+    color: #fff;
+}
+
 
 /*
  * Base structure

@@ -75,7 +75,7 @@ use Core\Support\Helpers\TimeFormat;
                                 <?= BootstrapForm::method("PATCH"); ?>
                                 <?= BootstrapForm::hidden("slug", $board->slug) ?>
                                 <?= BootstrapForm::hidden("status", "active") ?>
-                                <button type="submit" class="btn btn-sm btn-primary">Disable</button>
+                                <button type="submit" class="btn btn-sm btn-primary">Active</button>
                             </form>
                             <?php endif; ?>
                         </div>

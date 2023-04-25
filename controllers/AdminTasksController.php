@@ -9,9 +9,10 @@ use models\Users;
 use Core\Response;
 use Core\Controller;
 use Core\Application;
+use models\Questions;
+use models\TaskRegistration;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
-use models\Questions;
 
 class AdminTasksController extends Controller
 {
@@ -229,6 +230,50 @@ class AdminTasksController extends Controller
         ];
 
         $this->view->render("admin/tasks/view", $view);
+    }
+
+    public function participants(Request $request, Response $response)
+    {
+        $task_slug = $request->get("task-slug");
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $task_params = [
+            'conditions' => "slug = :slug",
+            'bind' => ['slug' => $task_slug]
+        ];
+
+        $params = [
+            'columns' => "task_registration.task_slug, task_registration.status, users.surname, users.name",
+            'conditions' => "task_id = :task_id",
+            'bind' => ['task_id' => $task_slug],
+            'joins' => [
+                ['users', 'task_registration.user_id = users.uid'],
+            ],
+            'order' => 'task_registration.created_at DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
+        $total = TaskRegistration::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
+        $view = [
+            'errors' => [],
+            'task' => Tasks::findFirst($task_params),
+            'participants' => TaskRegistration::find($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
+        ];
+
+        $this->view->render("admin/tasks/participants", $view);
+    }
+
+    public function participant_status(Request $request, Response $response)
+    {
+        if($request->isPatch()) {
+            
+        }
     }
 
     public function questions(Request $request, Response $response)

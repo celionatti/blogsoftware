@@ -31,8 +31,6 @@ class AdminBoardPostsController extends Controller
         $recordsPerPage = 5;
 
         $params = [
-            'conditions' => "status = :status",
-            'bind' => ['status' => 'active'],
             'order' => 'created_at DESC',
             'limit' => $recordsPerPage,
             'offset' => ($currentPage - 1) * $recordsPerPage
@@ -149,6 +147,23 @@ class AdminBoardPostsController extends Controller
 
     public function status(Request $request, Response $response)
     {
+        if($request->isPatch()) {
+            $params = [
+                'conditions' => "slug = :slug",
+                'bind' => ['slug' => $request->post('slug')]
+            ];
 
+            $boardPost = BoardPosts::findFirst($params);
+            
+            if(!$boardPost) {
+                Application::$app->session->setFlash("success", "Board Post Not Found");
+                last_uri();
+            }
+            $boardPost->loadData($request->getBody());
+            if ($boardPost->save()) {
+                Application::$app->session->setFlash("success", "Board Post Updated successfully");
+                last_uri();
+            }
+        }
     }
 }
