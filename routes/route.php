@@ -5,6 +5,7 @@
 use controllers\AuthController;
 use controllers\SiteController;
 use controllers\AdminController;
+use controllers\TasksController;
 use controllers\AdminTasksController;
 use controllers\AdminPodcastsController;
 use controllers\AdminBoardPostsController;
@@ -29,6 +30,10 @@ $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'login']);
 
 $router->post('/logout', [AuthController::class, 'logout']);
+
+// Quiz AND Tasks
+$router->get('/task/registration', [TasksController::class, 'task_registration']);
+$router->get('/quiz', [TasksController::class, 'quiz']);
 
 // Admin
 $router->get('/admin', [AdminController::class, 'index'])->only('admin');
@@ -110,5 +115,6 @@ $router->post('/admin/board-posts/create', [AdminBoardPostsController::class, 'c
 $router->get('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit'])->only('admin');
 $router->patch('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit'])->only('admin');
 $router->delete('/admin/board-posts/trash', [AdminBoardPostsController::class, 'trash'])->only('admin');
+$router->patch('/admin/board-posts/status', [AdminBoardPostsController::class, 'status'])->only('admin');
 
 // $router->get('/users', 'controllers/users.php');
