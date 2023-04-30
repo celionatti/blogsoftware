@@ -272,7 +272,45 @@ class AdminTasksController extends Controller
     public function participant_status(Request $request, Response $response)
     {
         if($request->isPatch()) {
-            
+            $params = [
+                'conditions' => "task_slug = :task_slug",
+                'bind' => ['task_slug' => $request->post('task_slug')]
+            ];
+
+            $participant = TaskRegistration::findFirst($params);
+
+            if(!$participant) {
+                Application::$app->session->setFlash("success", "Participant Not Found");
+                last_uri();
+            }
+
+            if ($participant) {
+                $participant->loadData($request->getBody());
+                if ($participant->save()) {
+                    Application::$app->session->setFlash("success", "Participant Updated successfully");
+                    last_uri();
+                }
+            }
+        }
+    }
+
+    public function participant_trash(Request $request, Response $response)
+    {
+        if($request->isDelete()) {
+            $participants = TaskRegistration::find();
+
+            if (!$participants) {
+                Application::$app->session->setFlash("success", "Participants Not Found");
+                last_uri();
+            }
+
+            if($participants) {
+                foreach($participants as $participant) {
+                    $participant->delete();
+                }
+                Application::$app->session->setFlash("success", "Participants Deleted successfully");
+                last_uri();
+            }
         }
     }
 

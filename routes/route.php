@@ -34,6 +34,7 @@ $router->post('/logout', [AuthController::class, 'logout']);
 // Quiz AND Tasks
 $router->get('/task/registration', [TasksController::class, 'task_registration']);
 $router->post('/task/registration', [TasksController::class, 'task_registration']);
+$router->get('/quiz/confirm', [TasksController::class, 'quiz_confirm']);
 $router->get('/quiz', [TasksController::class, 'quiz']);
 
 // Admin
@@ -103,6 +104,7 @@ $router->delete('/admin/tasks/trash', [AdminTasksController::class, 'trash_task'
 $router->get('/admin/tasks/view', [AdminTasksController::class, 'view_task'])->only('admin');
 $router->get('/admin/tasks/participants', [AdminTasksController::class, 'participants'])->only('admin');
 $router->patch('/admin/tasks/participant/status', [AdminTasksController::class, 'participant_status'])->only('admin');
+$router->delete('/admin/tasks/participants/trash', [AdminTasksController::class, 'participant_trash'])->only('admin');
 $router->get('/admin/tasks/questions', [AdminTasksController::class, 'questions'])->only('admin');
 $router->post('/admin/tasks/questions', [AdminTasksController::class, 'questions'])->only('admin');
 $router->get('/admin/tasks/questions/question', [AdminTasksController::class, 'question'])->only('admin');

@@ -15,13 +15,19 @@ use Core\Support\Pagination;
     </h5>
 
     <div id="table-actions" class="row mt-3">
-        <?= BootstrapForm::inputField('', 'search', '', ['class' => 'form-control form-control-sm shadow', 'type' => 'search'], ['class' => 'col my-1'], $errors) ?>
+        <div class="col text-start">
+            <a href="<?= Config::get('domain') ?>admin/tasks/view?task-slug=<?= $task->slug ?>"
+                class="btn btn-sm btn-primary my-2"><i class="bi bi-arrow-left"></i> Back</a>
+        </div>
 
         <div class="col text-end">
-            <a href="<?= Config::get('domain') ?>admin/task/participants/trash" class="btn btn-danger btn-sm">
-                <i class="bi bi-trash"></i>
-                Trash All
-            </a>
+            <form action="<?= Config::get('domain') ?>admin/tasks/participants/trash" method="post">
+                <?= BootstrapForm::method("DELETE"); ?>
+                <button type="submit" class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i>
+                    Trash All
+                </button>
+            </form>
         </div>
     </div>
 
@@ -58,7 +64,6 @@ use Core\Support\Pagination;
                                 <?php if ($participant->status === "active"): ?>
                                     <form action="<?= Config::get('domain') ?>admin/tasks/participant/status" method="post">
                                         <?= BootstrapForm::method("PATCH"); ?>
-                                        <?= BootstrapForm::hidden("task_id", $task->slug); ?>
                                         <?= BootstrapForm::hidden("task_slug", $participant->task_slug); ?>
                                         <?= BootstrapForm::hidden("status", "blocked"); ?>
                                         <button type="submit" class="btn btn-info btn-sm">Block</button>
@@ -66,7 +71,6 @@ use Core\Support\Pagination;
                                 <?php else: ?>
                                     <form action="<?= Config::get('domain') ?>admin/tasks/participant/status" method="post">
                                         <?= BootstrapForm::method("PATCH"); ?>
-                                        <?= BootstrapForm::hidden("task_id", $task->slug); ?>
                                         <?= BootstrapForm::hidden("task_slug", $participant->task_slug); ?>
                                         <?= BootstrapForm::hidden("status", "active"); ?>
                                         <button type="submit" class="btn btn-info btn-sm">Active</button>
