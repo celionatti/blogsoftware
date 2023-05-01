@@ -10,7 +10,8 @@ use Core\Support\Pagination;
         <div class="card-header">
             <div class="d-flex justify-content-between">
                 <h6 class="text-start"><span>Question No:</span> 4 of 5</h6>
-                <h6 class="text-end"><span>Time:</span> <span id="counter">00:00</span></h6>
+                <h6 class="text-end"><span>Time:</span> <span id="counter">00:00</span>
+                </h6>
             </div>
         </div>
         <div class="card-body text-start">
@@ -40,18 +41,21 @@ use Core\Support\Pagination;
                     </div>
                     <div class="form-check my-3">
                         <input type="radio" class="form-check-input border border-info"
-                            style="transform: scale(1.5);cursor: pointer;" name="answer" value="<?= $question->opt_two ?>">
+                            style="transform: scale(1.5);cursor: pointer;" name="answer"
+                            value="<?= $question->opt_two ?>">
                         <span class="text-normal"><?= $question->opt_two ?></span>
                     </div>
                     <div class="form-check my-3">
                         <input type="radio" class="form-check-input border border-warning"
-                            style="transform: scale(1.5);cursor: pointer;" name="answer" value="<?= $question->opt_three ?>">
+                            style="transform: scale(1.5);cursor: pointer;" name="answer"
+                            value="<?= $question->opt_three ?>">
                         <span class="text-normal"><?= $question->opt_three ?>
                         </span>
                     </div>
                     <div class="form-check my-3">
                         <input type="radio" class="form-check-input border border-dark"
-                            style="transform: scale(1.5);cursor: pointer;" name="answer" value="<?= $question->opt_four ?>">
+                            style="transform: scale(1.5);cursor: pointer;" name="answer"
+                            value="<?= $question->opt_four ?>">
                         <span class="text-normal"><?= $question->opt_four ?>
                         </span>
                     </div>
@@ -68,4 +72,32 @@ use Core\Support\Pagination;
     </div>
 </div>
 
+<?php $this->end(); ?>
+
+<?php $this->start("script"); ?>
+<script>
+    remaining_time = <?= $time ?>
+// Set the time for the exam in seconds
+var countDownSeconds = remaining_time;
+
+// Update the countdown every second
+var x = setInterval(function() {
+
+    // Decrement the countdown timer
+    countDownSeconds--;
+
+    // Calculate minutes and seconds
+    var minutes = Math.floor(countDownSeconds / 60);
+    var seconds = countDownSeconds % 60;
+
+    // Display the countdown timer
+    document.getElementById("counter").innerHTML = minutes + "m " + seconds + "s ";
+
+    // If the countdown is over, display "Exam Over"
+    if (countDownSeconds < 1) {
+        clearInterval(x);
+        document.getElementById("counter").innerHTML = "Exam Over";
+    }
+}, 1000)
+</script>
 <?php $this->end(); ?>

@@ -137,12 +137,29 @@ class TasksController extends Controller
 
                 $total = Questions::findTotal($params);
                 $numberOfPages = ceil($total / $recordsPerPage);
+
+                if (!$this->session->get("start_time")) {
+                    $this->session->set("start_time", time()); // Set the start time to the current time
+                }
+
+                $this->session->set("total_time", 60 * 60);
+
+                $current_time = time();
+                $start_time = $this->session->get("start_time");
+                $total_time = $this->session->get("total_time");
+
+                $elapsed_time = $current_time - $start_time;
+                $remaining_time = $total_time - $elapsed_time;
+
+                $this->session->set("remaining_time", $remaining_time); // Store the remaining time in a session variable
+
             }
 
         }
 
         $view = [
             'questions' => Questions::find($params),
+            'time' => $this->session->get("remaining_time"),
             'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
         $this->view->render('tasks/quiz', $view);

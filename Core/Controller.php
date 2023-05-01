@@ -7,11 +7,13 @@ use JetBrains\PhpStorm\NoReturn;
 class Controller
 {
     public View $view;
+    public Session $session;
     public string $action = "";
 
     public function __construct()
     {
         $this->view = new View();
+        $this->session = new Session();
         $this->view->setLayout(Config::get('default_layout'));
         $this->onConstruct();
     }
