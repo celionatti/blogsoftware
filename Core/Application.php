@@ -76,7 +76,8 @@ class Application
         $this->checkExtensions();
 
         $this->url = $_SERVER['REQUEST_URI'];
-        if (Config::get('domain') != '/') {
+        // if (Config::get('domain') != '/') {
+        if (! Config::get('domain')) {
             $this->url = str_replace(Config::get('domain'), '', $this->url);
         } else {
             $this->url = ltrim($this->url, '/');

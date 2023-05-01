@@ -35,6 +35,8 @@ use Core\Forms\BootstrapForm;
 
         <?= bootstrapForm::inputField('Time', 'time', $task->time ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
+        <?= bootstrapForm::inputField('Questions Limit', 'limit', $task->limit ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+
         <?= bootstrapForm::selectField('Status', 'status', $task->status ?? '', $statusOpts ?? [], ['class' => 'form-select form-select-lg'], ['class' => 'form-floating col'], $errors) ?>
 
         <div class="row my-3">

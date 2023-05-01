@@ -8,6 +8,8 @@ use Core\Request;
 use models\Users;
 use Core\Response;
 use Core\Controller;
+use models\Answers;
+use models\Questions;
 use models\TaskRegistration;
 use models\Tasks;
 
@@ -20,7 +22,7 @@ class TasksController extends Controller
         $this->view->setLayout('task');
         $this->currentUser = Users::getCurrentUser();
 
-        if(! $this->currentUser) {
+        if (!$this->currentUser) {
             Application::$app->session->setFlash("success", "Create Account First!");
             redirect("/");
         }
@@ -36,12 +38,12 @@ class TasksController extends Controller
             'bind' => ['status' => "active"]
         ];
 
-        if($request->isPost()) {
+        if ($request->isPost()) {
             $taskRegistration = new TaskRegistration();
 
             $taskRegistration->loadData($request->getBody());
 
-            if($taskRegistration->save()) {
+            if ($taskRegistration->save()) {
                 Application::$app->session->setFlash("success", "Task Registration Successful!");
                 redirect("/");
             }
@@ -66,11 +68,18 @@ class TasksController extends Controller
             'bind' => ['status' => "active"],
         ];
 
+        $task = Tasks::findFirst($params);
+
+        if (!$task) {
+            Application::$app->session->setFlash("error", "No Active Task at the moment!");
+            last_uri();
+        }
+
         $view = [
-            'task' => Tasks::findFirst($params),
+            'task' => $task,
             'user' => $this->currentUser,
         ];
-        
+
         $this->view->render('tasks/quiz_confirm', $view);
     }
 
@@ -83,7 +92,7 @@ class TasksController extends Controller
         $task_id = $request->get("task_id");
         $user_id = $request->get("user_id");
 
-        if($this->currentUser->uid !== $user_id) {
+        if ($this->currentUser->uid !== $user_id) {
             Application::$app->session->setFlash("success", "You do not have permission to view this task");
             redirect("/");
         }
@@ -91,26 +100,49 @@ class TasksController extends Controller
         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
         $recordsPerPage = 1;
 
-        $params = [
-            'columns' => "questions.*",
-            'conditions' => "task_registration.user_id = :user_id AND task_registration.status = :status AND questions.task_slug = :task_slug",
-            'bind' => ['user_id' => $this->currentUser->uid, 'status' => "active", 'task_slug' => $task_id],
-            'joins' => [
-                // ['answers', 'questions.slug = answers.question_id'],
-                ['questions', 'task_registration.task_slug = questions.task_id', 'questions', 'LEFT'],
-            ],
-            'limit' => $recordsPerPage,
-            'offset' => ($currentPage - 1) * $recordsPerPage
+        $register_params = [
+            'conditions' => "user_id = :user_id AND task_id = :task_id AND status = :status",
+            'bind' => ['user_id' => $user_id, 'task_id' => $task_id, 'status' => "active"],
         ];
 
-        $total = TaskRegistration::findTotal($params);
-        $numberOfPages = ceil($total / $recordsPerPage);
+        $registered_users = TaskRegistration::findFirst($register_params);
 
-        $questions = TaskRegistration::find($params);
-        dd($questions);
+        if ($registered_users) {
+            $task_params = [
+                'conditions' => "slug = :slug",
+                'bind' => ['slug' => $task_id]
+            ];
+
+            $task = Tasks::findFirst($task_params);
+
+            $answers_params = [
+                'conditions' => "task_slug = :task_slug",
+                'bind' => ['task_slug' => $registered_users->task_slug]
+            ];
+
+            $answers = Answers::findTotal($answers_params);
+
+            if ($answers <= (int) $task->limit) {
+                $params = [
+                    'columns' => "questions.*",
+                    'conditions' => "NOT EXISTS (SELECT 1 FROM answers WHERE answers.task_slug = :task_slug)",
+                    'bind' => ['task_slug' => $task_id],
+                    'joins' => [
+                        ['answers', 'questions.task_slug = answers.task_slug', 'answers', 'LEFT'],
+                    ],
+                    'order' => "RAND()",
+                    'limit' => $recordsPerPage,
+                    'offset' => ($currentPage - 1) * $recordsPerPage
+                ];
+
+                $total = Questions::findTotal($params);
+                $numberOfPages = ceil($total / $recordsPerPage);
+            }
+
+        }
 
         $view = [
-            'prevPage' => $this->previous_pagination($currentPage),
+            'questions' => Questions::find($params),
             'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
         $this->view->render('tasks/quiz', $view);

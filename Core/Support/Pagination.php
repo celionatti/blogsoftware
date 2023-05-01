@@ -28,4 +28,16 @@ class Pagination
             </nav>
         ";
     }
+
+    public static function bootstrap_quiz_next($nextPage)
+    {
+        $nextActive = !$nextPage ? "disabled" : "";
+        $nextPageLink = Config::get('domain') . Application::$app->currentLink . "?page=" . $nextPage;
+        echo "
+            <button class='btn btn-sm btn-primary w-75 mx-3 $nextActive' id='next_btn'>
+                <a class='page-link'
+                            href='$nextPageLink'>Next</a>
+            </button>
+        ";
+    }
 }

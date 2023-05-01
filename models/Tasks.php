@@ -21,6 +21,7 @@ class Tasks extends DbModel
     public string $title = "";
     public string $thumbnail = "";
     public string $time = "";
+    public string $limit = "5";
     public string $instruction = "";
     public string $editable = self::YES_EDITABLE;
     public string $status = self::STATUS_DISABLED;
