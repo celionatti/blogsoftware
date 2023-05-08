@@ -96,7 +96,7 @@ var x = setInterval(function() {
     // If the countdown is over, display "Exam Over"
     if (countDownSeconds < 1) {
         clearInterval(x);
-        document.getElementById("counter").innerHTML = "Exam Over";
+        document.getElementById("counter").innerHTML = "00:00";
     }
 }, 1000)
 </script>

@@ -35,7 +35,7 @@ $router->post('/logout', [AuthController::class, 'logout']);
 $router->get('/task/registration', [TasksController::class, 'task_registration']);
 $router->post('/task/registration', [TasksController::class, 'task_registration']);
 $router->get('/quiz/confirm', [TasksController::class, 'quiz_confirm']);
-$router->get('/quiz', [TasksController::class, 'quiz']);
+$router->post('/quiz', [TasksController::class, 'quiz']);
 
 // Admin
 $router->get('/admin', [AdminController::class, 'index'])->only('admin');

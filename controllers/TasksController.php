@@ -75,6 +75,12 @@ class TasksController extends Controller
             last_uri();
         }
 
+        if ($this->session->exists("start_time")) {
+            $this->session->remove("start_time"); // Delete the start time.
+            $this->session->remove("total_time");
+            $this->session->remove("remaining_time");
+        }
+
         $view = [
             'task' => $task,
             'user' => $this->currentUser,
@@ -89,79 +95,60 @@ class TasksController extends Controller
      */
     public function quiz(Request $request, Response $response)
     {
-        $task_id = $request->get("task_id");
-        $user_id = $request->get("user_id");
+        if($request->isPost()) {
+            $task_id = $request->get("task_id");
+            $user_id = $request->get("user_id");
 
-        if ($this->currentUser->uid !== $user_id) {
-            Application::$app->session->setFlash("success", "You do not have permission to view this task");
-            redirect("/");
-        }
-
-        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $recordsPerPage = 1;
-
-        $register_params = [
-            'conditions' => "user_id = :user_id AND task_id = :task_id AND status = :status",
-            'bind' => ['user_id' => $user_id, 'task_id' => $task_id, 'status' => "active"],
-        ];
-
-        $registered_users = TaskRegistration::findFirst($register_params);
-
-        if ($registered_users) {
-            $task_params = [
-                'conditions' => "slug = :slug",
-                'bind' => ['slug' => $task_id]
+            $reg_params = [
+                'conditions' => "user_id = :user_id AND task_id = :task_id AND status = :status",
+                'bind' => ['user_id' => $user_id, 'task_id' => $task_id, 'status' => "active"],
             ];
 
-            $task = Tasks::findFirst($task_params);
+            $reg_user = TaskRegistration::findFirst($reg_params);
 
-            $answers_params = [
-                'conditions' => "task_slug = :task_slug",
-                'bind' => ['task_slug' => $registered_users->task_slug]
-            ];
+            if($reg_user) {
+                $remaining_time = $this->session->get("remaining_time");
+                $task_user= $this->session->get("task_user");
 
-            $answers = Answers::findTotal($answers_params);
-
-            if ($answers <= (int) $task->limit) {
-                $params = [
-                    'columns' => "questions.*",
-                    'conditions' => "NOT EXISTS (SELECT 1 FROM answers WHERE answers.task_slug = :task_slug)",
-                    'bind' => ['task_slug' => $task_id],
-                    'joins' => [
-                        ['answers', 'questions.task_slug = answers.task_slug', 'answers', 'LEFT'],
-                    ],
-                    'order' => "RAND()",
-                    'limit' => $recordsPerPage,
-                    'offset' => ($currentPage - 1) * $recordsPerPage
-                ];
-
-                $total = Questions::findTotal($params);
-                $numberOfPages = ceil($total / $recordsPerPage);
-
-                if (!$this->session->get("start_time")) {
-                    $this->session->set("start_time", time()); // Set the start time to the current time
+                if(! $task_user) {
+                    $task_user = $this->session->set("task_user", $reg_user->task_slug);
                 }
 
-                $this->session->set("total_time", 60 * 60);
+                /**
+                 * Checking is Time is out.
+                 */
+                if ($remaining_time && $remaining_time <= 0) {
+                    dd("Quiz is done with. Thanks");
+                }
 
-                $current_time = time();
-                $start_time = $this->session->get("start_time");
-                $total_time = $this->session->get("total_time");
+                /**
+                 * Count the numbers of questions that are answered by the user.
+                 * So as to limit it to the number of questions in tasks.
+                 */
+                $task_params = [
+                    'conditions' => "slug = :slug",
+                    'bind' => ['slug' => $task_id]
+                ];
 
-                $elapsed_time = $current_time - $start_time;
-                $remaining_time = $total_time - $elapsed_time;
+                $task = Tasks::findFirst($task_params);
 
-                $this->session->set("remaining_time", $remaining_time); // Store the remaining time in a session variable
+                $answers_params = [
+                    'conditions' => "task_slug = :task_slug",
+                    'bind' => ['task_slug' => $reg_user->task_slug]
+                ];
 
+                $answers_total = Answers::findTotal($answers_params);
+                
+                 if ($answers_total >= (int) $task->limit) {
+
+                 }
             }
 
         }
+    }
 
-        $view = [
-            'questions' => Questions::find($params),
-            'time' => $this->session->get("remaining_time"),
-            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
-        ];
-        $this->view->render('tasks/quiz', $view);
+    private function submit_quiz(Request $request, Response $response)
+    {
+        
     }
 }

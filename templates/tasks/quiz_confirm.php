@@ -39,10 +39,12 @@ use Core\Config;
                     </td>
                 </tr>
             </table>
-            <a href="<?= Config::get('domain') ?>quiz?task_id=<?= $task->slug ?>&user_id=<?= $user->uid ?>" class="btn btn-sm btn-success w-100">
-                <i class="bi bi-box-arrow-up-right"></i>
-                Start
-            </a>
+            <form action="<?= Config::get('domain') ?>quiz?task_id=<?= $task->slug ?>&user_id=<?= $user->uid ?>" method="post">
+                <button type="submit" class="btn btn-sm btn-success w-100">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                    Start
+                </button>
+            </form>
         </div>
     </div>
 </div>
