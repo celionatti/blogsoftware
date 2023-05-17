@@ -6,6 +6,7 @@ use controllers\AuthController;
 use controllers\SiteController;
 use controllers\AdminController;
 use controllers\TasksController;
+use controllers\SettingsController;
 use controllers\AdminTasksController;
 use controllers\AdminPodcastsController;
 use controllers\AdminBoardPostsController;
@@ -123,5 +124,11 @@ $router->get('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit
 $router->patch('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit'])->only('admin');
 $router->delete('/admin/board-posts/trash', [AdminBoardPostsController::class, 'trash'])->only('admin');
 $router->patch('/admin/board-posts/status', [AdminBoardPostsController::class, 'status'])->only('admin');
+
+
+// Admin Settings
+$router->get('/admin/settings', [SettingsController::class, 'index'])->only('admin');
+$router->get('/admin/settings/trash', [SettingsController::class, 'trash'])->only('admin');
+$router->get('/admin/settings/edit', [SettingsController::class, 'edit'])->only('admin');
 
 // $router->get('/users', 'controllers/users.php');

@@ -144,7 +144,7 @@ class TasksController extends Controller
 
             $task = Tasks::findFirst($task_params);
 
-            if($remaining_time <= 0) {
+            if($remaining_time && $remaining_time <= 0) {
                 $this->quiz_submit();
             }
 

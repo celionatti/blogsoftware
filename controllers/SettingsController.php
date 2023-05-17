@@ -8,6 +8,8 @@ use models\Users;
 use Core\Response;
 use Core\Controller;
 use models\Articles;
+use models\Settings;
+use Core\Application;
 
 class SettingsController extends Controller
 {
@@ -24,21 +26,45 @@ class SettingsController extends Controller
      */
     public function index(Request $request, Response $response)
     {
-        $featured_params = [
-            'columns' => "articles.*, users.username, topics.topic, topics.slug as topic_slug",
-            'conditions' => "articles.status = :status AND articles.featured = '1'",
-            'bind' => ['status' => 'published'],
-            'joins' => [
-                ['users', 'articles.user_id = users.uid'],
-                ['topics', 'articles.topic = topics.slug', 'topics', 'LEFT']
-            ],
-            'limit' => "1",
-            'order' => 'articles.created_at DESC'
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $params = [
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
         ];
 
+        $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
         $view = [
-            'featured' => Articles::findFirst($featured_params),
+            'settings' => Settings::find($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
-        $this->view->render('welcome', $view);
+        $this->view->render('admin/extras/settings', $view);
+    }
+
+    public function trash(Request $request, Response $response)
+    {
+        $id = $request->get('setting-id');
+        $name = $request->get('setting-name');
+
+        $params = [
+            'conditions' => "id = :id AND name = :name",
+            'bind' => ['id' => $id, 'name' => $name]
+        ];
+        $setting = Settings::findFirst($params);
+        
+        if($setting) {
+            if($setting->delete()) {
+                if (file_exists($setting->value)) {
+                    unlink($setting->value);
+                    $setting->value = '';
+                }
+                Application::$app->session->setFlash("success", "{$setting->name} Deleted successfully");
+                redirect('/admin/settings');
+            }
+        }
     }
 }

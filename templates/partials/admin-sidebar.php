@@ -59,6 +59,12 @@ use Core\Config;
                     Messages
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= Config::get('domain') ?>admin/settings">
+                    <span class="align-text-center bi bi-gear-wide-connected"></span>
+                    Settings
+                </a>
+            </li>
             <li class="nav-item my-3">
                 <a class="nav-link text-danger" href="<?= Config::get('domain') ?>">
                     <span class="align-text-center bi bi-globe"></span>

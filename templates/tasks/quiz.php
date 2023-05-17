@@ -89,6 +89,10 @@ use Core\Support\Pagination;
 
 <?php $this->start("script"); ?>
 <script>
+    document.addEventListener("visibilitychange", function() {
+        document.title =document.visibilityState
+        window.location.href = `/quiz/submit`;
+    });
 remaining_time = <?= $time ?>
 // Set the time for the exam in seconds
 var countDownSeconds = remaining_time;
@@ -113,12 +117,5 @@ var x = setInterval(function() {
     }
 }, 1000)
 
-function submitQuiz() 
-{
-    if(confirm("Are you sure you want to submit!.")) {
-        alert("You are about to submit");
-        // window.location.href = `/examination/submitted/${id}?roll=${roll_no}&matric_no=${matricNo}`;
-    }
-}
 </script>
 <?php $this->end(); ?>

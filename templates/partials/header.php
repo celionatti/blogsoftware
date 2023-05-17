@@ -49,7 +49,7 @@ $navTopics = Topics::navTopics();
                             </li>
                             <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>account">Profile</a></li>
                             <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin" target="_blank">Dashboard</a></li>
-                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>quiz/confirm" target="_blank">Quiz</a></li>
+                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>quiz/confirm">Quiz</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
