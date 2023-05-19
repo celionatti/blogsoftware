@@ -2,6 +2,7 @@
 
 use Core\Config;
 use models\Articles;
+use models\Settings;
 use Core\Application;
 use models\RelatedArticles;
 
@@ -9,7 +10,9 @@ $slug = Application::$app->request->get("slug");
 
 $related_articles = RelatedArticles::fetch_related_articles($slug);
 
-$articles = Articles::fetch_articles($slug);
+$articles = Articles::fetch_articles();
+
+$settings = Settings::fetchSettings();
 
 ?>
 
@@ -62,10 +65,10 @@ $articles = Articles::fetch_articles($slug);
 
 
         <div class="p-4 d-flex justify-content-between align-items-center">
-            <a href="#" class="icon"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="icon"><i class="bi bi-twitter"></i></a>
-            <a href="#" class="icon"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="icon"><i class="bi bi-youtube"></i></a>
+            <a href="<?= $settings['facebook'] ?? "#" ?>" class="icon"><i class="bi bi-facebook"></i></a>
+            <a href="<?= $settings['twitter'] ?? "#" ?>" class="icon"><i class="bi bi-twitter"></i></a>
+            <a href="<?= $settings['instagram'] ?? "#" ?>" class="icon"><i class="bi bi-instagram"></i></a>
+            <a href="<?= $settings['youtube'] ?? "#" ?>" class="icon"><i class="bi bi-youtube"></i></a>
         </div>
 
     </div>

@@ -66,11 +66,8 @@ class Articles extends DbModel
         }
     }
 
-    public static function fetch_articles($slug)
-    {
-        if (!$slug)
-            abort(Response::NOT_FOUND);
-            
+    public static function fetch_articles()
+    {       
         $params = [
             'conditions' => "status = :status",
             'bind' => ['status' => 'published'],

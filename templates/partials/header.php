@@ -1,12 +1,15 @@
 <?php
 
 use Core\Config;
-use Core\Application;
 use models\Topics;
+use models\Settings;
+use Core\Application;
 
 $currentUser = Application::$app->currentUser;
 
 $navTopics = Topics::navTopics();
+
+$settings = Settings::fetchSettings();
 
 
 ?>
@@ -21,7 +24,7 @@ $navTopics = Topics::navTopics();
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="<?= Config::get('domain') ?>">
-                    <h2><?= $this->getTitle(); ?></h2>
+                    <h2><?= htmlspecialchars_decode($settings['app_name'] ?? $this->getTitle()); ?></h2>
                 </a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">

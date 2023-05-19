@@ -14,7 +14,7 @@ class Settings extends DbModel
 
     public string $name = "";
     public string $value = "";
-    public string $type = "text";
+    public string $type = "";
     public string $status = self::STATUS_DISABLED;
     public string $created_at = "";
     public string $updated_at = "";
@@ -45,7 +45,7 @@ class Settings extends DbModel
 
         if ($data['settings']) {
             foreach ($data['settings'] as $row) {
-                $data['data'][$row->setting] = $row->value;
+                $data['data'][$row->name] = $row->value;
             }
         }
         return $data['data'];

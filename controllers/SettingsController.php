@@ -10,6 +10,8 @@ use Core\Controller;
 use models\Articles;
 use models\Settings;
 use Core\Application;
+use Core\Support\Helpers\Image;
+use Core\Support\Helpers\FileUpload;
 
 class SettingsController extends Controller
 {
@@ -17,7 +19,7 @@ class SettingsController extends Controller
 
     public function onConstruct(): void
     {
-        $this->view->setLayout('blog');
+        $this->view->setLayout('admin');
         $this->currentUser = Users::getCurrentUser();
     }
 
@@ -34,7 +36,7 @@ class SettingsController extends Controller
             'offset' => ($currentPage - 1) * $recordsPerPage
         ];
 
-        $total = Articles::findTotal($params);
+        $total = Settings::findTotal($params);
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
@@ -43,6 +45,96 @@ class SettingsController extends Controller
             'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
         $this->view->render('admin/extras/settings', $view);
+    }
+
+    public function create(Request $request, Response $response)
+    {
+        $settings = new Settings();
+
+        if($request->isPost()) {
+            $settings->loadData($request->getBody());
+
+            if (empty($settings->getErrors())) {
+                if ($settings->save()) {
+                    Application::$app->session->setFlash("success", "Setting {$settings->name} Saved Successfully!");
+                    redirect('/admin/settings');
+                }
+            }
+        }
+
+        $view = [
+            'errors' => $settings->getErrors(),
+            'typeOpts' => [
+                'text' => 'Text',
+                'link' => 'Link',
+                'image' => 'Image'
+            ],
+            'setting' => $settings,
+        ];
+
+        $this->view->render('admin/extras/create-setting', $view);
+    }
+
+    public function edit(Request $request, Response $response)
+    {
+        $id = $request->get('setting-id');
+        $name = $request->get('setting-name');
+
+        $params = [
+            'conditions' => "id = :id AND name = :name",
+            'bind' => ['id' => $id, 'name' => $name]
+        ];
+        $settings = Settings::findFirst($params);
+
+        if($request->isPatch()) {
+            $settings->loadData($request->getBody());
+
+            if ($settings->type === "image") {
+                $upload = new FileUpload('value');
+                $uploadErrors = $upload->validate();
+            }
+
+
+            if ($settings->type === "image" && !empty($uploadErrors)) {
+                foreach ($uploadErrors as $field => $error) {
+                    $settings->setError($field, $error);
+                }
+            }
+
+            if (empty($settings->getErrors())) {
+                if ($settings->save()) {
+                    if ($settings->type === "image") {
+                        $upload->directory('uploads/settings');
+                    }
+                    if ($settings->type === "image" && !empty($upload->tmp)) {
+                        if ($settings->type === "image" && $upload->upload()) {
+                            if (file_exists($settings->value)) {
+                                unlink($settings->value);
+                                $settings->value = "";
+                            }
+                            $settings->value = $upload->fc;
+                            $image = new Image();
+                            $image->resize($settings->value);
+                            $settings->save();
+                        }
+                    }
+                    Application::$app->session->setFlash("success", "Setting {$settings->name} Updated Successfully!");
+                    redirect('/admin/settings');
+                }
+            }
+        }
+
+        $view = [
+            'errors' => $settings->getErrors(),
+            'typeOpts' => [
+                'text' => 'Text',
+                'link' => 'Link',
+                'image' => 'Image'
+            ],
+            'setting' => $settings,
+        ];
+
+        $this->view->render('admin/extras/edit-setting', $view);
     }
 
     public function trash(Request $request, Response $response)

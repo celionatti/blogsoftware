@@ -128,7 +128,10 @@ $router->patch('/admin/board-posts/status', [AdminBoardPostsController::class, '
 
 // Admin Settings
 $router->get('/admin/settings', [SettingsController::class, 'index'])->only('admin');
+$router->get('/admin/settings/create', [SettingsController::class, 'create'])->only('admin');
+$router->post('/admin/settings/create', [SettingsController::class, 'create'])->only('admin');
 $router->get('/admin/settings/trash', [SettingsController::class, 'trash'])->only('admin');
 $router->get('/admin/settings/edit', [SettingsController::class, 'edit'])->only('admin');
+$router->patch('/admin/settings/edit', [SettingsController::class, 'edit'])->only('admin');
 
 // $router->get('/users', 'controllers/users.php');

@@ -54,7 +54,7 @@ use Core\Forms\BootstrapForm;
                                 </td>
                             <?php else: ?>
                                 <td>
-                                    <?= $setting->value ?>
+                                    <?= htmlspecialchars_decode($setting->value) ?>
                                 </td>
                             <?php endif; ?>
                         </tr>

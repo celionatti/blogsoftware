@@ -24,7 +24,7 @@ class m00015_settings extends Migration
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4";
         $this->connection->exec($SQL);
 
-        $app_name = Config::get("title");
+        $title = Config::get("title");
         $logo = get_image("", "setting");
 
         $query = "INSERT INTO `settings` (
@@ -32,7 +32,7 @@ class m00015_settings extends Migration
             `name`, 
             `value`, 
             `type`) VALUES 
-            (NULL, 'app_name', '$app_name', 'text'),
+            (NULL, 'title', '$title', 'text'),
             (NULL, 'logo', '$logo', 'image'),
             (NULL, 'facebook', 'https://www.facebook.com/', 'link'),
             (NULL, 'instagram', 'https://www.instagram.com/', 'link'),
