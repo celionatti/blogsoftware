@@ -25,7 +25,7 @@ $settings = Settings::fetchSettings();
             <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>report-a-story" class="nav-link p-0 text-muted">Report a story</a></li>
                 <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Advertisement</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Privacy & Policy</a></li>
+                <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>docs/policy" class="nav-link p-0 text-muted">Privacy & Policy</a></li>
                 <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Terms & Conditions</a></li>
             </ul>
         </div>

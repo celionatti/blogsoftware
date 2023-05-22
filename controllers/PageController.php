@@ -44,27 +44,4 @@ class SettingsController extends Controller
         ];
         $this->view->render('admin/extras/settings', $view);
     }
-
-    public function trash(Request $request, Response $response)
-    {
-        $id = $request->get('setting-id');
-        $name = $request->get('setting-name');
-
-        $params = [
-            'conditions' => "id = :id AND name = :name",
-            'bind' => ['id' => $id, 'name' => $name]
-        ];
-        $setting = Settings::findFirst($params);
-
-        if ($setting) {
-            if ($setting->delete()) {
-                if (file_exists($setting->value)) {
-                    unlink($setting->value);
-                    $setting->value = '';
-                }
-                Application::$app->session->setFlash("success", "{$setting->name} Deleted successfully");
-                redirect('/admin/settings');
-            }
-        }
-    }
 }

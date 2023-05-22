@@ -3,6 +3,7 @@
 /** @var $router */
 
 use controllers\AuthController;
+use controllers\DocsController;
 use controllers\SiteController;
 use controllers\AdminController;
 use controllers\TasksController;
@@ -31,6 +32,9 @@ $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'login']);
 
 $router->post('/logout', [AuthController::class, 'logout']);
+
+// Policy & Terms
+$router->get('/docs/policy', [DocsController::class, 'policy']);
 
 // Quiz AND Tasks
 $router->get('/task/registration', [TasksController::class, 'task_registration']);
