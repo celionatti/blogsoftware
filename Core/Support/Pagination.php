@@ -29,15 +29,19 @@ class Pagination
         ";
     }
 
-    public static function bootstrap_quiz_next($nextPage)
+    // public static function bootstrap_quiz_next($name, $task_id, $user_id)
+    // {
+    //     $link = Config::get('domain') . $name . "?task_id=" . $task_id . "&user_id=" . $user_id . "&submit=true";
+    //     echo "
+    //         <a class='btn btn-sm btn-primary w-100 mx-2' href='$link'>Next</a>
+    //     ";
+    // }
+
+    public static function bootstrap_quiz_next($name, $task_id, $user_id)
     {
-        $nextActive = !$nextPage ? "disabled" : "";
-        $nextPageLink = Config::get('domain') . Application::$app->currentLink . "?page=" . $nextPage;
+        $link = Config::get('domain') . $name . "?task_id=" . $task_id . "&user_id=" . $user_id . "&submit=true";
         echo "
-            <button class='btn btn-sm btn-primary w-75 mx-3 $nextActive' id='next_btn'>
-                <a class='page-link'
-                            href='$nextPageLink'>Next</a>
-            </button>
+            <button type='submit' class='btn btn-sm btn-primary w-100 mx-2'>Next</button>
         ";
     }
 }

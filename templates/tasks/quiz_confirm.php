@@ -1,6 +1,7 @@
 <?php
 
 use Core\Config;
+use Core\Forms\BootstrapForm;
 
 ?>
 
@@ -39,7 +40,9 @@ use Core\Config;
                     </td>
                 </tr>
             </table>
-            <form action="<?= Config::get('domain') ?>quiz?task_id=<?= $task->slug ?>&user_id=<?= $user->uid ?>" method="post">
+            <form action="<?= Config::get('domain') ?>quiz" method="get">
+                <?= BootstrapForm::hidden("task_id", $task->slug); ?>
+                <?= BootstrapForm::hidden("user_id", $user->uid); ?>
                 <button type="submit" class="btn btn-sm btn-success w-100">
                     <i class="bi bi-box-arrow-up-right"></i>
                     Start

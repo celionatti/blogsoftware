@@ -87,10 +87,10 @@ class Application
         $this->currentPage = $this->url;
         $this->currentLink = $this->url;
 
-        $page = $_GET['page'] ?? '';
-        $this->queryString = $_SERVER['QUERY_STRING'] ? $_SERVER['QUERY_STRING'] . '&' : '';
-        $this->queryString = str_replace("page=" . $page, "", $_SERVER['QUERY_STRING']);
-        $this->queryString = !strstr($this->queryString, "page=" . $page) ? $this->queryString : $this->queryString;
+        // $page = $_GET['page'] ?? '';
+        // $this->queryString = $_SERVER['QUERY_STRING'] ? $_SERVER['QUERY_STRING'] . '&' : '';
+        // $this->queryString = str_replace("page=" . $page, "", $_SERVER['QUERY_STRING']);
+        // $this->queryString = !strstr($this->queryString, "page=" . $page) ? $this->queryString : $this->queryString;
     }
 
     private function checkExtensions(): void

@@ -23,5 +23,7 @@ class Answers extends DbModel
         $this->timeStamps();
 
         $this->runValidation(new RequiredValidation($this, ['field' => 'task_slug', 'msg' => "Task Slug is a required field."]));
+        $this->runValidation(new RequiredValidation($this, ['field' => 'answer', 'msg' => "Task Answer is a required field."]));
+        $this->runValidation(new RequiredValidation($this, ['field' => 'question_id', 'msg' => "Task Question is a required field."]));
     }
 }

@@ -3,9 +3,11 @@
 /** @var $router */
 
 use controllers\AuthController;
+use controllers\DocsController;
 use controllers\SiteController;
 use controllers\AdminController;
 use controllers\TasksController;
+use controllers\SettingsController;
 use controllers\AdminTasksController;
 use controllers\AdminPodcastsController;
 use controllers\AdminBoardPostsController;
@@ -31,11 +33,16 @@ $router->post('/login', [AuthController::class, 'login']);
 
 $router->post('/logout', [AuthController::class, 'logout']);
 
+// Policy & Terms
+$router->get('/docs/policy', [DocsController::class, 'policy']);
+
 // Quiz AND Tasks
 $router->get('/task/registration', [TasksController::class, 'task_registration']);
 $router->post('/task/registration', [TasksController::class, 'task_registration']);
 $router->get('/quiz/confirm', [TasksController::class, 'quiz_confirm']);
 $router->post('/quiz', [TasksController::class, 'quiz']);
+$router->get('/quiz', [TasksController::class, 'quiz']);
+$router->get('/quiz/submit', [TasksController::class, 'quiz_submit']);
 
 // Admin
 $router->get('/admin', [AdminController::class, 'index'])->only('admin');
@@ -121,5 +128,14 @@ $router->get('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit
 $router->patch('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit'])->only('admin');
 $router->delete('/admin/board-posts/trash', [AdminBoardPostsController::class, 'trash'])->only('admin');
 $router->patch('/admin/board-posts/status', [AdminBoardPostsController::class, 'status'])->only('admin');
+
+
+// Admin Settings
+$router->get('/admin/settings', [SettingsController::class, 'index'])->only('admin');
+$router->get('/admin/settings/create', [SettingsController::class, 'create'])->only('admin');
+$router->post('/admin/settings/create', [SettingsController::class, 'create'])->only('admin');
+$router->get('/admin/settings/trash', [SettingsController::class, 'trash'])->only('admin');
+$router->get('/admin/settings/edit', [SettingsController::class, 'edit'])->only('admin');
+$router->patch('/admin/settings/edit', [SettingsController::class, 'edit'])->only('admin');
 
 // $router->get('/users', 'controllers/users.php');

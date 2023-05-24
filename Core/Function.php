@@ -141,9 +141,11 @@ function get_image(mixed $file = '', string $type = 'post'): string
     }
 
     if ($type == 'user') {
-        return assets_path("img/user.webp");
+        return assets_path("/img/user.webp");
+    } elseif($type == 'setting') {
+        return assets_path("/img/setting.png");
     } else {
-        return assets_path("img/no_image.jpg");
+        return assets_path("/img/no_image.jpg");
     }
 
 }

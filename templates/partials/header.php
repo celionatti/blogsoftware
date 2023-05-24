@@ -1,12 +1,15 @@
 <?php
 
 use Core\Config;
-use Core\Application;
 use models\Topics;
+use models\Settings;
+use Core\Application;
 
 $currentUser = Application::$app->currentUser;
 
 $navTopics = Topics::navTopics();
+
+$settings = Settings::fetchSettings();
 
 
 ?>
@@ -21,7 +24,7 @@ $navTopics = Topics::navTopics();
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="<?= Config::get('domain') ?>">
-                    <h2><?= $this->getTitle(); ?></h2>
+                    <h2><?= htmlspecialchars_decode($settings['title'] ?? $this->getTitle()); ?></h2>
                 </a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -48,8 +51,10 @@ $navTopics = Topics::navTopics();
                                 </h6>
                             </li>
                             <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>account">Profile</a></li>
-                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin" target="_blank">Dashboard</a></li>
-                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>quiz/confirm" target="_blank">Quiz</a></li>
+                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>quiz/confirm">Quiz</a></li>
+                            <?php if($currentUser->acl === "admin"): ?>
+                                <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin" target="_blank">Dashboard</a></li>
+                            <?php endif; ?>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
