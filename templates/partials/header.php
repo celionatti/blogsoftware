@@ -24,7 +24,11 @@ $settings = Settings::fetchSettings();
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="<?= Config::get('domain') ?>">
+<<<<<<< HEAD
                     <h2><?= htmlspecialchars_decode($settings['title'] ?? $this->getTitle()); ?></h2>
+=======
+                    <h2><?= htmlspecialchars_decode($settings['app_name'] ?? $this->getTitle()); ?></h2>
+>>>>>>> 2a9bab3f4bbd8ff7674b78f8de86a2e1ca515b9e
                 </a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -51,10 +55,15 @@ $settings = Settings::fetchSettings();
                                 </h6>
                             </li>
                             <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>account">Profile</a></li>
+<<<<<<< HEAD
                             <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>quiz/confirm">Quiz</a></li>
                             <?php if($currentUser->acl === "admin"): ?>
                                 <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin" target="_blank">Dashboard</a></li>
                             <?php endif; ?>
+=======
+                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin" target="_blank">Dashboard</a></li>
+                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>quiz/confirm">Quiz</a></li>
+>>>>>>> 2a9bab3f4bbd8ff7674b78f8de86a2e1ca515b9e
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
