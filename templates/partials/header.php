@@ -24,11 +24,9 @@ $settings = Settings::fetchSettings();
             </div>
             <div class="col-4 text-center">
                 <a class="blog-header-logo text-dark" href="<?= Config::get('domain') ?>">
-<<<<<<< HEAD
-                    <h2><?= htmlspecialchars_decode($settings['title'] ?? $this->getTitle()); ?></h2>
-=======
-                    <h2><?= htmlspecialchars_decode($settings['app_name'] ?? $this->getTitle()); ?></h2>
->>>>>>> 2a9bab3f4bbd8ff7674b78f8de86a2e1ca515b9e
+                    <h2>
+                        <?= htmlspecialchars_decode($settings['title'] ?? $this->getTitle()); ?>
+                    </h2>
                 </a>
             </div>
             <div class="col-4 d-flex justify-content-end align-items-center">
@@ -55,15 +53,11 @@ $settings = Settings::fetchSettings();
                                 </h6>
                             </li>
                             <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>account">Profile</a></li>
-<<<<<<< HEAD
                             <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>quiz/confirm">Quiz</a></li>
-                            <?php if($currentUser->acl === "admin"): ?>
-                                <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin" target="_blank">Dashboard</a></li>
+                            <?php if ($currentUser->acl !== "user"): ?>
+                                <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin"
+                                        target="_blank">Dashboard</a></li>
                             <?php endif; ?>
-=======
-                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>admin" target="_blank">Dashboard</a></li>
-                            <li><a class="dropdown-item p-2" href="<?= Config::get('domain') ?>quiz/confirm">Quiz</a></li>
->>>>>>> 2a9bab3f4bbd8ff7674b78f8de86a2e1ca515b9e
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
@@ -88,13 +82,13 @@ $settings = Settings::fetchSettings();
                             aria-label="Close"></button>
                     </div>
                     <div class="modal-body d-flex align-items-center justify-content-center">
-                        <div class="input-group" style="max-width: 600px;">
-                            <input type="text" class="form-control bg-transparent border-light p-3 text-white"
+                        <form action="/search" method="get" class="input-group" style="max-width: 600px;">
+                            <input type="text" name="q" class="form-control bg-transparent border-light p-3 text-white"
                                 placeholder="Type search keyword" />
-                            <button class="btn btn-light px-4">
+                            <button class="btn btn-light px-4" type="submit">
                                 <span class="bi bi-search"></span>
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -106,13 +100,16 @@ $settings = Settings::fetchSettings();
             <div class="collapse navbar-collapse" id="navbarBuzz">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link <?= UrlIs('/') ? 'active' : '' ?>" aria-current="page" href="<?= Config::get('domain') ?>">Home</a>
+                        <a class="nav-link <?= UrlIs('/') ? 'active' : '' ?>" aria-current="page"
+                            href="<?= Config::get('domain') ?>">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= UrlIs('/news') ? 'active' : '' ?>" href="<?= Config::get('domain') ?>news">News</a>
+                        <a class="nav-link <?= UrlIs('/news') ? 'active' : '' ?>"
+                            href="<?= Config::get('domain') ?>news">News</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?= UrlIs('/contact') ? 'active' : '' ?>" href="<?= Config::get('domain') ?>contact">Contact</a>
+                        <a class="nav-link <?= UrlIs('/contact') ? 'active' : '' ?>"
+                            href="<?= Config::get('domain') ?>contact">Contact</a>
                     </li>
                 </ul>
             </div>

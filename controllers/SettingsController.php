@@ -131,6 +131,10 @@ class SettingsController extends Controller
                 'link' => 'Link',
                 'image' => 'Image'
             ],
+            'statusOpts' => [
+                'disabled' => 'Disabled',
+                'active' => 'Active',
+            ],
             'setting' => $settings,
         ];
 

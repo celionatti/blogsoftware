@@ -560,7 +560,7 @@ class AdminController extends Controller
     public function users(Request $request, Response $response)
     {
         $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
-        $recordsPerPage = 1;
+        $recordsPerPage = 5;
 
         $params = [
             'order' => 'name, surname',

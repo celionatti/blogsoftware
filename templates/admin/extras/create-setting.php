@@ -16,7 +16,7 @@ use Core\Forms\BootstrapForm;
         <?= BootstrapForm::inputField('Setting Name', 'name', $setting->name ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
         <?= bootstrapForm::selectField('Setting Type', 'type', $setting->type ?? '', $typeOpts ?? [], ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
-
+        
         <div class="row my-3">
             <div class="col">
                 <a href="<?= Config::get('domain') ?>admin/settings" class="btn btn-danger w-100"><i class="bi bi-arrow-left-circle"></i>

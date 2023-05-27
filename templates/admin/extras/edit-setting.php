@@ -35,6 +35,7 @@ use Core\Forms\BootstrapForm;
                 Note it will show up in the edit mode, after creating it.
                 </p>
         <?php endif; ?>
+        <?= bootstrapForm::selectField('Setting Status', 'status', $setting->status ?? '', $statusOpts ?? [], ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
         <div class="row my-3">
             <div class="col">
                 <a href="<?= Config::get('domain') ?>admin/settings" class="btn btn-danger w-100"><i class="bi bi-arrow-left-circle"></i>

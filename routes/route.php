@@ -25,6 +25,7 @@ $router->get('/contact', [SiteController::class, 'contact']);
 $router->post('/contact', [SiteController::class, 'contact']);
 $router->post('/subscribers', [SiteController::class, 'subscribers']);
 $router->get('/board-post/read', [SiteController::class, 'board_post']);
+$router->get('/search', [SiteController::class, 'search']);
 
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);

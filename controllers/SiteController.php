@@ -251,6 +251,9 @@ class SiteController extends Controller
 
     public function tags(Request $request, Response $response)
     {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 10;
+
         $slug = $request->get('slug');
         $tag_name = $request->get('tag_name');
 
@@ -262,8 +265,13 @@ class SiteController extends Controller
                 ['users', 'articles.user_id = users.uid'],
                 ['topics', 'articles.topic = topics.slug', 'topics', 'LEFT']
             ],
-            'order' => 'articles.created_at DESC'
+            'order' => 'articles.created_at DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
         ];
+
+        $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
 
         $params = Articles::mergeWithPagination($params);
         $total = Articles::findTotal($params);
@@ -271,7 +279,9 @@ class SiteController extends Controller
         $view = [
             'articles' => Articles::find($params),
             'total' => $total,
-            'tag_name' => $tag_name
+            'tag_name' => $tag_name,
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
 
         $this->view->render('tags', $view);
@@ -279,8 +289,33 @@ class SiteController extends Controller
 
     public function search(Request $request, Response $response)
     {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 10;
+
+        $search_query = $request->get("q");
+
+        $params = [
+            'columns' => "articles.*, users.username, users.avatar, topics.topic, topics.slug as topic_slug",
+            'conditions' => "articles.status = :status AND articles.title LIKE :title OR articles.content LIKE :content",
+            'bind' => ['status' => 'published', 'title' => "%$search_query%", 'content' => "%$search_query%"],
+            'joins' => [
+                ['users', 'articles.user_id = users.uid'],
+                ['topics', 'articles.topic = topics.slug', 'topics', 'LEFT']
+            ],
+            'order' => 'articles.created_at DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
+        $total = Articles::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
         $view = [
-            'errors' => [],
+            'articles' => Articles::find($params),
+            'total' => $total,
+            'search' => $search_query,
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
         $this->view->render('search', $view);
     }

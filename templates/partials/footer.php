@@ -16,7 +16,7 @@ $settings = Settings::fetchSettings();
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>" class="nav-link p-0 text-muted">Home</a></li>
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>news" class="nav-link p-0 text-muted">News</a></li>
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>contact" class="nav-link p-0 text-muted">Contacts</a></li>
-                <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>contact" class="nav-link p-0 text-muted">Tel: </a></li>
+                <li class="nav-item mb-2"><a href="tel:<?= htmlspecialchars_decode($settings['phone_number'] ?? "****"); ?>" class="nav-link p-0 text-muted">Tel: <?= htmlspecialchars_decode($settings['phone_number'] ?? "****"); ?></a></li>
             </ul>
         </div>
 
@@ -24,15 +24,9 @@ $settings = Settings::fetchSettings();
             <h5>Corporate Links</h5>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>report-a-story" class="nav-link p-0 text-muted">Report a story</a></li>
-<<<<<<< HEAD
                 <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>sadvert" class="nav-link p-0 text-muted">Advertisement</a></li>
                 <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>docs/policy" class="nav-link p-0 text-muted">Privacy & Policy</a></li>
                 <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>docs/terms" class="nav-link p-0 text-muted">Terms & Conditions</a></li>
-=======
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Advertisement</a></li>
-                <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>docs/policy" class="nav-link p-0 text-muted">Privacy & Policy</a></li>
-                <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted">Terms & Conditions</a></li>
->>>>>>> 2a9bab3f4bbd8ff7674b78f8de86a2e1ca515b9e
             </ul>
         </div>
 
@@ -51,11 +45,7 @@ $settings = Settings::fetchSettings();
     <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center py-4 my-2 border-top">
         <p>&copy;
             <?= date('Y'); ?>
-<<<<<<< HEAD
             <?= htmlspecialchars_decode($settings['title'] ?? $this->getTitle()); ?>, Inc. All rights reserved.
-=======
-            <?= htmlspecialchars_decode($settings['app_name'] ?? $this->getTitle()); ?>, Inc. All rights reserved.
->>>>>>> 2a9bab3f4bbd8ff7674b78f8de86a2e1ca515b9e
         </p>
         <ul class="list-unstyled d-flex">
             <li class="ms-3" id="youtube">
