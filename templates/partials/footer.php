@@ -16,7 +16,7 @@ $settings = Settings::fetchSettings();
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>" class="nav-link p-0 text-muted">Home</a></li>
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>news" class="nav-link p-0 text-muted">News</a></li>
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>contact" class="nav-link p-0 text-muted">Contacts</a></li>
-                <li class="nav-item mb-2"><a href="tel:<?= htmlspecialchars_decode($settings['phone_number'] ?? "****"); ?>" class="nav-link p-0 text-muted">Tel: <?= htmlspecialchars_decode($settings['phone_number'] ?? "****"); ?></a></li>
+                <li class="nav-item mb-2"><a href="tel:<?= Config::get('telephone') ?? ""; ?>" class="nav-link p-0 text-muted">Tel:<?= Config::get('telephone') ?? ""; ?></a></li>
             </ul>
         </div>
 
@@ -24,7 +24,7 @@ $settings = Settings::fetchSettings();
             <h5>Corporate Links</h5>
             <ul class="nav flex-column">
                 <li class="nav-item mb-2"><a href="<?= Config::get('domain') ?>report-a-story" class="nav-link p-0 text-muted">Report a story</a></li>
-                <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>sadvert" class="nav-link p-0 text-muted">Advertisement</a></li>
+                <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>advert" class="nav-link p-0 text-muted">Advertisement</a></li>
                 <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>docs/policy" class="nav-link p-0 text-muted">Privacy & Policy</a></li>
                 <li class="nav-item mb-2"><a href="<?= Config::get("domain") ?>docs/terms" class="nav-link p-0 text-muted">Terms & Conditions</a></li>
             </ul>

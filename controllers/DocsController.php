@@ -30,4 +30,16 @@ class DocsController extends Controller
         ];
         $this->view->render('docs/policy', $view);
     }
+
+
+    /**
+     * @throws Exception
+     */
+    public function terms(Request $request, Response $response)
+    {
+        $view = [
+            
+        ];
+        $this->view->render('docs/terms', $view);
+    }
 }

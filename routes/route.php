@@ -36,6 +36,7 @@ $router->post('/logout', [AuthController::class, 'logout']);
 
 // Policy & Terms
 $router->get('/docs/policy', [DocsController::class, 'policy']);
+$router->get('/docs/terms', [DocsController::class, 'terms']);
 
 // Quiz AND Tasks
 $router->get('/task/registration', [TasksController::class, 'task_registration']);

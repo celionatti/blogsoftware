@@ -33,11 +33,11 @@ $settings = Settings::fetchSettings();
     Back To Home</a>
   <h1 class="watermark">
     <?= htmlspecialchars_decode($settings['title'] ?? $this->getTitle()) ?>
-    <small>Privacy & Policy</small>
+    <small>Terms & Conditions</small>
   </h1>
 
   <div class="text-2xl mt-4 shadow p-3">
-    <?= htmlspecialchars_decode($settings['policy'] ?? "") ?>
+    <?= htmlspecialchars_decode($settings['terms'] ?? "") ?>
   </div>
 </main>
 <?php $this->end(); ?>
