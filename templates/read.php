@@ -26,25 +26,27 @@ use Core\Support\Helpers\TimeFormat;
         <div class="d-flex my-2">
             <a href="#" class="bi bi-facebook fs-5 me-3 text-primary"></a>
             <a href="#" class="bi bi-telegram fs-5 me-3 text-primary"></a>
-            <a href="https://api.whatsapp.com/send?text=<?= Config::get("domain") . $article->slug ?>" class="bi bi-whatsapp fs-5 me-3 text-success" target="_blank"></a>
-            <a href="https://twitter.com/share?text=<?= $article->meta_title ?>&url=<?= Config::get('domain') . $article->slug ?>" class="bi bi-twitter fs-5 me-3 text-info" target="_blank"></a>
+            <a href="https://api.whatsapp.com/send?text=<?= Config::get("domain") . $article->slug ?>"
+                class="bi bi-whatsapp fs-5 me-3 text-success" target="_blank"></a>
+            <a href="https://twitter.com/share?text=<?= $article->meta_title ?>&url=<?= Config::get('domain') . $article->slug ?>"
+                class="bi bi-twitter fs-5 me-3 text-info" target="_blank"></a>
         </div>
 
         <?php if ($article->point_one): ?>
 
-            <div class="p-4 mb-3 bg-light rounded border-top border-primary border-3">
-                <h4 class="fst-italic pb-2">What we covered here</h4>
-                <ul>
-                    <li>
-                        <?= $article->point_one ?>
-                    </li>
-                    <?php if ($article->point_two): ?>
-                    <li>
-                        <?= $article->point_two ?>
-                    </li>
-                    <?php endif; ?>
-                </ul>
-            </div>
+        <div class="p-4 mb-3 bg-light rounded border-top border-primary border-3">
+            <h4 class="fst-italic pb-2">What we covered here</h4>
+            <ul>
+                <li>
+                    <?= $article->point_one ?>
+                </li>
+                <?php if ($article->point_two): ?>
+                <li>
+                    <?= $article->point_two ?>
+                </li>
+                <?php endif; ?>
+            </ul>
+        </div>
         <?php endif; ?>
 
     </div>
@@ -75,6 +77,15 @@ use Core\Support\Helpers\TimeFormat;
 
                 <div class="card-body shadow">
                     <?= htmlspecialchars_decode($article->content) ?>
+                    <div class="share post-container border-top border-3 border-danger mt-5 text-center d-flex flex-column justify-content-center align-items-center">
+                        <h5 class="share-title">Author</h5>
+                        <div class="profile">
+                            <img src="<?= get_image($article->avatar ?? "", 'user') ?>" alt="" class="profile-img">
+                            <span class="share-title">
+                                <a href="<?= Config::get("domain") ?>author?name=<?= $article->username ?>" class="text-dark h6 text-uppercase"><?= $article->username ?></a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </article>

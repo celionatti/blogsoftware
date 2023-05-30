@@ -116,6 +116,28 @@ class SiteController extends Controller
         $this->view->render('read', $view);
     }
 
+    public function author(Request $request, Response $response)
+    {
+        $name = $request->get('name');
+
+        $params = [
+            'columns' => "username, surname, name, email, avatar, phone, social, bio",
+            'conditions' => "username = :username",
+            'bind' => ['username' => $name],
+            'limit' => 1
+        ];
+
+        $author = Users::findFirst($params);
+        if (!$author)
+            abort(Response::NOT_FOUND);
+
+        $view = [
+            'errors' => [],
+            'author' => $author,
+        ];
+        $this->view->render('author', $view);
+    }
+
     public function contact(Request $request, Response $response)
     {
         if ($request->isPost()) {
