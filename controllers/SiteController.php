@@ -138,6 +138,31 @@ class SiteController extends Controller
         $this->view->render('author', $view);
     }
 
+    public function account(Request $request, Response $response)
+    {
+        if(! $this->currentUser)
+            abort();
+
+        $uid = $this->currentUser->uid;
+
+        $params = [
+            'columns' => "username, surname, name, email, avatar, phone, social, bio, acl",
+            'conditions' => "uid = :uid",
+            'bind' => ['uid' => $uid],
+            'limit' => 1
+        ];
+
+        $user = Users::findFirst($params);
+        if (!$user)
+            abort(Response::NOT_FOUND);
+
+        $view = [
+            'errors' => [],
+            'user' => $user,
+        ];
+        $this->view->render('docs/profile', $view);
+    }
+
     public function contact(Request $request, Response $response)
     {
         if ($request->isPost()) {
