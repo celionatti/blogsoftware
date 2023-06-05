@@ -1,6 +1,8 @@
 <?php
 
 use Core\Database\Migration;
+use Core\Support\Helpers\Bcrypt;
+use Core\Support\Helpers\Token;
 
 /**
  * Initial Migration. (Users Table)
@@ -32,6 +34,22 @@ class m0001_initial extends Migration
         KEY `uid` (`uid`)
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4";
         $this->connection->exec($SQL);
+
+        $password = Bcrypt::hashPassword("adminpassword");
+        $uid = Token::generateOTP(60);
+
+        $query = "INSERT INTO `users` (
+            `id`, 
+            `uid`, 
+            `username`, 
+            `surname`, 
+            `name`, 
+            `email`, 
+            `password`, 
+            `acl`) VALUES 
+            (NULL, '$uid', 'adminuser', 'admin', 'user', 'adminuser@admin.com','$password', 'admin')
+            ";
+        $this->connection->exec($query);
     }
 
     public function down(): void

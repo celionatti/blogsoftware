@@ -37,8 +37,8 @@ class Users extends DbModel
     public string $confirm_password = "";
     public string $old_password = "";
     public string|null $token = null;
-    public string $bio = "";
-    public string $social = "";
+    public string|null $bio = "";
+    public string|null $social = "";
     public int $blocked = self::BLOCKED;
     public string $remember = '';
     public string $created_at = "";
