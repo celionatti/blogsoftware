@@ -2,10 +2,12 @@
 
 namespace controllers;
 
+use Core\Support\Helpers\Bcrypt;
 use Exception;
 use Core\Request;
 use models\Users;
 use Core\Response;
+use models\Ratings;
 use Core\Controller;
 use models\Articles;
 use models\Comments;
@@ -14,6 +16,8 @@ use Core\Application;
 use models\BoardPosts;
 use models\Subscribers;
 use models\CommentReplies;
+use Core\Support\Helpers\Image;
+use Core\Support\Helpers\FileUpload;
 
 class SiteController extends Controller
 {
@@ -131,16 +135,36 @@ class SiteController extends Controller
         if (!$author)
             abort(Response::NOT_FOUND);
 
+        $rating_params = [
+            'columns' => "SUM(rating) as total",
+            'conditions' => "name = :name",
+            'bind' => ['name' => $name],
+        ];
+
+        $rating = Ratings::findFirst($rating_params);
+
+        if ($request->isPost()) {
+            $ratings = new Ratings();
+
+            $ratings->loadData($request->getBody());
+            $ratings->name = $name;
+
+            if ($ratings->save()) {
+                redirect("/author?name=$name");
+            }
+        }
+
         $view = [
             'errors' => [],
             'author' => $author,
+            'rating' => $rating->total,
         ];
         $this->view->render('author', $view);
     }
 
     public function account(Request $request, Response $response)
     {
-        if(! $this->currentUser)
+        if (!$this->currentUser)
             abort();
 
         $uid = $this->currentUser->uid;
@@ -156,11 +180,138 @@ class SiteController extends Controller
         if (!$user)
             abort(Response::NOT_FOUND);
 
+        if ($user && $user->acl !== "user") {
+            $article_params = [
+                'conditions' => "user_id = :user_id",
+                'bind' => ['user_id' => $uid],
+            ];
+
+            $rating_params = [
+                'columns' => "SUM(rating) as total",
+                'conditions' => "name = :name",
+                'bind' => ['name' => $user->username],
+            ];
+
+            $article_count = Articles::findTotal($article_params);
+            $rating = Ratings::findFirst($rating_params);
+        }
+
         $view = [
             'errors' => [],
             'user' => $user,
+            'article_count' => $article_count,
+            'rating' => $rating->total,
         ];
         $this->view->render('docs/profile', $view);
+    }
+
+    public function account_edit(Request $request, Response $response)
+    {
+        if (!$this->currentUser)
+            abort();
+
+        $uid = $this->currentUser->uid;
+
+        $params = [
+            'conditions' => "uid = :uid",
+            'bind' => ['uid' => $uid],
+            'limit' => 1
+        ];
+
+        $user = Users::findFirst($params);
+
+        if (!$user)
+            abort(Response::NOT_FOUND);
+
+        if ($request->isPatch()) {
+            $user->loadData($request->getBody());
+
+            if ($user->token) {
+                $user->token = Bcrypt::hashPassword($user->token);
+            }
+
+            $upload = new FileUpload('avatar');
+
+            $uploadErrors = $upload->validate();
+
+            if (!empty($uploadErrors)) {
+                foreach ($uploadErrors as $field => $error) {
+                    $user->setError($field, $error);
+                }
+            }
+
+            if (empty($user->getErrors())) {
+                if ($user->save()) {
+                    $upload->directory('uploads/users');
+                    if (!empty($upload->tmp)) {
+                        if ($upload->upload()) {
+                            if (file_exists($user->avatar)) {
+                                unlink($user->avatar);
+                                $user->avatar = '';
+                            }
+                            $user->avatar = $upload->fc;
+                            $image = new Image();
+                            $image->resize($user->avatar);
+                            $user->save();
+                        }
+                    }
+                    Application::$app->session->setFlash("success", "{$user->surname} Updated successfully");
+                    redirect('/account');
+                }
+            }
+        }
+
+        $view = [
+            'errors' => $user->getErrors(),
+            'user' => $user,
+        ];
+        $this->view->render('docs/profile_edit', $view);
+    }
+
+    public function change_password(Request $request, Response $response)
+    {
+        if (!$this->currentUser)
+            abort();
+
+        $uid = $this->currentUser->uid;
+
+        $user = new Users();
+        $isError = true;
+
+
+        if ($request->isPatch()) {
+            $user->loadData($request->getBody());
+            $user->validateChangePassword();
+
+            if (empty($user->getErrors())) {
+                $u = Users::findFirst(
+                    [
+                        'columns' => "password",
+                        'conditions' => "uid = :uid",
+                        'bind' => ['uid' => $uid],
+                        'limit' => 1
+                    ]
+                );
+
+                if ($u) {
+                    $verified = password_verify($request->post('old_password'), $u->password);
+                    if ($verified) {
+                        $isError = false;
+                        Application::$app->session->setFlash("success", "Password Changed successfully");
+                        redirect('/account');
+                    } else {
+                        
+                    }
+                }
+            }
+            
+        }
+
+        $view = [
+            'errors' => $user->getErrors(),
+            'user' => $user,
+        ];
+        $this->view->render('docs/change_password', $view);
     }
 
     public function contact(Request $request, Response $response)

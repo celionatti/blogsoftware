@@ -27,7 +27,12 @@ $router->post('/subscribers', [SiteController::class, 'subscribers']);
 $router->get('/board-post/read', [SiteController::class, 'board_post']);
 $router->get('/search', [SiteController::class, 'search']);
 $router->get('/author', [SiteController::class, 'author']);
+$router->post('/author', [SiteController::class, 'author']);
 $router->get('/account', [SiteController::class, 'account']);
+$router->get('/account/edit', [SiteController::class, 'account_edit']);
+$router->patch('/account/edit', [SiteController::class, 'account_edit']);
+$router->get('/account/change-password', [SiteController::class, 'change_password']);
+$router->patch('/account/change-password', [SiteController::class, 'change_password']);
 
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);

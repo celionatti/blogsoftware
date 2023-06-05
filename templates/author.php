@@ -3,7 +3,7 @@
 
 use Core\Config;
 use Core\Forms\BootstrapForm;
-use Core\Support\Helpers\TimeFormat;
+use models\Ratings;
 
 
 ?>
@@ -54,42 +54,31 @@ use Core\Support\Helpers\TimeFormat;
         </header>
         <div class="px-3">
             <p class="col-md-8 fs-4 text-center mb-3"><?= htmlspecialchars_decode($author->bio) ?></p>
-            <form action="" method="post" class="my-4">
-                <div class="d-flex justify-content-between align-items-center">
-                    <span class="fs-4 flex-center">Rating</span>
+            <form action="" method="POST" class="my-4">
+                <div class="d-flex justify-content-between align-items-center border-bottom border-danger border-3 py-2 my-2">
+                    <span class="fs-4 flex-center">Ratings:</span>
                     <div class="fs-4 text-end">
-                        <span class="text-normal"><i class="bi bi-star-fill text-info"></i></span>
-                        <span class="text-normal"><i class="bi bi-star-fill text-info"></i></span>
-                        <span class="text-normal"><i class="bi bi-star-fill text-info"></i></span>
+                        <?php Ratings::RatingStars($rating) ?>
                     </div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
 
                     <div class="form-check my-3 mx-2">
                         <input type="radio" class="form-check-input border border-primary"
-                            style="transform: scale(1.5);cursor: pointer;" name="answer" value="5">
+                            style="transform: scale(1.5);cursor: pointer;" name="rating" value="5">
                         <span class="text-normal"><i class="bi bi-star-half"></i></span>
                     </div>
 
                     <div class="form-check my-3 mx-2">
                         <input type="radio" class="form-check-input border border-primary"
-                            style="transform: scale(1.5);cursor: pointer;" name="answer" value="10">
+                            style="transform: scale(1.5);cursor: pointer;" name="rating" value="10">
                         <span class="text-normal"><i class="bi bi-star-half"></i></span>
                         <span class="text-normal"><i class="bi bi-star"></i></span>
                     </div>
 
                     <div class="form-check my-3 mx-2">
                         <input type="radio" class="form-check-input border border-primary"
-                            style="transform: scale(1.5);cursor: pointer;" name="answer" value="15">
-                        <span class="text-normal"><i class="bi bi-star-half"></i></span>
-                        <span class="text-normal"><i class="bi bi-star-half"></i></span>
-                        <span class="text-normal"><i class="bi bi-star"></i></span>
-                    </div>
-
-                    <div class="form-check my-3 mx-2">
-                        <input type="radio" class="form-check-input border border-primary"
-                            style="transform: scale(1.5);cursor: pointer;" name="answer" value="20">
-                        <span class="text-normal"><i class="bi bi-star-half"></i></span>
+                            style="transform: scale(1.5);cursor: pointer;" name="rating" value="15">
                         <span class="text-normal"><i class="bi bi-star-half"></i></span>
                         <span class="text-normal"><i class="bi bi-star-half"></i></span>
                         <span class="text-normal"><i class="bi bi-star"></i></span>
@@ -97,7 +86,16 @@ use Core\Support\Helpers\TimeFormat;
 
                     <div class="form-check my-3 mx-2">
                         <input type="radio" class="form-check-input border border-primary"
-                            style="transform: scale(1.5);cursor: pointer;" name="answer" value="25">
+                            style="transform: scale(1.5);cursor: pointer;" name="rating" value="20">
+                        <span class="text-normal"><i class="bi bi-star-half"></i></span>
+                        <span class="text-normal"><i class="bi bi-star-half"></i></span>
+                        <span class="text-normal"><i class="bi bi-star-half"></i></span>
+                        <span class="text-normal"><i class="bi bi-star"></i></span>
+                    </div>
+
+                    <div class="form-check my-3 mx-2">
+                        <input type="radio" class="form-check-input border border-primary"
+                            style="transform: scale(1.5);cursor: pointer;" name="rating" value="25">
                         <span class="text-normal"><i class="bi bi-star-half"></i></span>
                         <span class="text-normal"><i class="bi bi-star-half"></i></span>
                         <span class="text-normal"><i class="bi bi-star-half"></i></span>

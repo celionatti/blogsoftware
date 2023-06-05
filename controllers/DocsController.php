@@ -42,4 +42,5 @@ class DocsController extends Controller
         ];
         $this->view->render('docs/terms', $view);
     }
+
 }
