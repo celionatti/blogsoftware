@@ -29,7 +29,7 @@ class Csrf
     /**
      * @throws Exception
      */
-    public function check_csrf()
+    public static function check_csrf()
     {
         $check = Application::$app->request->post('_csrf_token');
         if(Application::$app->session->exists('_csrf_token') && Application::$app->session->get('_csrf_token') == $check)

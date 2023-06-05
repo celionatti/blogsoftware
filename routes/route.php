@@ -38,6 +38,10 @@ $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);
 $router->get('/login', [AuthController::class, 'login']);
 $router->post('/login', [AuthController::class, 'login']);
+$router->get('/forgot_password', [AuthController::class, 'forgot_password']);
+$router->post('/forgot_password', [AuthController::class, 'forgot_password']);
+$router->get('/change_password', [AuthController::class, 'change_password']);
+$router->patch('/change_password', [AuthController::class, 'change_password']);
 
 $router->post('/logout', [AuthController::class, 'logout']);
 

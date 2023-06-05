@@ -8,6 +8,9 @@ use models\Users;
 use Core\Response;
 use Core\Controller;
 use Core\Application;
+use Core\Support\Csrf;
+use Core\Support\Helpers\Bcrypt;
+use Core\Support\Helpers\Token;
 
 class AuthController extends Controller
 {
@@ -96,10 +99,43 @@ class AuthController extends Controller
 
     public function forgot_password(Request $request, Response $response)
     {
+        if ($request->isPost()) {
+            Csrf::check_csrf();
+
+            $params = [
+                'columns' => "token",
+                'conditions' => "email = :email",
+                'bind' => ['email' => $request->post('email')],
+                'limit' => 1
+            ];
+
+            $user = Users::findFirst($params);
+            if ($user) {
+
+                $verifiedToken = password_verify($request->post('token'), $user->token);
+                if($verifiedToken) {
+                    $rand_id = Token::randomString('64');
+                    $token = Bcrypt::hashPassword(Token::randomString('10'));
+                    $user = $request->post('email');
+                    $this->session->set("token", Token::generateOTP('15'));
+                    redirect("/change_password?rand_id={$rand_id}&token={$token}&user={$user}");
+                }
+            }
+        }
+
         $view = [
             'errors' => [],
         ];
 
         $this->view->render("auth/forgot_password", $view);
+    }
+
+    public function change_password(Request $request, Response $response)
+    {
+        $view = [
+            'errors' => [],
+        ];
+
+        $this->view->render("auth/change_password", $view);
     }
 }
