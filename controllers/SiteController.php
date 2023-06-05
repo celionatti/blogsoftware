@@ -275,7 +275,13 @@ class SiteController extends Controller
 
         $uid = $this->currentUser->uid;
 
-        $user = new Users();
+        $params = [
+            'conditions' => "uid = :uid",
+            'bind' => ['uid' => $uid],
+            'limit' => 1
+        ];
+
+        $user = Users::findFirst($params);
         $isError = true;
 
 
@@ -284,27 +290,23 @@ class SiteController extends Controller
             $user->validateChangePassword();
 
             if (empty($user->getErrors())) {
-                $u = Users::findFirst(
-                    [
-                        'columns' => "password",
-                        'conditions' => "uid = :uid",
-                        'bind' => ['uid' => $uid],
-                        'limit' => 1
-                    ]
-                );
+                $u = Users::findFirst($params);
 
-                if ($u) {
+                if ($user) {
                     $verified = password_verify($request->post('old_password'), $u->password);
                     if ($verified) {
                         $isError = false;
-                        Application::$app->session->setFlash("success", "Password Changed successfully");
-                        redirect('/account');
+                        if ($user->save()) {
+                            Application::$app->session->setFlash("success", "Your password has been changed successfully");
+                            redirect('/account');
+                        }
                     } else {
-                        
+                        Application::$app->session->setFlash("success", "Your password is not corret.");
+                        redirect('/account/change-password');
                     }
                 }
             }
-            
+
         }
 
         $view = [

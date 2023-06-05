@@ -27,16 +27,16 @@ class Users extends DbModel
 
     public string $uid = "";
     public string $surname = "";
-    public string|null $username;
+    public string|null $username = null;
     public string $name = "";
     public string $email = "";
-    public string|null $avatar;
-    public string|null $phone;
+    public string|null $avatar = null;
+    public string|null $phone = null;
     public string $acl = self::USER_ACCESS;
     public string $password = "";
     public string $confirm_password = "";
     public string $old_password = "";
-    public string|null $token;
+    public string|null $token = null;
     public string $bio = "";
     public string $social = "";
     public int $blocked = self::BLOCKED;
