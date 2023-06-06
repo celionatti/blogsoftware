@@ -27,14 +27,14 @@ use Core\Support\Helpers\TimeFormat;
                                 <div
                                     class="d-flex justify-content-between align-items-center mb-2 px-3 py-1 text-center rounded border-bottom border-danger border-3">
                                     <h6 class="text-center">
-                                        <a href="<?= Config::get('domain') ?>topics?slug=<?= $article->topic_slug ?>" class="text-black">
+                                        <a href="<?= Config::get('domain') ?>tags?slug=<?= $article->topic_slug ?>&tag_name=<?= $article->topic ?>" class="text-black">
                                             <span class="bi bi-tags"></span>
                                             <?= $article->topic ?>
                                         </a>
                                     </h6>
-                                    <h6 class="text-black"><span class="bi bi-clock"></span>
+                                    <small class="text-black"><span class="bi bi-clock"></span>
                                         <?= TimeFormat::TimeInAgo($article->created_at) ?>
-                                    </h6>
+                                    </small>
                                 </div>
                                 <a href="<?= Config::get('domain') ?>news/read?slug=<?= $article->slug ?>" class="post-title">
                                     <?= $article->title ?>

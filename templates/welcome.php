@@ -93,14 +93,14 @@ $boardPost = BoardPosts::boardPost();
                         <div
                             class="d-flex justify-content-between align-items-center my-2 px-3 py-1 text-center rounded border-bottom border-danger border-3">
                             <h6 class="text-center">
-                                <a href="#" class="text-black">
+                                <a href="<?= Config::get('domain') ?>tags?slug=<?= $article->topic_slug ?>&tag_name=<?= $article->topic ?>" class="text-black">
                                     <span class="bi bi-tag"></span>
                                     <?= $article->topic ?>
                                 </a>
                             </h6>
-                            <h6 class="text-black fw-bold"><span class="bi bi-clock"></span>
+                            <small class="text-black"><span class="bi bi-clock"></span>
                                 <?= TimeFormat::TimeInAgo($article->created_at) ?>
-                            </h6>
+                            </small>
                         </div>
 
                         <a href="<?= Config::get("domain") ?>news/read?slug=<?= $article->slug ?>" class="post-title mt-3 px-3">

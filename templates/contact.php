@@ -1,6 +1,9 @@
 <?php
 
+use models\Settings;
 use Core\Forms\BootstrapForm;
+
+$settings = Settings::fetchSettings();
 
 ?>
 
@@ -13,7 +16,7 @@ use Core\Forms\BootstrapForm;
         <div class="about-head position-absolute bottom-50 top-0">
             <h3 class="text-danger mt-3">About Us</h3>
             <h1 class="text-white text-uppercase fw-bold fs-1 my-auto">
-                <?= $settings['site_name'] ?? $this->getTitle(); ?>
+                <?= htmlspecialchars_decode($settings['title'] ?? $this->getTitle()); ?>
             </h1>
         </div>
     </div>
@@ -21,15 +24,13 @@ use Core\Forms\BootstrapForm;
     <section>
         <div class="row">
             <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-                <img src="<?= get_image("assets/img/post-4.jpg") ?>" alt="" class="w-100 img-fluid rounded-5"
-                    style="object-fit: cover;">
+                <img src="<?= get_image("assets/img/post-4.jpg") ?>" alt="" class="w-100 img-fluid rounded-5" style="object-fit: cover;">
             </div>
             <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-                <h2
-                    class="text-shadow h3 text-uppercase border-bottom border-3 border-danger pb-2 text-black text-start">
-                    About <?= $settings['site_name'] ?? $this->getTitle() ?></h2>
+                <h2 class="text-shadow h3 text-uppercase border-bottom border-3 border-danger pb-2 text-black text-start">
+                    About <?= htmlspecialchars_decode($settings['title'] ?? $this->getTitle()) ?></h2>
                 <p>
-                    <?= $settings['about'] ?? '...' ?>
+                    <?= htmlspecialchars_decode($settings['about'] ?? '...') ?>
                 </p>
             </div>
         </div>
@@ -55,32 +56,28 @@ use Core\Forms\BootstrapForm;
                 <div class="accordion" id="accordionExample">
                     <div class="accordion-item">
                         <h4 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                 About the Founder
                             </button>
                         </h4>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                            data-bs-parent="#accordionExample">
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <?= $settings['founder'] ?? 'Loading...' ?>
+                                <?= htmlspecialchars_decode($settings['founder'] ?? 'Loading...') ?>
                             </div>
                         </div>
                     </div>
                     <div class="accordion-item">
                         <h4 class="accordion-header" id="headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                 Mission And Aim
                             </button>
                         </h4>
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                            data-bs-parent="#accordionExample">
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem rerum illo recusandae
-                                dicta
-                                quos saepe repudiandae sunt. Omnis numquam tempora, rem ipsum et asperiores ipsa enim,
-                                corrupti tenetur consequatur nisi!
+                                <?=
+                                htmlspecialchars_decode($settings['mission'] ??
+                                    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem rerum illo recusanda')
+                                ?>
                             </div>
                         </div>
                     </div>
