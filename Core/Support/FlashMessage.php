@@ -22,7 +22,7 @@ class FlashMessage
     private static function bootstrap_success($msg)
     {
         echo "
-            <div class='alert alert-success alert-dismissible fade show mt-3 mx-2 shadow-lg text-uppercase text-center' role='alert' style='z-index: 99999;'>
+            <div class='alert alert-success alert-dismissible fade show mt-3 mx-2 shadow-lg text-uppercase text-center' role='alert' id='alert-message' style='z-index: 99999;'>
                 <div>{$msg}</div>
                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
             </div>
