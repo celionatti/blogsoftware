@@ -13,7 +13,7 @@ use Core\Forms\BootstrapForm;
         </div>
         <div class="col-md-10 mx-auto col-lg-7">
                 <h3 class="text-muted text-center border-bottom border-danger border-3 py-2">Change Password</h3>
-            <form action="" method="post" class="p-4 p-md-2 rounded-3">
+            <form action="" method="post" class="p-4 p-md-2 rounded-3" autocomplete="off">
                 <?= BootstrapForm::csrfField(); ?>
                 <?= BootstrapForm::inputField('Password', 'password', '', ['class' => 'form-control', 'type' => 'password'], ['class' => 'form-floating mb-3'], $errors) ?>
 

@@ -22,8 +22,7 @@ use models\Ratings;
 <?php $this->start('content') ?>
 <div class="p-2 mb-4 bg-light rounded-3">
     <div class="container-fluid d-flex justify-content-center align-items-center author-bg rounded">
-        <img src="<?= get_image($user->avatar) ?>" class="rounded-5 m-2"
-            style="object-fit: cover; height: 350px; width:350px;" />
+        <img src="<?= get_image($user->avatar) ?>" class="rounded-5 m-2" style="object-fit: cover; height: 350px; width:350px;" />
     </div>
     <div class="pt-3 pb-5 d-flex flex-column justify-content-center align-items-center">
         <h1 class="display-5 fw-bold text-capitalize">
@@ -39,20 +38,22 @@ use models\Ratings;
         <div class="col shadow p-3">
             <div class="share-title fw-bold border-bottom border-danger border-3">Others Info</div>
             <table class="table table-responsive table-striped">
-                <?php if ($rating): ?>
+                <?php if ($user->acl !== "user") : ?>
+                    <?php if ($rating) : ?>
+                        <tr>
+                            <th>Rating:</th>
+                            <td class="text-end">
+                                <?php Ratings::RatingStars($rating) ?>
+                            </td>
+                        </tr>
+                    <?php endif; ?>
                     <tr>
-                        <th>Rating:</th>
+                        <th># of Articles:</th>
                         <td class="text-end">
-                            <?php Ratings::RatingStars($rating) ?>
+                            <?= $article_count ?>
                         </td>
                     </tr>
                 <?php endif; ?>
-                <tr>
-                    <th># of Articles:</th>
-                    <td class="text-end">
-                        <?= $article_count ?>
-                    </td>
-                </tr>
                 <tr>
                     <th>Credits:</th>
                     <td class="text-end">
@@ -66,8 +67,7 @@ use models\Ratings;
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2" class="text-end text-capitalize fw-bold"><a href="#"
-                            class="btn btn-sm btn-dark">Request withdrawal</a></td>
+                    <td colspan="2" class="text-end text-capitalize fw-bold"><a href="#" class="btn btn-sm btn-dark">Request withdrawal</a></td>
                 </tr>
             </table>
         </div>
@@ -118,10 +118,8 @@ use models\Ratings;
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-start text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/change-password"
-                            class="btn btn-sm btn-dark">Change Password</a></td>
-                    <td colspan="2" class="text-end text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/edit"
-                            class="btn btn-sm btn-dark">Update</a></td>
+                    <td class="text-start text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/change-password" class="btn btn-sm btn-dark">Change Password</a></td>
+                    <td colspan="2" class="text-end text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/edit" class="btn btn-sm btn-dark">Update</a></td>
                 </tr>
             </table>
         </div>

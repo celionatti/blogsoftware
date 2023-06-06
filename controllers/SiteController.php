@@ -199,8 +199,8 @@ class SiteController extends Controller
         $view = [
             'errors' => [],
             'user' => $user,
-            'article_count' => $article_count,
-            'rating' => $rating->total,
+            'article_count' => $article_count ?? 0,
+            'rating' => $rating->total ?? 0,
         ];
         $this->view->render('docs/profile', $view);
     }
