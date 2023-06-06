@@ -11,11 +11,10 @@ use models\Ratings;
 <?php $this->start('header') ?>
 <style>
 .author-bg {
-    background-image: url('/assets/img/bg-1.jpg'), url('/assets/img/bg-3.jpg');
+    background-image: url('/assets/img/bg-1.jpg');
     background-position: center;
-    background-repeat: no-repeat, repeat;
+    background-repeat: no-repeat;
     background-size: cover;
-    background-blend-mode: lighten;
 }
 </style>
 <?php $this->end(); ?>
