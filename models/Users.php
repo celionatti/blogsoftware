@@ -95,6 +95,16 @@ class Users extends DbModel
         $this->password = Bcrypt::hashPassword($this->password);
     }
 
+    public function validateChangePasswordAuth()
+    {
+        $this->runValidation(new RequiredValidation($this, ['field' => 'password', 'msg' => "Password is a required field."]));
+        $this->runValidation(new RequiredValidation($this, ['field' => 'confirm_password', 'msg' => "Confirm Password is a required field."]));
+        $this->runValidation(new MatchesValidation($this, ['field' => 'confirm_password', 'rule' => $this->password, 'msg' => "Your passwords do not match."]));
+        $this->runValidation(new MinValidation($this, ['field' => 'password', 'rule' => 8, 'msg' => "Password must be at least 8 characters."]));
+
+        $this->password = Bcrypt::hashPassword($this->password);
+    }
+
     public function login($remember = false)
     {
         session_regenerate_id();

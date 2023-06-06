@@ -118,7 +118,8 @@ class AuthController extends Controller
                     $token = Bcrypt::hashPassword(Token::randomString('10'));
                     $user = $request->post('email');
                     $this->session->set("token", Token::generateOTP('15'));
-                    redirect("/change_password?rand_id={$rand_id}&token={$token}&user={$user}");
+                    $ses = time();
+                    redirect("/change_password?rand_id={$rand_id}&token={$token}&user={$user}&ses={$ses}");
                 }
             }
         }
@@ -132,8 +133,43 @@ class AuthController extends Controller
 
     public function change_password(Request $request, Response $response)
     {
+        $email = $request->get("user");
+
+        if(! $this->session->exists("token"))
+            abort(Response::NOT_ACCEPTABLE);
+
+        $current_time = time();
+        $time_left = 60 * 30;
+
+        if($request->get("ses") + $time_left <= $current_time) {
+            $this->session->remove("token");
+            Application::$app->session->setFlash("success", "Request Expired, Try again.");
+            redirect("/login");
+        }
+
+        $params = [
+            'conditions' => "email = :email",
+            'bind' => ['email' => $email],
+            'limit' => 1
+        ];
+
+        $user = Users::FindFirst($params);
+
+        if($request->isPatch()) {
+            if($user) {
+                $user->loadData($request->getBody());
+                $user->validateChangePasswordAuth();
+
+                if ($user->save()) {
+                    $this->session->remove("token");
+                    Application::$app->session->setFlash("success", "Your password has been changed successfully");
+                    redirect('/login');
+                }
+            }
+        }
+
         $view = [
-            'errors' => [],
+            'errors' => $user->getErrors(),
         ];
 
         $this->view->render("auth/change_password", $view);
