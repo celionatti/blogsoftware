@@ -286,8 +286,8 @@ class AdminArticlesController extends Controller
         $article = Articles::findFirst($params);
 
         $related_params = [
-            'conditions' => "status = :status AND title LIKE :title OR author LIKE :author",
-            'bind' => ['status' => 'published', 'title' => "%$article->title%", 'author' => "%$article->author%"],
+            'conditions' => "status = :status AND title LIKE :title OR author LIKE :author OR topic LIKE :topic",
+            'bind' => ['status' => 'published', 'title' => "%$article->title%", 'author' => "%$article->author%", 'topic' => "%$article->topic%"],
             'order' => "created_at DESC",
             'limit' => $recordsPerPage,
             'offset' => ($currentPage - 1) * $recordsPerPage

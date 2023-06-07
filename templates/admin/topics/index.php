@@ -11,8 +11,7 @@ use Core\Forms\BootstrapForm;
 <div class="container bg-white p-2 rounded">
     <h2 class="text-muted text-center border-bottom border-3 border-danger py-2">Topics</h2>
 
-    <div id="table-actions" class="row mt-3">
-        <?= BootstrapForm::inputField('', 'search', '', ['class' => 'form-control form-control-sm shadow', 'type' => 'search'], ['class' => 'col my-1'], $errors) ?>
+    <div id="table-actions" class="row my-3">
 
         <div class="col text-end">
             <a href="<?= Config::get('domain') ?>admin/topics/trash" class="btn btn-danger btn-sm">
