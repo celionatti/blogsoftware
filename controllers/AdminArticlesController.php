@@ -555,24 +555,22 @@ class AdminArticlesController extends Controller
             'bind' => ['slug' => $slug]
         ];
         $article_featured = Articles::findFirst([
-            'conditions' => "featured = :featured AND slug != :slug",
-            'bind' => ['featured' => "1", 'slug' => $slug]
+            'conditions' => "featured = :featured",
+            'bind' => ['featured' => "1"]
         ]);
 
-        if (!$article_featured) {
-            Application::$app->session->setFlash("success", "Article Featured Already, Try changing it.");
-            last_uri();
+        if ($article_featured) {
+            $article_featured->featured = 0;
+            $article_featured->save();
         }
-        $article_featured->featured = 0;
-        if ($article_featured->save()) {
-            $article = Articles::findFirst($params);
+        
+        $article = Articles::findFirst($params);
 
-            if ($article) {
-                $article->loadData($request->getBody());
-                if ($article->save()) {
-                    Application::$app->session->setFlash("success", "Article Featured successfully");
-                    last_uri();
-                }
+        if ($article) {
+            $article->loadData($request->getBody());
+            if ($article->save()) {
+                Application::$app->session->setFlash("success", "Article Featured successfully");
+                last_uri();
             }
         }
     }
