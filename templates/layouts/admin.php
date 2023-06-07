@@ -104,7 +104,7 @@ use Core\Support\FlashMessage;
     <script src="<?= assets_path('js/jquery-3.6.3.min.js'); ?>"></script>
     <script src="<?= assets_path('bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $(".spinner").hide();
             $(".sp-container").hide();
         });

@@ -12,22 +12,7 @@ use Core\Support\Helpers\TimeFormat;
 <div class="container bg-white p-2 rounded">
     <h2 class="text-muted text-center border-bottom border-3 border-danger py-2">Articles</h2>
 
-    <div id="featured_posts">
-        <form action="" method="post">
-            <strong>Featured Post: </strong>
-            <span class="title-wrapper">
-                <span>This is a sample post title</span>
-                <button type="button" class="change-featured-post btn btn-sm btn-secondary">Change</button>
-            </span>
-            <span class="input-wrapper d-none">
-                <?= BootstrapForm::inputField('Featured Article', 'title', '', ['class' => 'form-control form-control-sm'], ['class' => 'form-floating my-2'], $errors) ?>
-                <button type="submit" class="btn btn-dark">Update</button>
-            </span>
-        </form>
-    </div>
-
-    <div id="table-actions" class="row mt-3">
-        <?= BootstrapForm::inputField('', 'search', '', ['class' => 'form-control form-control-sm shadow', 'type' => 'search'], ['class' => 'col my-1'], $errors) ?>
+    <div id="table-actions" class="row my-3">
 
         <div class="col text-end">
             <a href="<?= Config::get('domain') ?>admin/articles/drafts" class="btn btn-warning btn-sm">
@@ -42,7 +27,7 @@ use Core\Support\Helpers\TimeFormat;
     </div>
 
     <div class="border border-muted border-1 px-2 table-responsive">
-        <?php if ($articles): ?>
+        <?php if ($articles) : ?>
             <table class="table table-striped">
                 <thead>
                     <th>S/N</th>
@@ -52,7 +37,7 @@ use Core\Support\Helpers\TimeFormat;
                     <th>Created Date</th>
                 </thead>
                 <tbody>
-                    <?php foreach ($articles as $key => $article): ?>
+                    <?php foreach ($articles as $key => $article) : ?>
                         <tr>
                             <td>
                                 <?= $key + 1 ?>
@@ -65,17 +50,25 @@ use Core\Support\Helpers\TimeFormat;
                                     <?= $article->title ?>
                                 </a>
                                 <div class="my-2">
-                                    <a href="<?= Config::get('domain') ?>admin/articles/trash?article-slug=<?= $article->slug ?>"
-                                        class="text-danger">Trash</a>
+                                    <a href="<?= Config::get('domain') ?>admin/articles/trash?article-slug=<?= $article->slug ?>" class="btn btn-sm btn-danger">Trash</a>
                                     <span class="divider">|</span>
-                                    <a href="<?= Config::get('domain') ?>admin/articles/edit?article-slug=<?= $article->slug ?>"
-                                        class="text-info">Edit</a>
+                                    <a href="<?= Config::get('domain') ?>admin/articles/edit?article-slug=<?= $article->slug ?>" class="btn btn-sm btn-info">Edit</a>
                                     <span class="divider">|</span>
-                                    <a href="<?= Config::get('domain') ?>admin/articles/related-articles?article-slug=<?= $article->slug ?>"
-                                        class="text-primary">Related Article</a>
+                                    <a href="<?= Config::get('domain') ?>admin/articles/related-articles?article-slug=<?= $article->slug ?>" class="btn btn-sm btn-primary">Related Article</a>
                                     <span class="divider">|</span>
-                                    <a href="<?= Config::get('domain') ?>admin/articles/comments-article?article-slug=<?= $article->slug ?>"
-                                        class="text-warning">Comments</a>
+                                    <a href="<?= Config::get('domain') ?>admin/articles/comments-article?article-slug=<?= $article->slug ?>" class="btn btn-sm btn-warning">Comments</a>
+                                    <span class="divider">|</span>
+                                    <form action="<?= Config::get('domain') ?>admin/articles/featured-article" method="post" class="d-inline">
+                                        <?= BootstrapForm::method("PATCH") ?>
+
+                                        <?= BootstrapForm::hidden("article_slug", $article->slug) ?>
+                                        <?= BootstrapForm::hidden("featured", "1") ?>
+                                        <button type="submit" class="btn btn-sm btn-secondary">Featured</button>
+                                    </form>
+                                    <?php if ($article->featured === 1) : ?>
+                                        <span class="divider">|</span>
+                                        <a class="h4 mx-3 text-success bi bi-patch-check"></a>
+                                    <?php endif; ?>
                                 </div>
                             </td>
                             <td>
@@ -89,7 +82,7 @@ use Core\Support\Helpers\TimeFormat;
                 </tbody>
             </table>
             <?= Pagination::bootstrap_prev_next($prevPage, $nextPage) ?>
-        <?php else: ?>
+        <?php else : ?>
             <h4 class="text-center text-muted border-bottom border-3 border-danger p-3">No Data Available at the moment!
             </h4>
         <?php endif; ?>
@@ -105,7 +98,7 @@ use Core\Support\Helpers\TimeFormat;
     const inputWrapper = document.querySelector('.input-wrapper');
     const titleWrapper = document.querySelector('.title-wrapper');
 
-    changeFeaturedPostBtn.addEventListener('click', function () {
+    changeFeaturedPostBtn.addEventListener('click', function() {
         inputWrapper.classList.toggle('d-none');
         titleWrapper.classList.toggle('d-none');
     });

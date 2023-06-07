@@ -81,6 +81,7 @@ $router->delete('/admin/articles/comments-article/trash', [AdminArticlesControll
 $router->patch('/admin/articles/comments-article/status', [AdminArticlesController::class, 'comments_article_status'])->only('admin');
 $router->delete('/admin/articles/comments-article/replies/trash', [AdminArticlesController::class, 'comments_article_replies_trash'])->only('admin');
 $router->patch('/admin/articles/comments-article/replies/status', [AdminArticlesController::class, 'comments_article_replies_status'])->only('admin');
+$router->patch('/admin/articles/featured-article', [AdminArticlesController::class, 'featured_article'])->only('admin');
 
 // Admin Users
 $router->get('/admin/users', [AdminUsersController::class, 'users'])->only('admin');
