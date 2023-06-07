@@ -17,7 +17,7 @@ use Core\Support\Helpers\TimeFormat;
             <strong>Featured Post: </strong>
             <span class="title-wrapper">
                 <span>This is a sample post title</span>
-                <button type="button" class="change-featured-post">Change</button>
+                <button type="button" class="change-featured-post btn btn-sm btn-secondary">Change</button>
             </span>
             <span class="input-wrapper d-none">
                 <?= BootstrapForm::inputField('Featured Article', 'title', '', ['class' => 'form-control form-control-sm'], ['class' => 'form-floating my-2'], $errors) ?>

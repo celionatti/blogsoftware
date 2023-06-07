@@ -9,6 +9,9 @@ use controllers\AdminController;
 use controllers\TasksController;
 use controllers\SettingsController;
 use controllers\AdminTasksController;
+use controllers\AdminUsersController;
+use controllers\AdminTopicsController;
+use controllers\AdminArticlesController;
 use controllers\AdminPodcastsController;
 use controllers\AdminBoardPostsController;
 
@@ -61,41 +64,41 @@ $router->get('/quiz/submit', [TasksController::class, 'quiz_submit']);
 $router->get('/admin', [AdminController::class, 'index'])->only('admin');
 
 // Admin Articles
-$router->get('/admin/articles', [AdminController::class, 'articles'])->only('admin');
-$router->get('/admin/articles/drafts', [AdminController::class, 'drafts'])->only('admin');
-$router->get('/admin/articles/create', [AdminController::class, 'create_article'])->only('admin');
-$router->post('/admin/articles/create', [AdminController::class, 'create_article'])->only('admin');
-$router->get('/admin/articles/edit', [AdminController::class, 'edit_article'])->only('admin');
-$router->patch('/admin/articles/edit', [AdminController::class, 'edit_article'])->only('admin');
-$router->get('/admin/articles/trash', [AdminController::class, 'trash_article'])->only('admin');
-$router->delete('/admin/articles/trash', [AdminController::class, 'trash_article'])->only('admin');
-$router->get('/admin/articles/related-articles', [AdminController::class, 'related_articles'])->only('admin');
-$router->post('/admin/articles/related-articles/add', [AdminController::class, 'add_related_articles'])->only('admin');
-$router->delete('/admin/articles/related-articles/remove', [AdminController::class, 'remove_related_articles'])->only('admin');
-$router->get('/admin/articles/comments-article', [AdminController::class, 'comments_article'])->only('admin');
-$router->get('/admin/articles/comments-article/replies', [AdminController::class, 'comments_article_replies'])->only('admin');
-$router->delete('/admin/articles/comments-article/trash', [AdminController::class, 'comments_article_trash'])->only('admin');
-$router->patch('/admin/articles/comments-article/status', [AdminController::class, 'comments_article_status'])->only('admin');
-$router->delete('/admin/articles/comments-article/replies/trash', [AdminController::class, 'comments_article_replies_trash'])->only('admin');
-$router->patch('/admin/articles/comments-article/replies/status', [AdminController::class, 'comments_article_replies_status'])->only('admin');
+$router->get('/admin/articles', [AdminArticlesController::class, 'articles'])->only('admin');
+$router->get('/admin/articles/drafts', [AdminArticlesController::class, 'drafts'])->only('admin');
+$router->get('/admin/articles/create', [AdminArticlesController::class, 'create_article'])->only('admin');
+$router->post('/admin/articles/create', [AdminArticlesController::class, 'create_article'])->only('admin');
+$router->get('/admin/articles/edit', [AdminArticlesController::class, 'edit_article'])->only('admin');
+$router->patch('/admin/articles/edit', [AdminArticlesController::class, 'edit_article'])->only('admin');
+$router->get('/admin/articles/trash', [AdminArticlesController::class, 'trash_article'])->only('admin');
+$router->delete('/admin/articles/trash', [AdminArticlesController::class, 'trash_article'])->only('admin');
+$router->get('/admin/articles/related-articles', [AdminArticlesController::class, 'related_articles'])->only('admin');
+$router->post('/admin/articles/related-articles/add', [AdminArticlesController::class, 'add_related_articles'])->only('admin');
+$router->delete('/admin/articles/related-articles/remove', [AdminArticlesController::class, 'remove_related_articles'])->only('admin');
+$router->get('/admin/articles/comments-article', [AdminArticlesController::class, 'comments_article'])->only('admin');
+$router->get('/admin/articles/comments-article/replies', [AdminArticlesController::class, 'comments_article_replies'])->only('admin');
+$router->delete('/admin/articles/comments-article/trash', [AdminArticlesController::class, 'comments_article_trash'])->only('admin');
+$router->patch('/admin/articles/comments-article/status', [AdminArticlesController::class, 'comments_article_status'])->only('admin');
+$router->delete('/admin/articles/comments-article/replies/trash', [AdminArticlesController::class, 'comments_article_replies_trash'])->only('admin');
+$router->patch('/admin/articles/comments-article/replies/status', [AdminArticlesController::class, 'comments_article_replies_status'])->only('admin');
 
 // Admin Users
-$router->get('/admin/users', [AdminController::class, 'users'])->only('admin');
-$router->get('/admin/users/create', [AdminController::class, 'create_user'])->only('admin');
-$router->post('/admin/users/create', [AdminController::class, 'create_user'])->only('admin');
-$router->get('/admin/users/edit', [AdminController::class, 'edit_user'])->only('admin');
-$router->patch('/admin/users/edit', [AdminController::class, 'edit_user'])->only('admin');
-$router->get('/admin/users/delete', [AdminController::class, 'delete_user'])->only('admin');
-$router->delete('/admin/users/delete', [AdminController::class, 'delete_user'])->only('admin');
+$router->get('/admin/users', [AdminUsersController::class, 'users'])->only('admin');
+$router->get('/admin/users/create', [AdminUsersController::class, 'create_user'])->only('admin');
+$router->post('/admin/users/create', [AdminUsersController::class, 'create_user'])->only('admin');
+$router->get('/admin/users/edit', [AdminUsersController::class, 'edit_user'])->only('admin');
+$router->patch('/admin/users/edit', [AdminUsersController::class, 'edit_user'])->only('admin');
+$router->get('/admin/users/delete', [AdminUsersController::class, 'delete_user'])->only('admin');
+$router->delete('/admin/users/delete', [AdminUsersController::class, 'delete_user'])->only('admin');
 
 // Admin Topics
-$router->get('/admin/topics', [AdminController::class, 'topics'])->only('admin');
-$router->get('/admin/topics/create', [AdminController::class, 'create_topic'])->only('admin');
-$router->post('/admin/topics/create', [AdminController::class, 'create_topic'])->only('admin');
-$router->get('/admin/topics/edit', [AdminController::class, 'edit_topic'])->only('admin');
-$router->patch('/admin/topics/edit', [AdminController::class, 'edit_topic'])->only('admin');
-$router->get('/admin/topics/delete', [AdminController::class, 'delete_topic'])->only('admin');
-$router->delete('/admin/topics/delete', [AdminController::class, 'delete_topic'])->only('admin');
+$router->get('/admin/topics', [AdminTopicsController::class, 'topics'])->only('admin');
+$router->get('/admin/topics/create', [AdminTopicsController::class, 'create_topic'])->only('admin');
+$router->post('/admin/topics/create', [AdminTopicsController::class, 'create_topic'])->only('admin');
+$router->get('/admin/topics/edit', [AdminTopicsController::class, 'edit_topic'])->only('admin');
+$router->patch('/admin/topics/edit', [AdminTopicsController::class, 'edit_topic'])->only('admin');
+$router->get('/admin/topics/delete', [AdminTopicsController::class, 'delete_topic'])->only('admin');
+$router->delete('/admin/topics/delete', [AdminTopicsController::class, 'delete_topic'])->only('admin');
 
 // Admin Collections
 $router->get('/admin/collections/create', [AdminController::class, 'create_collection'])->only('admin');
