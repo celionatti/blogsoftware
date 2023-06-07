@@ -3,6 +3,9 @@
 namespace Core\Middleware;
 
 use Exception;
+use middlewares\Auth;
+use middlewares\Admin;
+use middlewares\Guest;
 
 class Middleware
 {

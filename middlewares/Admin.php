@@ -1,16 +1,16 @@
 <?php
 
-namespace Core\Middleware;
+namespace middlewares;
 
-use models\Users;
 use Core\Application;
+use models\Users;
 
-class Auth
+class Admin
 {
     public function handle(): void
     {
         $user = Users::getCurrentUser();
-        $allowed = $user;
+        $allowed = $user && $user->hasPermission(['admin', 'author']);
         if (!$allowed) {
             Application::$app->session->setFlash("success", "You do not have access to this page.");
             redirect("/");

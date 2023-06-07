@@ -1,6 +1,6 @@
 <?php
 
-namespace Core\Middleware;
+namespace middlewares;
 
 class Guest
 {
