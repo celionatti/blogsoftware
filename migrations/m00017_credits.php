@@ -14,12 +14,14 @@ class m00017_credits extends Migration
         `wallet_id` varchar(300) NOT NULL,
         `user_id` text DEFAULT NULL,
         `type` varchar(30) NOT NULL DEFAULT 'personal',
+        `balance` bigint(20) NOT NULL DEFAULT '0',
         `status` varchar(30) NOT NULL DEFAULT 'disabled',
         `created_at` datetime NOT NULL DEFAULT current_timestamp(),
         `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
         PRIMARY KEY (`id`),
         KEY `wallet_id` (`wallet_id`),
-        KEY `type` (`type`)
+        KEY `type` (`type`),
+        INDEX `balance` (`balance`)
         ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4";
         $this->connection->exec($SQL);
     }

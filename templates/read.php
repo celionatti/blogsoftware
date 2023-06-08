@@ -24,11 +24,11 @@ use Core\Support\Helpers\TimeFormat;
         </small>
         <!-- <small class="text-muted">Updated 05:45 PM GMT. April 05, 2023</small> -->
         <div class="d-flex my-2">
-            <a href="#" class="bi bi-facebook fs-5 me-3 text-primary"></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= Config::get("domain") ?>news/read?slug=<?= $article->slug ?>" class="bi bi-facebook fs-5 me-3 text-primary" target="_blank"></a>
             <a href="#" class="bi bi-telegram fs-5 me-3 text-primary"></a>
             <a href="https://api.whatsapp.com/send?text=<?= Config::get("domain") . $article->slug ?>"
                 class="bi bi-whatsapp fs-5 me-3 text-success" target="_blank"></a>
-            <a href="https://twitter.com/share?text=<?= $article->meta_title ?>&url=<?= Config::get('domain') . $article->slug ?>"
+            <a href="https://twitter.com/intent/tweet?text=<?= $article->title ?>&url=<?= Config::get("domain") ?>news/read?slug=<?= $article->slug ?>"
                 class="bi bi-twitter fs-5 me-3 text-info" target="_blank"></a>
         </div>
 
