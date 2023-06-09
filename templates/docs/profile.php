@@ -67,6 +67,9 @@ use models\Ratings;
                     </td>
                 </tr>
                 <tr>
+                    <?php if ($user->acl === "user") : ?>
+                        <td class="text-start text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/request-wallet" class="btn btn-sm btn-dark"><span class="bi bi-wallet"></span> Request Wallet</a></td>
+                    <?php endif; ?>
                     <td colspan="2" class="text-end text-capitalize fw-bold"><a href="#" class="btn btn-sm btn-dark">Request withdrawal</a></td>
                 </tr>
             </table>

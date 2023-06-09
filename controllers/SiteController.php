@@ -306,7 +306,6 @@ class SiteController extends Controller
                     }
                 }
             }
-
         }
 
         $view = [
@@ -314,6 +313,30 @@ class SiteController extends Controller
             'user' => $user,
         ];
         $this->view->render('docs/change_password', $view);
+    }
+
+    public function request_wallet(Request $request, Response $response)
+    {
+        if (!$this->currentUser)
+            abort();
+
+        $uid = $this->currentUser->uid;
+
+        $params = [
+            'conditions' => "uid = :uid",
+            'bind' => ['uid' => $uid],
+            'limit' => 1
+        ];
+
+        $user = Users::findFirst($params);
+
+        if (!$user)
+            abort(Response::NOT_FOUND);
+
+        $view = [
+            'errors' => [],
+        ];
+        $this->view->render('docs/request_wallet', $view);
     }
 
     public function contact(Request $request, Response $response)
@@ -356,7 +379,6 @@ class SiteController extends Controller
                 } else {
                     $this->json_response("Give a Comment.");
                 }
-
             }
         }
     }
