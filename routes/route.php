@@ -37,6 +37,7 @@ $router->patch('/account/edit', [SiteController::class, 'account_edit']);
 $router->get('/account/change-password', [SiteController::class, 'change_password']);
 $router->patch('/account/change-password', [SiteController::class, 'change_password']);
 $router->get('/account/request-wallet', [SiteController::class, 'request_wallet']);
+$router->post('/account/request-wallet', [SiteController::class, 'request_wallet']);
 
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);

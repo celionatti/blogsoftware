@@ -8,8 +8,7 @@ use Core\Forms\BootstrapForm;
 
 
 <?php $this->start('content') ?>
-<form action="" method="post" enctype="multipart/form-data">
-    <?= BootstrapForm::method("PATCH"); ?>
+<form action="" method="post" enctype="multipart/form-data" autocomplete="off">
     <div class="p-2 mb-4 bg-light rounded-3">
         <div class="container-fluid m-2 p-3 text-center rounded">
             <p class="text-muted">
@@ -17,24 +16,14 @@ use Core\Forms\BootstrapForm;
             </p>
         </div>
 
-        <?= bootstrapForm::fileField('', 'avatar', ['class' => 'form-control', 'onchange' => "display_image_edit(this.files[0])"], ['class' => 'col m-0 form-floating'], $errors) ?>
+        <h5 class="text-center border-bottom border-danger border-3 p-2">Create Wallet</h5>
+
 
         <div class="pt-3 pb-5">
-            <?= BootstrapForm::inputField('Surname', 'surname', $user->surname ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
-
-            <?= BootstrapForm::inputField('Name', 'name', $user->name ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
-
-            <?= BootstrapForm::inputField('Username', 'username', $user->username ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
-
-            <?= BootstrapForm::inputField('E-Mail', 'email', $user->email ?? '', ['class' => 'form-control', 'type' => 'email'], ['class' => 'form-floating my-2'], $errors) ?>
-
-            <?= BootstrapForm::inputField('Phone Number', 'phone', $user->phone ?? '', ['class' => 'form-control', 'type' => 'tel'], ['class' => 'form-floating my-2'], $errors) ?>
-
-            <?= BootstrapForm::inputField('Social (Twitter)', 'social', $user->social ?? '', ['class' => 'form-control', 'type' => 'url'], ['class' => 'form-floating my-2'], $errors) ?>
+            <?= BootstrapForm::selectField('Type', 'type', $user->type ?? '', $typeOpts ?? [], ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
             <?= BootstrapForm::inputField('Token (Pin)', 'token', $user->token ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
-            <?= BootstrapForm::textareaField('Bio', 'bio', $user->bio ?? '', ['class' => 'form-control summernote'], ['class' => 'form-floating mb-2'], $errors) ?>
 
             <div class="row mt-3">
                 <div class="col">
@@ -43,7 +32,7 @@ use Core\Forms\BootstrapForm;
                         cancel</a>
                 </div>
                 <div class="col">
-                    <button type="submit" class="btn btn-sm btn-dark w-100">Update</button>
+                    <button type="submit" class="btn btn-sm btn-dark w-100">Create Wallet</button>
                 </div>
             </div>
         </div>

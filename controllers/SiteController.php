@@ -18,6 +18,7 @@ use models\Subscribers;
 use models\CommentReplies;
 use Core\Support\Helpers\Image;
 use Core\Support\Helpers\FileUpload;
+use models\Credits;
 
 class SiteController extends Controller
 {
@@ -333,8 +334,18 @@ class SiteController extends Controller
         if (!$user)
             abort(Response::NOT_FOUND);
 
+        if($request->isPost()) {
+            dd($_POST);
+        }
+
         $view = [
             'errors' => [],
+            'typeOpts' => [
+                '' => '',
+                Credits::PERSONAL_WALLET => 'Personal Wallet',
+                Credits::BUSINESS_WALLET => 'Business Wallet',
+                Credits::INVESTMENT_WALLET => 'Investment Wallet'
+            ],
         ];
         $this->view->render('docs/request_wallet', $view);
     }
