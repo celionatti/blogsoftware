@@ -54,12 +54,14 @@ use models\Ratings;
                         </td>
                     </tr>
                 <?php endif; ?>
-                <tr>
-                    <th>Credits:</th>
-                    <td class="text-end">
-                        100 <span class="fw-bold text-primary">CNT</span>
-                    </td>
-                </tr>
+                <?php if ($credit) : ?>
+                    <tr>
+                        <th>Credits:</th>
+                        <td class="text-end">
+                            <?= $credit->getBalance() ?> <span class="fw-bold text-primary">CNT</span>
+                        </td>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th>Role:</th>
                     <td class="text-end text-capitalize fw-bold">
@@ -68,7 +70,9 @@ use models\Ratings;
                 </tr>
                 <tr>
                     <?php if ($user->acl === "user") : ?>
-                        <td class="text-start text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/request-wallet" class="btn btn-sm btn-dark"><span class="bi bi-wallet"></span> Request Wallet</a></td>
+                        <?php if (!$credit) : ?>
+                            <td class="text-start text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/request-wallet" class="btn btn-sm btn-dark"><span class="bi bi-wallet"></span> Request Wallet</a></td>
+                        <?php endif; ?>
                     <?php endif; ?>
                     <td colspan="2" class="text-end text-capitalize fw-bold"><a href="#" class="btn btn-sm btn-dark">Request withdrawal</a></td>
                 </tr>

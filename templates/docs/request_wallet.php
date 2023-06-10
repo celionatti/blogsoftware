@@ -20,9 +20,9 @@ use Core\Forms\BootstrapForm;
 
 
         <div class="pt-3 pb-5">
-            <?= BootstrapForm::selectField('Type', 'type', $user->type ?? '', $typeOpts ?? [], ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+            <?= BootstrapForm::selectField('Type', 'type', $credit->type ?? '', $typeOpts ?? [], ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
-            <?= BootstrapForm::inputField('Token (Pin)', 'token', $user->token ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
+            <?= BootstrapForm::inputField('Token (Pin)', 'token', $credit->token ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>
 
 
             <div class="row mt-3">

@@ -22,8 +22,8 @@ use Core\Config;
             }
         </style>
         <rect width="400" height="400" fill="#FFFFFF" />
-        <text x="50%" y="50%" text-anchor="middle" class="error-code">404</text>
-        <text x="50%" y="60%" text-anchor="middle" class="error-text">Not Found</text>
+        <text x="50%" y="50%" text-anchor="middle" class="error-code">403</text>
+        <text x="50%" y="60%" text-anchor="middle" class="error-text">Forbidden</text>
     </svg>
 
 </div>

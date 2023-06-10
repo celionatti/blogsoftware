@@ -181,6 +181,12 @@ class SiteController extends Controller
         if (!$user)
             abort(Response::NOT_FOUND);
 
+        $credit = Credits::findFirst([
+            'conditions' => "user_id = :user_id",
+            'bind' => ["user_id" => $uid]
+        ]);
+
+
         if ($user && $user->acl !== "user") {
             $article_params = [
                 'conditions' => "user_id = :user_id",
@@ -202,6 +208,7 @@ class SiteController extends Controller
             'user' => $user,
             'article_count' => $article_count ?? 0,
             'rating' => $rating->total ?? 0,
+            'credit' => $credit,
         ];
         $this->view->render('docs/profile', $view);
     }
@@ -334,22 +341,45 @@ class SiteController extends Controller
         if (!$user)
             abort(Response::NOT_FOUND);
 
-        if($request->isPost()) {
+        $credit = Credits::findFirst([
+            'conditions' => "user_id = :user_id",
+            'bind' => ["user_id" => $uid]
+        ]);
+
+        if($credit)
+            abort(Response::BAD_REQUEST);
+
+
+        $credit = new Credits();
+
+        if ($request->isPost()) {
             $verifiedToken = password_verify($request->post('token'), $user->token);
 
-            if($verifiedToken) {
-                dd($_POST);
+            if ($verifiedToken) {
+                unset($_POST['token']);
+
+                $credit->loadData($request->getBody());
+                $credit->user_id = $this->currentUser->uid;
+
+                if ($credit->save()) {
+                    Application::$app->session->setFlash("success", "Wallet Created successfully");
+                    redirect('/account');
+                } else {
+                    $credit->setError('type', 'Something went wrong with creating your wallet. Please try again.');
+                    $credit->setError('token', '');
+                }
             }
         }
 
         $view = [
-            'errors' => [],
+            'errors' => $credit->getErrors(),
             'typeOpts' => [
                 '' => '',
                 Credits::PERSONAL_WALLET => 'Personal Wallet',
                 Credits::BUSINESS_WALLET => 'Business Wallet',
                 Credits::INVESTMENT_WALLET => 'Investment Wallet'
             ],
+            'credit' => $credit
         ];
         $this->view->render('docs/request_wallet', $view);
     }

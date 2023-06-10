@@ -5,6 +5,7 @@ namespace models;
 use Core\Database\DbModel;
 use Core\Support\Helpers\Token;
 use Core\Validations\RequiredValidation;
+use Core\Validations\UniqueValidation;
 
 class Credits extends DbModel
 {
@@ -33,9 +34,10 @@ class Credits extends DbModel
         $this->timeStamps();
 
         $this->runValidation(new RequiredValidation($this, ['field' => 'type', 'msg' => "Wallet Type is a required field."]));
+        $this->runValidation(new UniqueValidation($this, ['field' => 'user_id', 'msg' => "Wallet User Already Exists."]));
 
         if ($this->isNew()) {
-            $this->wallet_id = Token::TransactID(15, "CN-WAL-");
+            $this->wallet_id = Token::TransactID(15, "CN-WAL");
         } else {
             $this->_skipUpdate = ['wallet_id'];
         }
