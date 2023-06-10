@@ -335,7 +335,11 @@ class SiteController extends Controller
             abort(Response::NOT_FOUND);
 
         if($request->isPost()) {
-            dd($_POST);
+            $verifiedToken = password_verify($request->post('token'), $user->token);
+
+            if($verifiedToken) {
+                dd($_POST);
+            }
         }
 
         $view = [

@@ -10,7 +10,7 @@ class Credits extends DbModel
 {
     const STATUS_ACTIVE = "active";
     const STATUS_DISABLED = "disabled";
-    
+
     const PERSONAL_WALLET = "personal";
     const INVESTMENT_WALLET = "investment";
     const BUSINESS_WALLET = "business";
@@ -18,7 +18,7 @@ class Credits extends DbModel
     public string $wallet_id = "";
     public string $user_id = "";
     public string $type = self::PERSONAL_WALLET;
-    public string|float|null $balance = 0.0;
+    public string|float|null $balance = 0;
     public string $status = self::STATUS_DISABLED;
     public string $created_at = "";
     public string $updated_at = "";
@@ -38,6 +38,31 @@ class Credits extends DbModel
             $this->wallet_id = Token::TransactID(15, "CN-WAL-");
         } else {
             $this->_skipUpdate = ['wallet_id'];
+        }
+    }
+
+    public function balance()
+    {
+        $this->balance = 0;
+    }
+
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+
+    public function deposit($amount)
+    {
+        $this->balance += $amount;
+    }
+
+    public function withdraw($amount)
+    {
+        if ($amount <= $this->balance) {
+            $this->balance -= $amount;
+            return true;
+        } else {
+            return false;
         }
     }
 }
