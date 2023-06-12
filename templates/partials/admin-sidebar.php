@@ -35,7 +35,7 @@ use Core\Config;
 
         <h6
             class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
-            <span>Saved reports</span>
+            <span>Others</span>
             <a class="link-secondary" aria-label="Add a new report">
                 <span class="align-text-center bi bi-plus-circle"></span>
             </a>
@@ -51,6 +51,12 @@ use Core\Config;
                 <a class="nav-link" href="<?= Config::get('domain') ?>admin/tasks">
                     <span class="align-text-center bi bi-list-task"></span>
                     Tasks
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= Config::get('domain') ?>admin/credits">
+                    <span class="align-text-center bi bi-wallet"></span>
+                    Credits & Wallets
                 </a>
             </li>
             <li class="nav-item">

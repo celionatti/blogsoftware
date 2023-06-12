@@ -11,6 +11,7 @@ use controllers\SettingsController;
 use controllers\AdminTasksController;
 use controllers\AdminUsersController;
 use controllers\AdminTopicsController;
+use controllers\AdminCreditsController;
 use controllers\AdminArticlesController;
 use controllers\AdminPodcastsController;
 use controllers\AdminBoardPostsController;
@@ -147,6 +148,10 @@ $router->get('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit
 $router->patch('/admin/board-posts/edit', [AdminBoardPostsController::class, 'edit'])->only('admin');
 $router->delete('/admin/board-posts/trash', [AdminBoardPostsController::class, 'trash'])->only('admin');
 $router->patch('/admin/board-posts/status', [AdminBoardPostsController::class, 'status'])->only('admin');
+
+// Admin Credits
+$router->get('/admin/credits', [AdminCreditsController::class, 'index'])->only('admin');
+$router->get('/admin/wallets', [AdminCreditsController::class, 'wallets'])->only('admin');
 
 
 // Admin Settings

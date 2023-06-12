@@ -16,11 +16,12 @@ class Credits extends DbModel
     const INVESTMENT_WALLET = "investment";
     const BUSINESS_WALLET = "business";
 
+    public string $slug = "";
     public string $wallet_id = "";
     public string $user_id = "";
     public string $type = self::PERSONAL_WALLET;
     public string|float|null $balance = 0;
-    public string $status = self::STATUS_DISABLED;
+    public string $status = self::STATUS_ACTIVE;
     public string $created_at = "";
     public string $updated_at = "";
 
@@ -37,8 +38,10 @@ class Credits extends DbModel
         $this->runValidation(new UniqueValidation($this, ['field' => 'user_id', 'msg' => "Wallet User Already Exists."]));
 
         if ($this->isNew()) {
+            $this->slug = Token::generateOTP(60);
             $this->wallet_id = Token::TransactID(15, "CN-WAL");
         } else {
+            $this->_skipUpdate = ['slug'];
             $this->_skipUpdate = ['wallet_id'];
         }
     }
