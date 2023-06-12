@@ -60,4 +60,35 @@ class AdminCreditsController extends Controller
         ];
         $this->view->render('admin/credits/wallets', $view);
     }
+
+
+    /**
+     * @throws Exception
+     */
+    public function info(Request $request, Response $response)
+    {
+        $slug = $request->get("credit-slug");
+
+        $params = [
+            'columns' => "credits.*, users.surname, users.email, users.name",
+            'conditions' => "credits.status = :status AND credits.slug = :slug",
+            'joins' => [
+                ['users', 'credits.user_id = users.uid'],
+            ],
+            'bind' => ['status' => 'active', 'slug' => $slug],
+            'order' => 'credits.id DESC',
+            'limit' => '1',
+        ];
+
+        if($request->isPost()) {
+            
+        }
+
+        $view = [
+            'errors' => [],
+            'credit' => Credits::findFirst($params),
+        ];
+
+        $this->view->render('admin/credits/info', $view);
+    }
 }
