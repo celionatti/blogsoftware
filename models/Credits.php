@@ -16,6 +16,7 @@ class Credits extends DbModel
     const INVESTMENT_WALLET = "investment";
     const BUSINESS_WALLET = "business";
 
+    // public string $id = "";
     public string $slug = "";
     public string $wallet_id = "";
     public string $user_id = "";
