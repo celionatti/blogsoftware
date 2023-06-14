@@ -85,38 +85,33 @@ class AdminCreditsController extends Controller
         ];
 
         $credit = Credits::findFirst($params);
-        $transaction = new Transactions();
 
         if ($request->isPost()) {
             Csrf::check_csrf();
 
-            // $transaction->slug = Token::generateOTP(60);
-            $transaction->to = $credit->uid;
-            $transaction->from = $this->currentUser->uid;
-            $transaction->details = $request->post("details");
-            $transaction->method = Transactions::CREDIT_METHOD;
-            $transaction->amount = $request->post("amount");
-            $transaction->status = Transactions::STATUS_SUCCESS;
+            $isError = false;
 
-            if ($transaction->save()) {
-                $last_transaction = Transactions::findFirst([
-                    'conditions' => "slug = :slug",
-                    'bind' => ['slug' => $transaction->slug],
-                ]);
+            if (empty($request->post("amount") || $request->post("amount") === 0)) {
+                $isError = true;
+                $credit->setError('amount', 'Something is wrong. Please try again.');
+                $credit->setError('details', '');
+            }
 
-                if ($last_transaction) {
-                    $c = Credits::findFirst($params);
-                    $c->balance = $c->deposit($request->post("amount"));
-                    if ($credit->save()) {
-                        Application::$app->session->setFlash("success", "{$credit->surname} Credited successfully.");
-                        redirect('/admin/credits');
-                    }
+            if (empty($credit->getErrors())) {
+                $credit->balance = $credit->balance + $request->post("amount");
+
+                if ($credit->save()) {
+                    Application::$app->session->setFlash("success", "{$credit->surname} Credited successfully.");
+                    redirect('/admin/credits');
+                } else {
+                    Application::$app->session->setFlash("success", "Something went wrong, Try again later.");
+                    last_uri();
                 }
             }
         }
 
         $view = [
-            'errors' => [],
+            'errors' => $credit->getErrors(),
             'credit' => $credit,
         ];
 

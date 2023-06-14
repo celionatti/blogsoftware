@@ -16,7 +16,6 @@ class Credits extends DbModel
     const INVESTMENT_WALLET = "investment";
     const BUSINESS_WALLET = "business";
 
-    // public string $id = "";
     public string $slug = "";
     public string $wallet_id = "";
     public string $user_id = "";
@@ -44,31 +43,6 @@ class Credits extends DbModel
         } else {
             $this->_skipUpdate = ['slug'];
             $this->_skipUpdate = ['wallet_id'];
-        }
-    }
-
-    public function balance()
-    {
-        $this->balance = 0;
-    }
-
-    public function getBalance()
-    {
-        return $this->balance;
-    }
-
-    public function deposit($amount)
-    {
-        $this->balance += $amount;
-    }
-
-    public function withdraw($amount)
-    {
-        if ($amount <= $this->balance) {
-            $this->balance -= $amount;
-            return true;
-        } else {
-            return false;
         }
     }
 }
