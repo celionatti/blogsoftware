@@ -15,7 +15,6 @@ class m00018_credit_withdraws extends Migration
         `wallet_id` varchar(300) DEFAULT NULL,
         `user_id` varchar(300) DEFAULT NULL,
         `amount` bigint(20) NOT NULL DEFAULT '0',
-        `details` text DEFAULT NULL,
         `status` varchar(30) NOT NULL DEFAULT 'disabled',
         `created_at` datetime NOT NULL DEFAULT current_timestamp(),
         `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),

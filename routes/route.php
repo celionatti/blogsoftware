@@ -15,6 +15,7 @@ use controllers\AdminCreditsController;
 use controllers\AdminArticlesController;
 use controllers\AdminPodcastsController;
 use controllers\AdminBoardPostsController;
+use controllers\WalletController;
 
 $router->get('/', [SiteController::class, 'index']);
 $router->get('/news', [SiteController::class, 'news']);
@@ -37,8 +38,10 @@ $router->get('/account/edit', [SiteController::class, 'account_edit']);
 $router->patch('/account/edit', [SiteController::class, 'account_edit']);
 $router->get('/account/change-password', [SiteController::class, 'change_password']);
 $router->patch('/account/change-password', [SiteController::class, 'change_password']);
-$router->get('/account/request-wallet', [SiteController::class, 'request_wallet']);
-$router->post('/account/request-wallet', [SiteController::class, 'request_wallet']);
+$router->get('/account/request-wallet', [WalletController::class, 'request_wallet']);
+$router->post('/account/request-wallet', [WalletController::class, 'request_wallet']);
+$router->get('/account/request-withdrawal', [WalletController::class, 'request_withdrawal']);
+$router->post('/account/request-withdrawal', [WalletController::class, 'request_withdrawal']);
 
 $router->get('/register', [AuthController::class, 'register']);
 $router->post('/register', [AuthController::class, 'register']);

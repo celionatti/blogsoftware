@@ -5,7 +5,6 @@ namespace models;
 use Core\Database\DbModel;
 use Core\Support\Helpers\Token;
 use Core\Validations\RequiredValidation;
-use Core\Validations\UniqueValidation;
 
 class CreditWithdraws extends DbModel
 {
@@ -17,7 +16,6 @@ class CreditWithdraws extends DbModel
     public string $slug = "";
     public string $wallet_id = "";
     public string $user_id = "";
-    public string $details = "";
     public string|float|null $amount = 0;
     public string $status = self::STATUS_PENDING;
     public string $created_at = "";

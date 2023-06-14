@@ -73,8 +73,8 @@ use models\Ratings;
                         <?php if (!$credit) : ?>
                             <td class="text-start text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/request-wallet" class="btn btn-sm btn-dark"><span class="bi bi-wallet"></span> Request Wallet</a></td>
                         <?php endif; ?>
+                        <td colspan="2" class="text-end text-capitalize fw-bold"><a href="<?= Config::get("domain") ?>account/request-withdrawal" class="btn btn-sm btn-dark">Request withdrawal</a></td>
                     <?php endif; ?>
-                    <td colspan="2" class="text-end text-capitalize fw-bold"><a href="#" class="btn btn-sm btn-dark">Request withdrawal</a></td>
                 </tr>
             </table>
         </div>
