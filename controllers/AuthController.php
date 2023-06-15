@@ -139,7 +139,7 @@ class AuthController extends Controller
             abort(Response::NOT_ACCEPTABLE);
 
         $current_time = time();
-        $time_left = 60 * 30;
+        $time_left = 60 * 15;
 
         if($request->get("ses") + $time_left <= $current_time) {
             $this->session->remove("token");

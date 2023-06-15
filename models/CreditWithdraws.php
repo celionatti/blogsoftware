@@ -16,6 +16,10 @@ class CreditWithdraws extends DbModel
     public string $slug = "";
     public string $wallet_id = "";
     public string $user_id = "";
+    public string|null $accepted_by = "";
+    public string|null $bank = "";
+    public string|null $account_number = "";
+    public string|null $account_name = "";
     public string|float|null $amount = 0;
     public string $status = self::STATUS_PENDING;
     public string $created_at = "";
@@ -32,8 +36,10 @@ class CreditWithdraws extends DbModel
 
         $this->runValidation(new RequiredValidation($this, ['field' => 'wallet_id', 'msg' => "Wallet ID is a required field."]));
         $this->runValidation(new RequiredValidation($this, ['field' => 'user_id', 'msg' => "User ID is a required field."]));
-        $this->runValidation(new RequiredValidation($this, ['field' => 'details', 'msg' => "Details is a required field."]));
         $this->runValidation(new RequiredValidation($this, ['field' => 'amount', 'msg' => "Amount is a required field."]));
+        $this->runValidation(new RequiredValidation($this, ['field' => 'bank', 'msg' => "Bank is a required field."]));
+        $this->runValidation(new RequiredValidation($this, ['field' => 'account_number', 'msg' => "Account Number is a required field."]));
+        $this->runValidation(new RequiredValidation($this, ['field' => 'account_name', 'msg' => "Account Name is a required field."]));
 
         if ($this->isNew()) {
             $this->slug = Token::generateOTP(20);

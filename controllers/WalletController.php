@@ -89,24 +89,41 @@ class WalletController extends Controller
         $uid = $this->currentUser->uid;
 
         $params = [
-            'conditions' => "uid = :uid",
+            'columns' => "credits.*, users.uid, users.surname, users.name, users.token",
+            'conditions' => "users.uid = :uid",
             'bind' => ['uid' => $uid],
+            'joins' => [
+                ['users', 'credits.user_id = users.uid'],
+            ],
             'limit' => 1
         ];
 
-        $user = Users::findFirst($params);
+        $credit = Credits::findFirst($params);
 
-        if (!$user)
+        if (!$credit)
             abort(Response::NOT_FOUND);
 
         $withdraw = new CreditWithdraws();
-        
-        if($request->isPost()) {
-            dd($_POST);
+
+        if ($request->isPost()) {
+            if ($request->post("amount") >= $credit->balance) {
+                Application::$app->session->setFlash("success", "Insufficient Wallet Balance");
+                last_uri();
+            }
+
+            $withdraw->loadData($request->getBody());
+            $withdraw->wallet_id = $credit->wallet_id;
+            $withdraw->user_id = $this->currentUser->uid;
+
+            if ($withdraw->save()) {
+                Application::$app->session->setFlash("success", "Wallet Withdraw successful. Admin will process it soon.");
+                redirect('/account');
+            }
         }
 
         $view = [
-            'errors' => [],
+            'errors' => $withdraw->getErrors(),
+            'credit' => $credit
         ];
         $this->view->render('docs/request_withdraw', $view);
     }
