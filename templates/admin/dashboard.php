@@ -25,4 +25,18 @@ use Core\Config;
     </div>
 </div>
 
+<div class="row border border-3 border-secondary p-2 m-2">
+    <div class="col card">
+        <div class="card-header">
+            <h3 class="card-title">Subscribers</h3>
+        </div>
+        <div class="card-body">
+
+        </div>
+        <div class="card-footer">
+            
+        </div>
+    </div>
+</div>
+
 <?php $this->end() ?>
