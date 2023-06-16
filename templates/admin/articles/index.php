@@ -57,6 +57,7 @@ use Core\Support\Helpers\TimeFormat;
                                     <a href="<?= Config::get('domain') ?>admin/articles/related-articles?article-slug=<?= $article->slug ?>" class="btn btn-sm btn-primary">Related Article</a>
                                     <span class="divider">|</span>
                                     <a href="<?= Config::get('domain') ?>admin/articles/comments-article?article-slug=<?= $article->slug ?>" class="btn btn-sm btn-warning">Comments</a>
+                                    <?php if ($article->featured !== 1) : ?>
                                     <span class="divider">|</span>
                                     <form action="<?= Config::get('domain') ?>admin/articles/featured-article" method="post" class="d-inline">
                                         <?= BootstrapForm::method("PATCH") ?>
@@ -65,6 +66,8 @@ use Core\Support\Helpers\TimeFormat;
                                         <?= BootstrapForm::hidden("featured", "1") ?>
                                         <button type="submit" class="btn btn-sm btn-secondary">Featured</button>
                                     </form>
+                                    <?php endif; ?>
+
                                     <?php if ($article->featured === 1) : ?>
                                         <span class="divider">|</span>
                                         <a class="h4 mx-3 text-success bi bi-patch-check"></a>

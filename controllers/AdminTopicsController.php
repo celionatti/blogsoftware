@@ -33,6 +33,10 @@ class AdminTopicsController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Topics', 'url' => '']
+            ],
             'errors' => [],
             'topics' => Topics::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -56,6 +60,11 @@ class AdminTopicsController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Topics', 'url' => 'admin/topics'],
+                ['label' => 'Create Topic', 'url' => '']
+            ],
             'errors' => $topic->getErrors(),
             'statusOpts' => [
                 '' => '--- Please Select ---',
@@ -88,6 +97,11 @@ class AdminTopicsController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Topics', 'url' => 'admin/topics'],
+                ['label' => 'Edit Topic', 'url' => '']
+            ],
             'errors' => $topic->getErrors(),
             'statusOpts' => [
                 '' => '--- Please Select ---',
@@ -120,6 +134,11 @@ class AdminTopicsController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Topics', 'url' => 'admin/topics'],
+                ['label' => 'Delete Topic', 'url' => '']
+            ],
             'errors' => [],
             'topic' => $topic,
         ];

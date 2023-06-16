@@ -34,6 +34,10 @@ class AdminUsersController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Users', 'url' => 'admin/users']
+            ],
             'errors' => [],
             'users' => Users::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -82,6 +86,11 @@ class AdminUsersController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Users', 'url' => 'admin/users'],
+                ['label' => 'Create User', 'url' => '']
+            ],
             'errors' => $user->getErrors(),
             'aclOpts' => [
                 '' => '--- Please Select ---',
@@ -139,6 +148,11 @@ class AdminUsersController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Users', 'url' => 'admin/users'],
+                ['label' => 'Edit User', 'url' => '']
+            ],
             'errors' => $user->getErrors(),
             'aclOpts' => [
                 '' => '--- Please Select ---',
@@ -176,6 +190,11 @@ class AdminUsersController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Users', 'url' => 'admin/users'],
+                ['label' => 'Delete User', 'url' => '']
+            ],
             'errors' => [],
             'user' => $user,
         ];

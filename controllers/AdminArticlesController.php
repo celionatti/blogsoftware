@@ -49,6 +49,10 @@ class AdminArticlesController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Articles', 'url' => '']
+            ],
             'errors' => [],
             'articles' => Articles::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -79,6 +83,11 @@ class AdminArticlesController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Articles', 'url' => 'admin/articles'],
+                ['label' => 'Drafts', 'url' => 'admin/articles/drafts']
+            ],
             'errors' => [],
             'articles' => Articles::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -147,6 +156,11 @@ class AdminArticlesController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Articles', 'url' => 'admin/articles'],
+                ['label' => 'Create Article', 'url' => 'admin/articles/create']
+            ],
             'errors' => $article->getErrors(),
             'statusOpts' => [
                 '' => '--- Please Select ---',
@@ -223,6 +237,11 @@ class AdminArticlesController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Articles', 'url' => 'admin/articles'],
+                ['label' => 'Edit Article', 'url' => 'admin/articles/edit']
+            ],
             'errors' => $article->getErrors(),
             'statusOpts' => [
                 '' => '--- Please Select ---',
@@ -264,6 +283,11 @@ class AdminArticlesController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Articles', 'url' => 'admin/articles'],
+                ['label' => 'Delete Article', 'url' => '']
+            ],
             'errors' => [],
             'article' => $article,
         ];
@@ -298,6 +322,11 @@ class AdminArticlesController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Articles', 'url' => 'admin/articles'],
+                ['label' => 'Related Article', 'url' => '']
+            ],
             'article' => $article,
             'articles' => Articles::find($related_params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -387,6 +416,11 @@ class AdminArticlesController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Articles', 'url' => 'admin/articles'],
+                ['label' => 'Comments', 'url' => '']
+            ],
             'article' => $article,
             'comments' => Comments::find($comments_params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -423,6 +457,12 @@ class AdminArticlesController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Articles', 'url' => 'admin/articles'],
+                ['label' => 'Comments', 'url' => 'admin/articles/comments'],
+                ['label' => 'Comment Replies', 'url' => '']
+            ],
             'article' => $article,
             'comments' => CommentReplies::find($comment_replies_params),
             'prevPage' => $this->previous_pagination($currentPage),

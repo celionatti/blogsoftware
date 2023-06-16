@@ -8,7 +8,6 @@ use Core\Config;
 
 <?php $this->start('content') ?>
 
-<?php include('../templates/partials/breadcrumbs.php') ?>
 <div id="table-actions" class="row mt-3">
 
     <div class="col text-start">

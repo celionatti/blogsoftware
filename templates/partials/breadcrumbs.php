@@ -6,7 +6,7 @@ use Core\Config;
 ?>
 
 
-<nav aria-label="breadcrumb" class="d-flex justify-content-center align-items-center border-bottom border-3 border-info">
+<nav aria-label="breadcrumb" class="d-flex justify-content-center align-items-center border-bottom border-3 border-info my-1">
     <ol class="breadcrumb">
         <?php $count = count($navigations); ?>
         <?php foreach ($navigations as $index => $navigation) : ?>

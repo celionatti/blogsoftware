@@ -40,6 +40,10 @@ class AdminBoardPostsController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Board Posts', 'url' => ''],
+            ],
             'errors' => [],
             'boards' => BoardPosts::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -88,6 +92,11 @@ class AdminBoardPostsController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Board Posts', 'url' => 'admin/board-posts'],
+                ['label' => 'Create Board Post', 'url' => '']
+            ],
             'errors' => $boardPost->getErrors(),
             'board' => $boardPost
         ];
@@ -139,6 +148,11 @@ class AdminBoardPostsController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Board Posts', 'url' => 'admin/board-posts'],
+                ['label' => 'Edit Board Post', 'url' => '']
+            ],
             'errors' => $boardPost->getErrors(),
             'board' => $boardPost
         ];

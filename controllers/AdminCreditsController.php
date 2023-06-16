@@ -29,7 +29,10 @@ class AdminCreditsController extends Controller
     public function index(Request $request, Response $response)
     {
         $view = [
-            'podcasts' => Users::find(),
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Credits & Wallets', 'url' => ''],
+            ],
         ];
         $this->view->render('admin/credits/index', $view);
     }
@@ -58,6 +61,11 @@ class AdminCreditsController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Credits & Wallets', 'url' => 'admin/credits'],
+                ['label' => 'Wallets', 'url' => ''],
+            ],
             'credits' => Credits::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
             'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
@@ -111,6 +119,12 @@ class AdminCreditsController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Credits & Wallets', 'url' => 'admin/credits'],
+                ['label' => 'Wallets', 'url' => 'admin/wallets'],
+                ['label' => 'Info', 'url' => ''],
+            ],
             'errors' => $credit->getErrors(),
             'credit' => $credit,
         ];
