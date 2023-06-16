@@ -34,6 +34,7 @@ class View
         return $this->_title;
     }
 
+
     /**
      * @throws Exception
      */
@@ -100,4 +101,5 @@ class View
             require($fullPath);
         }
     }
+
 }

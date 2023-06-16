@@ -33,4 +33,9 @@ class Contacts extends DbModel
             $this->_skipUpdate = ['slug'];
         }
     }
+
+    public static function messages_count()
+    {
+        return self::findTotal();
+    }
 }

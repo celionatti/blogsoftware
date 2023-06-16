@@ -186,4 +186,9 @@ class Users extends DbModel
         return trim($this->username);
     }
 
+    public static function users_count()
+    {
+        return Users::findTotal();
+    }
+
 }

@@ -1,6 +1,11 @@
 <?php
 
 use Core\Config;
+use models\Contacts;
+use models\CreditWithdraws;
+
+$messages = Contacts::messages_count();
+$withdraws = CreditWithdraws::withdrawPending_count();
 
 ?>
 
@@ -33,8 +38,7 @@ use Core\Config;
             </li>
         </ul>
 
-        <h6
-            class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
             <span>Others</span>
             <a class="link-secondary" aria-label="Add a new report">
                 <span class="align-text-center bi bi-plus-circle"></span>
@@ -57,12 +61,24 @@ use Core\Config;
                 <a class="nav-link" href="<?= Config::get('domain') ?>admin/credits">
                     <span class="align-text-center bi bi-wallet"></span>
                     Credits & Wallets
+                    <?php if($withdraws && $withdraws !== 0): ?>
+                    <span class="badge rounded-pill bg-danger">
+                        <?= $withdraws ?>+
+                        <span class="visually-hidden">Withdraw Request</span>
+                    </span>
+                    <?php endif; ?>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="<?= Config::get('domain') ?>admin/messages">
                     <span class="align-text-center bi bi-envelope-paper"></span>
                     Messages
+                    <?php if($messages && $messages !== 0): ?>
+                    <span class="badge rounded-pill bg-danger">
+                        <?= $messages ?>+
+                        <span class="visually-hidden">unread messages</span>
+                    </span>
+                    <?php endif; ?>
                 </a>
             </li>
             <li class="nav-item">

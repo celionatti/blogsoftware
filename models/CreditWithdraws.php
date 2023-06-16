@@ -48,4 +48,14 @@ class CreditWithdraws extends DbModel
         }
     }
 
+    public static function withdrawPending_count()
+    {
+        $params = [
+            'conditions' => "status = :status",
+            'bind' => ['status' => 'pending']
+        ];
+
+        return self::findTotal($params);
+    }
+
 }

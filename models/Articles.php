@@ -80,4 +80,9 @@ class Articles extends DbModel
         return $articles;
     }
 
+    public static function count_articles()
+    {       
+        return Articles::findTotal();
+    }
+
 }

@@ -9,6 +9,8 @@ use Core\Response;
 use Core\Controller;
 use models\Contacts;
 use Core\Application;
+use models\Articles;
+use models\CreditWithdraws;
 use models\Subscribers;
 
 class AdminController extends Controller
@@ -27,7 +29,14 @@ class AdminController extends Controller
     public function index(Request $request, Response $response)
     {
         $view = [
-            'users' => Users::find(),
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin']
+            ],
+            'users' => Users::findFirst(),
+            'articles_count' => Articles::count_articles(),
+            'users_count' => Users::users_count(),
+            'withdrawals_count' => CreditWithdraws::withdrawPending_count(),
+            'messages_count' => Contacts::messages_count()
         ];
         $this->view->render('admin/dashboard', $view);
     }
