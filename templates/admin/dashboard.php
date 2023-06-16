@@ -26,17 +26,69 @@ use Core\Config;
 </div>
 
 <div class="row border border-3 border-secondary p-2 m-2">
-    <div class="col card">
-        <div class="card-header">
-            <h3 class="card-title">Subscribers</h3>
-        </div>
-        <div class="card-body">
-
-        </div>
-        <div class="card-footer">
-            
+    <!-- Card -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-secondary text-white mb-4">
+            <div class="card-header"># of Articles</div>
+            <div class="card-body">
+                <h4 class="m-0 bi bi-newspaper"></h4>
+                <h2 class="m-0">1000</h2>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
         </div>
     </div>
+    <!-- // Card -->
+
+    <!-- Card -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-warning text-white mb-4">
+            <div class="card-header"># of Users</div>
+            <div class="card-body">
+                <h4 class="m-0 bi bi-people"></h4>
+                <h2 class="m-0">100</h2>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <!-- // Card -->
+
+    <!-- Card -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-info text-white mb-4">
+            <div class="card-header">Withdrawal Request</div>
+            <div class="card-body">
+                <h4 class="m-0 bi bi-wallet2"></h4>
+                <h2 class="m-0">10</h2>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <!-- // Card -->
+
+    <!-- Card -->
+    <div class="col-xl-3 col-md-6">
+        <div class="card bg-primary text-white mb-4">
+            <div class="card-header"># of Messages</div>
+            <div class="card-body">
+                <h4 class="m-0 bi bi-envelope-open"></h4>
+                <h2 class="m-0">5</h2>
+            </div>
+            <div class="card-footer d-flex align-items-center justify-content-between">
+                <a class="small text-white stretched-link" href="#">View Details</a>
+                <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+            </div>
+        </div>
+    </div>
+    <!-- // Card -->
 </div>
 
 <?php $this->end() ?>
