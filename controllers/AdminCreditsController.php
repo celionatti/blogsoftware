@@ -12,6 +12,7 @@ use Core\Application;
 use Core\Support\Csrf;
 use models\Transactions;
 use Core\Support\Helpers\Token;
+use models\CreditWithdraws;
 
 class AdminCreditsController extends Controller
 {
@@ -28,11 +29,30 @@ class AdminCreditsController extends Controller
      */
     public function index(Request $request, Response $response)
     {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $params = [
+            'columns' => "credit_withdraws.*, users.surname, users.email, users.name",
+            'joins' => [
+                ['users', 'credit_withdraws.user_id = users.uid'],
+            ],
+            'order' => 'credit_withdraws.created_at DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
+        $total = CreditWithdraws::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
         $view = [
             'navigations' => [
                 ['label' => 'Dashboard', 'url' => 'admin'],
                 ['label' => 'Credits & Wallets', 'url' => ''],
             ],
+            'credits' => CreditWithdraws::find($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
         ];
         $this->view->render('admin/credits/index', $view);
     }
