@@ -44,6 +44,9 @@ class AdminController extends Controller
     public function collections(Request $request, Response $response)
     {
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin']
+            ],
             'errors' => []
         ];
 
@@ -53,6 +56,9 @@ class AdminController extends Controller
     public function create_collection(Request $request, Response $response)
     {
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin']
+            ],
             'errors' => [],
             'statusOpts' => [
                 '' => '--- Please Select ---',
@@ -78,6 +84,10 @@ class AdminController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Messages', 'url' => '']
+            ],
             'errors' => [],
             'messages' => Contacts::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -135,6 +145,10 @@ class AdminController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Subscribers', 'url' => ''],
+            ],
             'errors' => [],
             'subscribers' => Subscribers::find($params),
             'prevPage' => $this->previous_pagination($currentPage),

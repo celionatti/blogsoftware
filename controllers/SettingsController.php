@@ -40,6 +40,10 @@ class SettingsController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Settings', 'url' => ''],
+            ],
             'settings' => Settings::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
             'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
@@ -63,6 +67,11 @@ class SettingsController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Settings', 'url' => 'admin/settings'],
+                ['label' => 'Create Setting', 'url' => ''],
+            ],
             'errors' => $settings->getErrors(),
             'typeOpts' => [
                 'text' => 'Text',
@@ -125,6 +134,11 @@ class SettingsController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Settings', 'url' => 'admin/settings'],
+                ['label' => 'Edit Setting', 'url' => ''],
+            ],
             'errors' => $settings->getErrors(),
             'typeOpts' => [
                 'text' => 'Text',

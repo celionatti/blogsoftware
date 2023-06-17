@@ -46,4 +46,17 @@ class Topics extends DbModel
         ];
         return self::find($params);
     }
+
+    public static function articles_topic_count($slug)
+    {
+        $params = [
+            'columns' => "articles.*, topics.slug",
+            'conditions' => "topics.slug = :slug",
+            'bind' => ['slug' => $slug],
+            'joins' => [
+                ['articles', 'topics.slug = articles.topic', 'articles', 'LEFT']
+            ],
+        ];
+        return self::findTotal($params);
+    }
 }

@@ -3,6 +3,8 @@
 use Core\Config;
 use Core\Support\Pagination;
 use Core\Forms\BootstrapForm;
+use models\Topics;
+
 
 ?>
 
@@ -40,7 +42,7 @@ use Core\Forms\BootstrapForm;
                             <td>
                                 <?= $key + 1 ?>
                             </td>
-                            <td>1000</td>
+                            <td><?= Topics::articles_topic_count($topic->slug) ?></td>
                             <td class="text-capitalize">
                                 <a href="" target="_blank" class="text-dark text-decoration-none">
                                     <?= $topic->topic ?>

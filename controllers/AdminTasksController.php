@@ -44,6 +44,10 @@ class AdminTasksController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => ''],
+            ],
             'errors' => [],
             'tasks' => Tasks::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -92,6 +96,11 @@ class AdminTasksController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => 'admin/tasks'],
+                ['label' => 'Create Task', 'url' => ''],
+            ],
             'errors' => $task->getErrors(),
             'task' => $task,
             'typeOpts' => [
@@ -151,6 +160,11 @@ class AdminTasksController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => 'admin/tasks'],
+                ['label' => 'Edit Task', 'url' => ''],
+            ],
             'errors' => $task->getErrors(),
             'task' => $task,
             'typeOpts' => [
@@ -183,6 +197,11 @@ class AdminTasksController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => 'admin/tasks'],
+                ['label' => 'Archive Tasks', 'url' => ''],
+            ],
             'errors' => [],
             'tasks' => Tasks::find($params),
             'prevPage' => $this->previous_pagination($currentPage),
@@ -226,6 +245,11 @@ class AdminTasksController extends Controller
         ];
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => 'admin/tasks'],
+                ['label' => 'Task Details', 'url' => ''],
+            ],
             'task' => Tasks::findFirst($params)
         ];
 
@@ -259,6 +283,11 @@ class AdminTasksController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => 'admin/tasks'],
+                ['label' => 'Task Participants', 'url' => ''],
+            ],
             'errors' => [],
             'task' => Tasks::findFirst($task_params),
             'participants' => TaskRegistration::find($params),
@@ -344,6 +373,11 @@ class AdminTasksController extends Controller
         $numberOfPages = ceil($total / $recordsPerPage);
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => 'admin/tasks'],
+                ['label' => 'Task Questions', 'url' => ''],
+            ],
             'task' => $task,
             'questions' => Questions::find($questions_params),
             'totalQuestions' => $total,
@@ -410,6 +444,11 @@ class AdminTasksController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => 'admin/tasks'],
+                ['label' => 'Create Question', 'url' => ''],
+            ],
             'errors' => $question->getErrors(),
             'task' => $task,
             'type' => $type,
@@ -486,6 +525,11 @@ class AdminTasksController extends Controller
         }
 
         $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Tasks', 'url' => 'admin/tasks'],
+                ['label' => 'Edit Question', 'url' => ''],
+            ],
             'errors' => [],
             'task' => $task,
             'type' => $type,
