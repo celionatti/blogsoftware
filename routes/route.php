@@ -156,6 +156,7 @@ $router->patch('/admin/board-posts/status', [AdminBoardPostsController::class, '
 $router->get('/admin/credits', [AdminCreditsController::class, 'index'])->only('admin');
 $router->get('/admin/credits/info', [AdminCreditsController::class, 'info'])->only('admin');
 $router->post('/admin/credits/info', [AdminCreditsController::class, 'info'])->only('admin');
+$router->patch('/admin/credits/status', [AdminCreditsController::class, 'status'])->only('admin');
 $router->get('/admin/wallets', [AdminCreditsController::class, 'wallets'])->only('admin');
 
 

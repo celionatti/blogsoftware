@@ -151,4 +151,9 @@ class AdminCreditsController extends Controller
 
         $this->view->render('admin/credits/info', $view);
     }
+
+    public function status(Request $request, Response $response)
+    {
+        dd($request->post("status"));
+    }
 }

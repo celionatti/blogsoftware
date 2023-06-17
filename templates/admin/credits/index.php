@@ -29,8 +29,12 @@ use Core\Support\Helpers\TimeFormat;
                     <th>S/N</th>
                     <th>Name</th>
                     <th>Amount</th>
+                    <th>Bank</th>
+                    <th>Account Name</th>
+                    <th>Account Number</th>
                     <th>Status</th>
-                    <th>Created Date</th>
+                    <th>Date</th>
+                    <th colspan="2"></th>
                 </thead>
                 <tbody>
                     <?php foreach ($credits as $key => $credit) : ?>
@@ -38,42 +42,54 @@ use Core\Support\Helpers\TimeFormat;
                             <td>
                                 <?= $key + 1 ?>
                             </td>
-                            <td>
+                            <td class="text-capitalize">
                                 <?= $credit->surname . " " . $credit->name ?>
                             </td>
                             <td>
-                                <a class="text-white text-decoration-none">
-                                    <?= $credit->amount ?>
-                                </a>
-                                <div class="my-2">
-                                    <a href="<?= Config::get('domain') ?>admin/credits/info?credit-slug=<?= $credit->slug ?>" class="btn btn-sm btn-info"><i class="bi bi-info-circle"></i></a>
-                                    <span class="divider">|</span>
-                                    <a href="<?= Config::get('domain') ?>admin/credits/trash?credit-slug=<?= $credit->slug ?>" class="btn btn-sm btn-danger">Trash</a>
-                                    <span class="divider">|</span>
-                                    <form action="<?= Config::get('domain') ?>admin/credits/status" method="post" class="d-inline">
-                                        <?= BootstrapForm::method("PATCH") ?>
-
-                                        <?= BootstrapForm::hidden("slug", $credit->slug) ?>
-                                        <?= BootstrapForm::hidden("status", "disabled") ?>
-                                        <button type="submit" class="btn btn-sm btn-secondary">Disabled</button>
-                                    </form>
-                                </div>
+                                <?= $credit->amount ?>
+                            </td>
+                            <td class="text-capitalize">
+                                <?= $credit->bank ?>
+                            </td>
+                            <td class="text-capitalize">
+                                <?= $credit->account_name ?>
+                            </td>
+                            <td class="text-capitalize">
+                                <?= $credit->account_number ?>
                             </td>
                             <?php if ($credit->status === 'success') : ?>
-                                <td class="text-capitalize badge bg-success">
-                                    <?= $credit->status ?>
+                                <td class="text-capitalize">
+                                    <span class="badge bg-success"><?= $credit->status ?></span>
                                 </td>
                             <?php elseif ($credit->status === 'failed') : ?>
-                                <td class="text-capitalize badge bg-danger">
-                                    <?= $credit->status ?>
+                                <td class="text-capitalize">
+                                    <span class="badge bg-danger"><?= $credit->status ?></span>
                                 </td>
                             <?php else : ?>
-                                <td class="text-capitalize badge bg-warning">
-                                    <?= $credit->status ?>
+                                <td class="text-capitalize">
+                                    <span class="badge bg-warning p-2"><?= $credit->status ?></span>
                                 </td>
                             <?php endif; ?>
                             <td>
-                                <?= TimeFormat::DateOne($credit->created_at) ?>
+                                <?= TimeFormat::StringTime($credit->created_at) ?>
+                            </td>
+                            <td class="text-end">
+                                <div class="row g-2">
+                                    <form action="<?= Config::get('domain') ?>admin/credits/status" method="post" class="d-inlines col">
+                                        <?= BootstrapForm::method("PATCH") ?>
+
+                                        <?= BootstrapForm::hidden("slug", $credit->slug) ?>
+                                        <?= BootstrapForm::hidden("status", "success") ?>
+                                        <button type="submit" class="btn btn-sm btn-success w-100">Approve</button>
+                                    </form>
+                                    <form action="<?= Config::get('domain') ?>admin/credits/status" method="post" class="d-inlines col">
+                                        <?= BootstrapForm::method("PATCH") ?>
+
+                                        <?= BootstrapForm::hidden("slug", $credit->slug) ?>
+                                        <?= BootstrapForm::hidden("status", "failed") ?>
+                                        <button type="submit" class="btn btn-sm btn-danger w-100">Cancel</button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach; ?>
