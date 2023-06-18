@@ -79,6 +79,8 @@ use Core\Support\Helpers\TimeFormat;
                                         <?= BootstrapForm::method("PATCH") ?>
 
                                         <?= BootstrapForm::hidden("slug", $credit->slug) ?>
+                                        <?= BootstrapForm::hidden("wallet_id", $credit->wallet_id) ?>
+                                        <?= BootstrapForm::hidden("amount", $credit->amount) ?>
                                         <?= BootstrapForm::hidden("status", "success") ?>
                                         <button type="submit" class="btn btn-sm btn-success w-100">Approve</button>
                                     </form>
@@ -86,6 +88,8 @@ use Core\Support\Helpers\TimeFormat;
                                         <?= BootstrapForm::method("PATCH") ?>
 
                                         <?= BootstrapForm::hidden("slug", $credit->slug) ?>
+                                        <?= BootstrapForm::hidden("wallet_id", $credit->wallet_id) ?>
+                                        <?= BootstrapForm::hidden("amount", $credit->amount) ?>
                                         <?= BootstrapForm::hidden("status", "failed") ?>
                                         <button type="submit" class="btn btn-sm btn-danger w-100">Cancel</button>
                                     </form>

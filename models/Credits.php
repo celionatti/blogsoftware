@@ -56,19 +56,4 @@ class Credits extends DbModel
         return $this->balance;
     }
 
-    public function deposit($amount)
-    {
-        $this->balance += $amount;
-    }
-
-    public function withdraw($amount)
-    {
-        if ($amount <= self::$balance) {
-            $this->balance -= $amount;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

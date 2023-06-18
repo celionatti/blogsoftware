@@ -16,7 +16,7 @@ class CreditWithdraws extends DbModel
     public string $slug = "";
     public string $wallet_id = "";
     public string $user_id = "";
-    public string|null $accepted_by = "";
+    public string|null $accepted_by;
     public string|null $bank = "";
     public string|null $account_number = "";
     public string|null $account_name = "";

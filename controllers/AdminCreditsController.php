@@ -154,6 +154,39 @@ class AdminCreditsController extends Controller
 
     public function status(Request $request, Response $response)
     {
-        dd($request->post("status"));
+        $creditParams = [
+            'conditions' => "wallet_id = :wallet_id",
+            'bind' => ['wallet_id' => $request->post('wallet_id')]
+        ];
+
+        $credit = Credits::findFirst($creditParams);
+
+        if ($credit) {
+            $credit->balance = $credit->balance - $request->post('amount');
+
+            if ($credit->save()) {
+                $params = [
+                    'conditions' => "slug = :slug",
+                    'bind' => ['slug' => $request->post('slug')]
+                ];
+
+                $creditWithdraw = CreditWithdraws::findFirst($params);
+
+                if ($creditWithdraw) {
+                    $creditWithdraw->loadData($request->getBody());
+                    $creditWithdraw->accepted_by = $this->currentUser->uid;
+                    if ($creditWithdraw->save()) {
+                        Application::$app->session->setFlash("success", "Credit Updated successfully");
+                        last_uri();
+                    }
+                }
+            }
+        }
+
+        // if ($request->isPatch()) {
+
+
+            
+        // }
     }
 }
