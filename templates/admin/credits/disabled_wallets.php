@@ -10,14 +10,14 @@ use Core\Support\Helpers\TimeFormat;
 
 <?php $this->start('content') ?>
 <div class="container bg-white p-2 rounded">
-    <h2 class="text-muted text-center border-bottom border-3 border-danger py-2">Wallets</h2>
+    <h2 class="text-muted text-center border-bottom border-3 border-danger py-2">Disabled Wallets</h2>
 
     <div id="table-actions" class="row my-3">
 
         <div class="col text-end">
-            <a href="<?= Config::get('domain') ?>admin/wallets/disabled" class="btn btn-warning btn-sm">
+            <a href="<?= Config::get('domain') ?>admin/wallets" class="btn btn-primary btn-sm">
                 <i class="bi bi-wallet"></i>
-                Disabled Wallets
+                Wallets
             </a>
         </div>
     </div>
@@ -62,8 +62,8 @@ use Core\Support\Helpers\TimeFormat;
                                 <?= BootstrapForm::method("PATCH") ?>
 
                                 <?= BootstrapForm::hidden("slug", $credit->slug) ?>
-                                <?= BootstrapForm::hidden("status", "disabled") ?>
-                                <button type="submit" class="btn btn-sm btn-secondary">Disabled</button>
+                                <?= BootstrapForm::hidden("status", "active") ?>
+                                <button type="submit" class="btn btn-sm btn-success">Activate</button>
                             </form>
                         </div>
                     </td>

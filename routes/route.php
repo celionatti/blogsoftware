@@ -159,6 +159,9 @@ $router->post('/admin/credits/info', [AdminCreditsController::class, 'info'])->o
 $router->patch('/admin/credits/withdraw', [AdminCreditsController::class, 'withdraw'])->only('admin');
 $router->patch('/admin/credits/status', [AdminCreditsController::class, 'status'])->only('admin');
 $router->get('/admin/wallets', [AdminCreditsController::class, 'wallets'])->only('admin');
+$router->get('/admin/wallets/disabled', [AdminCreditsController::class, 'wallets_disabled'])->only('admin');
+$router->patch('/admin/wallets/status', [AdminCreditsController::class, 'wallet_status'])->only('admin');
+$router->delete('/admin/wallets/trash', [AdminCreditsController::class, 'wallet_trash'])->only('admin');
 
 
 // Admin Settings

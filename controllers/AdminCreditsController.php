@@ -94,6 +94,79 @@ class AdminCreditsController extends Controller
         $this->view->render('admin/credits/wallets', $view);
     }
 
+    /**
+     * @throws Exception
+     */
+    public function wallets_disabled(Request $request, Response $response)
+    {
+        $currentPage = isset($_GET['page']) ? $_GET['page'] : 1;
+        $recordsPerPage = 5;
+
+        $params = [
+            'columns' => "credits.*, users.surname, users.email, users.name",
+            'conditions' => "credits.status = :status",
+            'joins' => [
+                ['users', 'credits.user_id = users.uid'],
+            ],
+            'bind' => ['status' => 'disabled'],
+            'order' => 'credits.id DESC',
+            'limit' => $recordsPerPage,
+            'offset' => ($currentPage - 1) * $recordsPerPage
+        ];
+
+        $total = Credits::findTotal($params);
+        $numberOfPages = ceil($total / $recordsPerPage);
+
+        $view = [
+            'navigations' => [
+                ['label' => 'Dashboard', 'url' => 'admin'],
+                ['label' => 'Credits & Wallets', 'url' => 'admin/credits'],
+                ['label' => 'Wallets', 'url' => 'admin/wallets'],
+                ['label' => 'Disabled Wallets', 'url' => ''],
+            ],
+            'credits' => Credits::find($params),
+            'prevPage' => $this->previous_pagination($currentPage),
+            'nextPage' => $this->next_pagination($currentPage, $numberOfPages),
+        ];
+        $this->view->render('admin/credits/disabled_wallets', $view);
+    }
+
+    public function wallet_status(Request $request, Response $response)
+    {
+        if ($request->isPatch()) {
+            $params = [
+                'conditions' => "slug = :slug",
+                'bind' => ['slug' => $request->post('slug')]
+            ];
+
+            $credit = Credits::findFirst($params);
+
+            if ($credit) {
+                $credit->loadData($request->getBody());
+                if ($credit->save()) {
+                    Application::$app->session->setFlash("success", "Wallet status Updated successfully");
+                    last_uri();
+                }
+            }
+        }
+    }
+
+    public function wallet_trash(Request $request, Response $response)
+    {
+        if ($request->isDelete()) {
+            $params = [
+                'conditions' => "slug = :slug",
+                'bind' => ['slug' => $request->post('slug')]
+            ];
+
+            $credit = Credits::findFirst($params);
+
+            if ($credit->delete()) {
+                Application::$app->session->setFlash("success", "Wallet Deleted successfully");
+                last_uri();
+            }
+        }
+    }
 
     /**
      * @throws Exception
@@ -155,14 +228,14 @@ class AdminCreditsController extends Controller
 
     public function status(Request $request, Response $response)
     {
-        if($request->isPatch()) {
+        if ($request->isPatch()) {
             $params = [
                 'conditions' => "slug = :slug",
                 'bind' => ['slug' => $request->post('slug')]
             ];
-    
+
             $creditWithdraw = CreditWithdraws::findFirst($params);
-    
+
             if ($creditWithdraw) {
                 $creditWithdraw->loadData($request->getBody());
                 $creditWithdraw->accepted_by = $this->currentUser->uid;
@@ -176,18 +249,18 @@ class AdminCreditsController extends Controller
 
     public function withdraw(Request $request, Response $response)
     {
-        if($request->isPatch()) {
+        if ($request->isPatch()) {
             $creditParams = [
                 'conditions' => "wallet_id = :wallet_id",
                 'bind' => ['wallet_id' => $request->post('wallet_id')]
             ];
-    
+
             $credit = Credits::findFirst($creditParams);
-    
+
             if ($credit) {
                 $credit->balance = $credit->balance - $request->post('amount');
-    
-                if($credit->save()) {
+
+                if ($credit->save()) {
                     Application::$app->session->setFlash("success", "Credit Withdraw successfully");
                     last_uri();
                 }
