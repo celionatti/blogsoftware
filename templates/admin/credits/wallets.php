@@ -49,10 +49,10 @@ use Core\Support\Helpers\TimeFormat;
                             <a href="<?= Config::get('domain') ?>admin/credits/info?credit-slug=<?= $credit->slug ?>"
                                 class="btn btn-sm btn-info"><i class="bi bi-info-circle"></i></a>
                             <span class="divider">|</span>
-                            <a href="<?= Config::get('domain') ?>admin/credits/trash?credit-slug=<?= $credit->slug ?>"
+                            <a href="<?= Config::get('domain') ?>admin/wallets/trash?credit-slug=<?= $credit->slug ?>"
                                 class="btn btn-sm btn-danger">Trash</a>
                             <span class="divider">|</span>
-                            <form action="<?= Config::get('domain') ?>admin/credits/status" method="post"
+                            <form action="<?= Config::get('domain') ?>admin/wallets/status" method="post"
                                 class="d-inline">
                                 <?= BootstrapForm::method("PATCH") ?>
 

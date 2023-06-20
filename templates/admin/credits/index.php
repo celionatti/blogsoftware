@@ -59,11 +59,11 @@ use Core\Support\Helpers\TimeFormat;
                             </td>
                             <?php if ($credit->status === 'success') : ?>
                                 <td class="text-capitalize">
-                                    <span class="badge bg-success"><?= $credit->status ?></span>
+                                    <span class="badge bg-success p-2"><?= $credit->status ?></span>
                                 </td>
                             <?php elseif ($credit->status === 'failed') : ?>
                                 <td class="text-capitalize">
-                                    <span class="badge bg-danger"><?= $credit->status ?></span>
+                                    <span class="badge bg-danger p-2"><?= $credit->status ?></span>
                                 </td>
                             <?php else : ?>
                                 <td class="text-capitalize">
@@ -75,15 +75,26 @@ use Core\Support\Helpers\TimeFormat;
                             </td>
                             <td class="text-end">
                                 <div class="row g-2">
-                                    <form action="<?= Config::get('domain') ?>admin/credits/status" method="post" class="d-inlines col">
-                                        <?= BootstrapForm::method("PATCH") ?>
+                                    <?php if ($credit->status === 'pending') : ?>
+                                        <form action="<?= Config::get('domain') ?>admin/credits/withdraw" method="post" class="d-inlines col">
+                                            <?= BootstrapForm::method("PATCH") ?>
 
-                                        <?= BootstrapForm::hidden("slug", $credit->slug) ?>
-                                        <?= BootstrapForm::hidden("wallet_id", $credit->wallet_id) ?>
-                                        <?= BootstrapForm::hidden("amount", $credit->amount) ?>
-                                        <?= BootstrapForm::hidden("status", "success") ?>
-                                        <button type="submit" class="btn btn-sm btn-success w-100">Approve</button>
-                                    </form>
+                                            <?= BootstrapForm::hidden("wallet_id", $credit->wallet_id) ?>
+                                            <?= BootstrapForm::hidden("amount", $credit->amount) ?>
+                                            <button type="submit" class="btn btn-sm btn-primary w-100">Withdraw</button>
+                                        </form>
+                                    <?php endif; ?>
+                                    <?php if ($credit->status !== 'success') : ?>
+                                        <form action="<?= Config::get('domain') ?>admin/credits/status" method="post" class="d-inlines col">
+                                            <?= BootstrapForm::method("PATCH") ?>
+
+                                            <?= BootstrapForm::hidden("slug", $credit->slug) ?>
+                                            <?= BootstrapForm::hidden("wallet_id", $credit->wallet_id) ?>
+                                            <?= BootstrapForm::hidden("amount", $credit->amount) ?>
+                                            <?= BootstrapForm::hidden("status", "success") ?>
+                                            <button type="submit" class="btn btn-sm btn-success w-100">Approve</button>
+                                        </form>
+                                    <?php endif; ?>
                                     <form action="<?= Config::get('domain') ?>admin/credits/status" method="post" class="d-inlines col">
                                         <?= BootstrapForm::method("PATCH") ?>
 

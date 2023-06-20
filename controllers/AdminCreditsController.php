@@ -33,9 +33,10 @@ class AdminCreditsController extends Controller
         $recordsPerPage = 5;
 
         $params = [
-            'columns' => "credit_withdraws.*, users.surname, users.email, users.name",
+            'columns' => "credit_withdraws.*, users.surname, users.email, users.name, credits.slug as credit_slug",
             'joins' => [
                 ['users', 'credit_withdraws.user_id = users.uid'],
+                ['credits', 'credit_withdraws.wallet_id = credits.wallet_id', 'credits', 'LEFT'],
             ],
             'order' => 'credit_withdraws.created_at DESC',
             'limit' => $recordsPerPage,
@@ -154,39 +155,43 @@ class AdminCreditsController extends Controller
 
     public function status(Request $request, Response $response)
     {
-        $creditParams = [
-            'conditions' => "wallet_id = :wallet_id",
-            'bind' => ['wallet_id' => $request->post('wallet_id')]
-        ];
-
-        $credit = Credits::findFirst($creditParams);
-
-        if ($credit) {
-            $credit->balance = $credit->balance - $request->post('amount');
-
-            if ($credit->save()) {
-                $params = [
-                    'conditions' => "slug = :slug",
-                    'bind' => ['slug' => $request->post('slug')]
-                ];
-
-                $creditWithdraw = CreditWithdraws::findFirst($params);
-
-                if ($creditWithdraw) {
-                    $creditWithdraw->loadData($request->getBody());
-                    $creditWithdraw->accepted_by = $this->currentUser->uid;
-                    if ($creditWithdraw->save()) {
-                        Application::$app->session->setFlash("success", "Credit Updated successfully");
-                        last_uri();
-                    }
+        if($request->isPatch()) {
+            $params = [
+                'conditions' => "slug = :slug",
+                'bind' => ['slug' => $request->post('slug')]
+            ];
+    
+            $creditWithdraw = CreditWithdraws::findFirst($params);
+    
+            if ($creditWithdraw) {
+                $creditWithdraw->loadData($request->getBody());
+                $creditWithdraw->accepted_by = $this->currentUser->uid;
+                if ($creditWithdraw->save()) {
+                    Application::$app->session->setFlash("success", "Credit Updated successfully");
+                    last_uri();
                 }
             }
         }
+    }
 
-        // if ($request->isPatch()) {
-
-
-            
-        // }
+    public function withdraw(Request $request, Response $response)
+    {
+        if($request->isPatch()) {
+            $creditParams = [
+                'conditions' => "wallet_id = :wallet_id",
+                'bind' => ['wallet_id' => $request->post('wallet_id')]
+            ];
+    
+            $credit = Credits::findFirst($creditParams);
+    
+            if ($credit) {
+                $credit->balance = $credit->balance - $request->post('amount');
+    
+                if($credit->save()) {
+                    Application::$app->session->setFlash("success", "Credit Withdraw successfully");
+                    last_uri();
+                }
+            }
+        }
     }
 }
