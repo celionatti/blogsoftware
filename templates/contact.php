@@ -24,7 +24,7 @@ $settings = Settings::fetchSettings();
     <section>
         <div class="row">
             <div class="col-12 col-lg-6 col-md-6 col-sm-12">
-                <img src="<?= get_image("assets/img/post-4.jpg") ?>" alt="" class="w-100 img-fluid rounded-5" style="object-fit: cover;">
+                <img src="<?= get_image("assets/img/logo-color.png") ?>" alt="" class="w-100 img-fluid rounded-5" style="object-fit: cover;">
             </div>
             <div class="col-12 col-lg-6 col-md-6 col-sm-12">
                 <h2 class="text-shadow h3 text-uppercase border-bottom border-3 border-danger pb-2 text-black text-start">
