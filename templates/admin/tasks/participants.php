@@ -33,7 +33,7 @@ use Core\Support\Pagination;
 
     <div class="border border-muted border-1 px-2 table-responsive">
         <?php if ($participants): ?>
-            <table class="table table-striped">
+            <table class="table table-primary">
                 <thead>
                     <th>S/N</th>
                     <th>Task No</th>

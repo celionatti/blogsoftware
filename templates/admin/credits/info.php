@@ -13,7 +13,7 @@ use Core\Support\Helpers\TimeFormat;
     <h2 class="text-muted text-center text-capitalize border-bottom border-3 border-danger py-2"><?= $credit->surname . " " . $credit->name ?> Wallet Info</h2>
 
     <div class="border border-muted border-1 px-2 table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover table-primary">
             <tr>
                 <th>Surname:</th>
                 <td class="text-end text-capitalize"><?= $credit->surname ?></td>

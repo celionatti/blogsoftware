@@ -21,7 +21,7 @@ use models\RelatedArticles;
 
     <div class="border border-muted border-1 px-2 table-responsive">
         <?php if ($comments): ?>
-            <table class="table table-striped">
+            <table class="table table-primary">
                 <thead>
                     <th>S/N</th>
                     <th>User</th>

@@ -25,7 +25,7 @@ use Core\Forms\BootstrapForm;
 
     <div class="border border-muted border-1 px-2 py-2 table-responsive">
         <?php if ($messages): ?>
-            <table class="table table-striped">
+            <table class="table table-primary">
                 <thead>
                     <th>S/N</th>
                     <th>Name</th>

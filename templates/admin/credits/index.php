@@ -24,7 +24,7 @@ use Core\Support\Helpers\TimeFormat;
 
     <div class="border border-muted border-1 px-2 table-responsive">
         <?php if ($credits) : ?>
-            <table class="table table-sm table-dark table-striped">
+            <table class="table table-sm table-dark">
                 <thead>
                     <th>S/N</th>
                     <th>Name</th>
