@@ -95,6 +95,7 @@ use Core\Support\Helpers\TimeFormat;
                                             <button type="submit" class="btn btn-sm btn-success w-100">Approve</button>
                                         </form>
                                     <?php endif; ?>
+                                    <?php if($credit->status === 'pending'): ?>
                                     <form action="<?= Config::get('domain') ?>admin/credits/status" method="post" class="d-inlines col">
                                         <?= BootstrapForm::method("PATCH") ?>
 
@@ -104,6 +105,7 @@ use Core\Support\Helpers\TimeFormat;
                                         <?= BootstrapForm::hidden("status", "failed") ?>
                                         <button type="submit" class="btn btn-sm btn-danger w-100">Cancel</button>
                                     </form>
+                                    <?php endif; ?>
                                 </div>
                             </td>
                         </tr>

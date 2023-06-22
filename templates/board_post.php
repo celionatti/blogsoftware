@@ -1,6 +1,7 @@
 <?php
 
 
+use Core\Config;
 use Core\Support\Helpers\TimeFormat;
 
 
@@ -20,12 +21,11 @@ use Core\Support\Helpers\TimeFormat;
         <small class="text-muted">Updated
             <?= TimeFormat::BlogDate($board->created_at) ?>
         </small>
-        <!-- <small class="text-muted">Updated 05:45 PM GMT. April 05, 2023</small> -->
         <div class="d-flex my-2">
-            <a href="#" class="bi bi-facebook fs-5 me-3 text-primary"></a>
-            <a href="#" class="bi bi-telegram fs-5 me-3 text-primary"></a>
-            <a href="#" class="bi bi-whatsapp fs-5 me-3 text-success"></a>
-            <a href="#" class="bi bi-twitter fs-5 me-3 text-info"></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=<?= Config::get("domain") ?>board-post/read?slug=<?= $board->slug ?>" class="bi bi-facebook fs-5 me-3 text-primary" target="_blank"></a>
+            <a href="https://t.me/botnatti?text=<?= Config::get("domain") ?>board-post/read?slug=<?= $board->slug ?>" class="bi bi-telegram fs-5 me-3 text-primary" target="_blank"></a>
+            <a href="https://api.whatsapp.com/send?text=<?= Config::get("domain") ?>board-post/read?slug=<?= $board->slug ?>" class="bi bi-whatsapp fs-5 me-3 text-success" target="_blank"></a>
+            <a href="https://twitter.com/intent/tweet?text=<?= $board->title ?>&url=<?= Config::get("domain") ?>board-post/read?slug=<?= $board->slug ?>" class="bi bi-twitter fs-5 me-3 text-info" target="_blank"></a>
         </div>
 
     </div>
