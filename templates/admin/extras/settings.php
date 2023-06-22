@@ -2,8 +2,9 @@
 
 use Core\Config;
 use Core\Support\Pagination;
-use Core\Forms\BootstrapForm;
 use Core\Support\Helpers\StringFormat;
+
+$this->setHeader("Settings");
 
 ?>
 

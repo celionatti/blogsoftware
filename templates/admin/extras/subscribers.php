@@ -4,6 +4,8 @@ use Core\Config;
 use Core\Support\Pagination;
 use Core\Forms\BootstrapForm;
 
+$this->setHeader("Subscribers");
+
 ?>
 
 

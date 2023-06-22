@@ -7,6 +7,7 @@ use Exception;
 class View
 {
     private string $_title = '';
+    private string $_header = 'Dashboard';
     private array $_content = [];
     private $_currentContent;
     private $_buffer;
@@ -32,6 +33,26 @@ class View
     public function getTitle()
     {
         return $this->_title;
+    }
+
+    /**
+     * Get the value of _header
+     */ 
+    public function getHeader()
+    {
+        return $this->_header;
+    }
+
+    /**
+     * Set the value of _header
+     *
+     * @return  self
+     */ 
+    public function setHeader($_header)
+    {
+        $this->_header = $_header;
+
+        return $this;
     }
 
 

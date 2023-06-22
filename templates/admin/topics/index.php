@@ -2,9 +2,9 @@
 
 use Core\Config;
 use Core\Support\Pagination;
-use Core\Forms\BootstrapForm;
 use models\Topics;
 
+$this->setHeader("Topics");
 
 ?>
 

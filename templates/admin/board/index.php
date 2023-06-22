@@ -5,6 +5,8 @@ use Core\Support\Pagination;
 use Core\Forms\BootstrapForm;
 use Core\Support\Helpers\TimeFormat;
 
+$this->setHeader("Board Posts");
+
 ?>
 
 

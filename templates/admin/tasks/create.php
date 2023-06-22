@@ -3,6 +3,8 @@
 use Core\Config;
 use Core\Forms\BootstrapForm;
 
+$this->setHeader("Create Task");
+
 ?>
 
 <?php $this->start('header'); ?>

@@ -3,6 +3,8 @@
 use Core\Config;
 use Core\Forms\BootstrapForm;
 
+$this->setHeader("Update Setting");
+
 ?>
 
 <?php $this->start('header'); ?>
@@ -11,7 +13,7 @@ use Core\Forms\BootstrapForm;
 
 <?php $this->start('content') ?>
 <div class="container bg-white p-2 rounded">
-    <h2 class="text-muted text-center">Add New Setting</h2>
+    <h2 class="text-muted text-center">Update Setting</h2>
     <form action="" method="post" enctype="multipart/form-data">
         <?= BootstrapForm::method("PATCH"); ?>
         <?= BootstrapForm::inputField('Setting Name', 'name', $setting->name ?? '', ['class' => 'form-control'], ['class' => 'form-floating my-2'], $errors) ?>

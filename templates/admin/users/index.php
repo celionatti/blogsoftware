@@ -1,8 +1,9 @@
 <?php
 
 use Core\Config;
-use Core\Forms\BootstrapForm;
 use Core\Support\Pagination;
+
+$this->setHeader("Users");
 
 ?>
 

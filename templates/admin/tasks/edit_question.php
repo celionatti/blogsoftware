@@ -2,7 +2,8 @@
 
 use Core\Config;
 use Core\Forms\BootstrapForm;
-use Core\Support\Helpers\TimeFormat;
+
+$this->setHeader("Edit Question");
 
 ?>
 
@@ -12,7 +13,7 @@ use Core\Support\Helpers\TimeFormat;
 
 <?php $this->start('content') ?>
 <div class="container bg-white p-2 rounded">
-    <h2 class="text-muted text-center border-bottom border-3 border-info py-2">Create Question</h2>
+    <h2 class="text-muted text-center border-bottom border-3 border-info py-2">Edit Question</h2>
 
     <h5 class="text-muted text-center border-bottom border-3 border-info py-2">Task:
         <?= $task->title ?>

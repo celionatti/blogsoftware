@@ -6,6 +6,8 @@ use Core\Forms\BootstrapForm;
 use Core\Support\Helpers\TimeFormat;
 use models\RelatedArticles;
 
+$this->setHeader("Related Articles");
+
 ?>
 
 

@@ -3,6 +3,8 @@
 use Core\Config;
 use Core\Forms\BootstrapForm;
 
+$this->setHeader("Create Board Post");
+
 ?>
 
 <?php $this->start('header'); ?>

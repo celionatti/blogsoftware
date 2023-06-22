@@ -2,6 +2,8 @@
 
 use Core\Forms\BootstrapForm;
 
+$this->setHeader("Trashed Articles");
+
 ?>
 
 

@@ -3,6 +3,8 @@
 use Core\Config;
 use Core\Forms\BootstrapForm;
 
+$this->setHeader("Delete Article");
+
 ?>
 
 <?php $this->start('content') ?>
