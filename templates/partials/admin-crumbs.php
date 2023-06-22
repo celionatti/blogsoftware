@@ -1,6 +1,8 @@
 <?php
 
+use Core\Application;
 
+$currentUser = Application::$app->currentUser;
 
 ?>
 
@@ -8,13 +10,8 @@
     <h1 class="h2"><?= $this->getHeader() ?></h1>
 
     <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group me-2">
-            <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
-            <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
-            <span data-feather="calendar" class="align-text-bottom"></span>
-            This week
+        <button type="button" class="btn btn-sm btn-outline-danger">
+            <span class="bi bi-person"></span> <span class="text-capitalize"><?= $currentUser->displayName() ?></span>
         </button>
     </div>
 </div>
